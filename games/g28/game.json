@@ -1,0 +1,58 @@
+{
+  "title": "锅炉房的秤与招牌",
+  "intro": "停业改造的老澡堂断了电，积水正一寸一寸爬向水泵房的配电箱。闸箱挂锁、手轮销失踪，秤盘上的压铁和更衣柜楼的半块招牌，各自守着一半线索。",
+  "start": "lobby",
+  "rooms": {
+    "lobby": { "n": "门厅穿堂", "d": "穿堂风从两道门里对灌，吊灯的灯泡拆得只剩一只。去值班房、池厅的门虚掩着，楼梯口通更衣柜楼，后门直下锅炉房。" },
+    "office": { "n": "值班房", "d": "值班房窄得转不开身。门后的挂钩上拴着钥匙，桌上玻璃板压着字条，茶杯里积了一圈褐垢。" },
+    "pool": { "n": "池厅", "d": "大池子放干了水，池底马赛克拼着一只蓝孔雀。更衣凳摞在墙角，池沿的瓷砖缺了几块，露出灰黑的底子。" },
+    "lockers": { "n": "更衣柜楼", "d": "朝南的窗糊着旧报纸，天光落在贴北墙的第一排柜门上。四排铁皮柜沿东西向排开，从北数第三排的柜门上挂着水电班的搪瓷牌，一头山墙上钉着半块褪色招牌。" },
+    "boiler": { "n": "锅炉房", "d": "铸铁锅炉蹲在屋子正中，水箱的玻璃水位管挂在侧面，水箱旁立着一杆吊秤。墙角滚着四块压铁，总闸箱钉在砖柱上。" },
+    "pump": { "n": "水泵房", "d": "水泵房半截沉在地下，铁梯上全是油泥。泵体积着齐踝的积水，配电箱的指示灯全灭了，积水里说不准残着余电。" }
+  },
+  "items": {
+    "office_key": "挂钩上的钥匙",
+    "box_key": "黄铜闸箱钥匙",
+    "pin": "黄铜手轮销"
+  },
+  "puzzles": [
+    { "id": "锅炉房门", "solved": "p_bdoor", "clue": "c_note" },
+    { "id": "配重校秤", "solved": "p_scale", "clue": "c_water" },
+    { "id": "总闸箱挂锁", "solved": "p_box", "clue": "c_switch" },
+    { "id": "老岑的私柜", "solved": "p_cab", "clue": "c_log" },
+    { "id": "合闸送电", "solved": "won", "clue": "c_notice" }
+  ],
+  "acts": [
+    { "id": "lobby2office", "room": "lobby", "label": "去值班房", "go": "office" },
+    { "id": "lobby2pool", "room": "lobby", "label": "进池厅", "go": "pool" },
+    { "id": "lobby2lockers", "room": "lobby", "label": "上更衣柜楼", "go": "lockers" },
+    { "id": "lobby2boiler", "room": "lobby", "label": "进锅炉房", "req": { "i": ["office_key"] }, "go": "boiler", "eff": { "f": ["p_bdoor"] } },
+    { "id": "bulb", "room": "lobby", "label": "看拆剩的吊灯", "text": "那只灯泡晃了晃，丝没断，就是没电。" },
+    { "id": "office2lobby", "room": "office", "label": "回门厅", "go": "lobby" },
+    { "id": "note_read", "room": "office", "label": "看玻璃板下的字条", "n": ["c_note"], "eff": { "f": ["c_note"] }, "text": "字条压在玻璃板下：锅炉房钥匙照旧挂在门后钉子上，用完记得挂回去，别让穿堂风刮跑了——水电老岑。" },
+    { "id": "notice_read", "room": "office", "label": "读停业改造通告", "n": ["c_notice"], "eff": { "f": ["c_notice"] }, "text": "通告盖着改造办的章：施工期间水电由老岑统一负责；总闸合闸前，水箱浮球配重必须过秤校准，违者烧泵自负。" },
+    { "id": "take_key", "room": "office", "label": "摘下门后挂钩的钥匙", "req": { "f": ["c_note"] }, "n": ["key_taken"], "eff": { "f": ["key_taken"], "i": ["office_key"] }, "text": "挂钩上只有一把黄铜钥匙，木牌上烙着锅炉房三个字。" },
+    { "id": "pool2lobby", "room": "pool", "label": "回门厅", "go": "lobby" },
+    { "id": "mosaic", "room": "pool", "label": "看池底的马赛克", "text": "蓝孔雀尾羽上几片鳞是新补的，颜色还没吃进釉里。" },
+    { "id": "lockers2lobby", "room": "lockers", "label": "下楼回门厅", "go": "lobby" },
+    { "id": "plaque_dir", "room": "lockers", "label": "看门楣木牌", "n": ["c_dir"], "eff": { "f": ["c_dir"] }, "text": "木牌刻着：柜格自东端起数，排次自北而南为甲、乙、丙、丁。末尾一行小字——东在哪头，认准那半块東字招牌，钉在哪面山墙，哪面就是东。" },
+    { "id": "open_d3", "room": "lockers", "label": "照木牌的数法开老岑私柜", "req": { "f": ["c_dir", "c_log"] }, "n": ["p_cab"], "eff": { "f": ["p_cab"], "i": ["pin"] }, "text": "第三格的柜门一拉就开。一副帆布手套里裹着黄铜手轮销，绳上还拴着老岑的名牌。" },
+    { "id": "wrong_x3", "room": "lockers", "label": "开丙排西起第三格", "req": { "f": ["c_dir", "c_log"] }, "n": ["p_cab"], "text": "西起第三格是只空柜，柜底积着厚厚一层石灰。" },
+    { "id": "wrong_y3", "room": "lockers", "label": "开乙排东起第三格", "req": { "f": ["c_dir", "c_log"] }, "n": ["p_cab"], "text": "乙排第三格挂着件洗得发白的旧工作服，胸牌上的名字不是老岑。" },
+    { "id": "wrong_t3", "room": "lockers", "label": "开丁排东起第三格", "req": { "f": ["c_dir", "c_log"] }, "n": ["p_cab"], "text": "丁排第三格的锁孔锈死了，缝隙里透出一股陈年的霉味。" },
+    { "id": "boiler2lobby", "room": "boiler", "label": "回门厅", "go": "lobby" },
+    { "id": "boiler2pump", "room": "boiler", "label": "下水泵房", "go": "pump" },
+    { "id": "water_gauge", "room": "boiler", "label": "看水箱水位管", "n": ["c_water"], "eff": { "f": ["c_water"] }, "text": "玻璃管里的水位稳稳停在十七格，管旁的铜挂牌錾着一行字：一格水，对一斤。" },
+    { "id": "weights", "room": "boiler", "label": "翻看压铁堆", "n": ["c_weight"], "eff": { "f": ["c_weight"] }, "text": "四块压铁侧面都錾着字：拾斤、捌斤、陆斤、叁斤，块块磨得发亮。" },
+    { "id": "balance", "room": "boiler", "label": "照水位斤两挂压铁配平", "req": { "f": ["c_water", "c_weight"] }, "n": ["p_scale"], "eff": { "f": ["p_scale"], "i": ["box_key"] }, "text": "叁、陆、捌三块压铁落进秤盘，秤杆慢慢抬平——水箱标尺后的暗匣咔哒弹开，里面是一把黄铜闸箱钥匙。" },
+    { "id": "w18", "room": "boiler", "label": "挂拾斤和捌斤压铁", "req": { "f": ["c_water", "c_weight"] }, "n": ["p_scale"], "text": "秤杆高高翘过头顶，压铁哐当滚回砖地——多出一斤，秤星全乱了。" },
+    { "id": "w16", "room": "boiler", "label": "挂拾斤和陆斤压铁", "req": { "f": ["c_water", "c_weight"] }, "n": ["p_scale"], "text": "秤杆垂着不起，还差一斤的分量，暗匣连响都没响一声。" },
+    { "id": "wall4", "room": "boiler", "label": "四块压铁全挂上", "req": { "f": ["c_water", "c_weight"] }, "n": ["p_scale"], "text": "四块压铁一齐落盘，秤梁咔的一声顶死在限位销上。" },
+    { "id": "box_look", "room": "boiler", "label": "端详总闸箱", "n": ["c_switch"], "eff": { "f": ["c_switch", "c_log"] }, "text": "闸箱铁门挂着黄铜锁，铭牌刻着两行：闸箱钥匙随秤配重；手轮销由水电老岑亲自保管，收在他的私物柜里。" },
+    { "id": "box_open", "room": "boiler", "label": "用黄铜钥匙开闸箱", "req": { "i": ["box_key"] }, "n": ["p_box"], "eff": { "f": ["p_box"] }, "text": "黄铜钥匙转过两圈，闸箱铁门吱呀敞开——手轮销的销孔空着，闸把光秃秃立在正中。" },
+    { "id": "win_close", "room": "boiler", "label": "装上手轮销合闸", "req": { "i": ["pin"], "f": ["p_box", "p_scale", "c_notice"] }, "end": "win", "eff": { "f": ["won"] }, "text": "手轮销插进闸把，黄铜闸刀推到底。走廊的灯一串接一串亮起来，水泵房的方向传来嗡的一声——积水开始退了。" },
+    { "id": "pump2boiler", "room": "pump", "label": "爬回锅炉房", "go": "boiler" },
+    { "id": "ladder", "room": "pump", "label": "顺湿铁梯下积水处", "end": "lose", "text": "你踩着油泥铁梯下到积水里想捞配电箱，脚下一滑，水面炸开一串电火花。" }
+  ],
+  "difficulty": { "minSteps": 6, "maxSteps": 20, "maxBranch": 6 }
+}

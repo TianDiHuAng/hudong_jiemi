@@ -1,0 +1,27 @@
+{
+ "game": "g25",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 12,
+ "invalid": 3,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "从台钩取资料柜钥匙",
+  "去库房走廊",
+  "回值班室",
+  "去资料间",
+  "用铜钥匙开资料柜",
+  "回值班室",
+  "去库房走廊",
+  "去备品间",
+  "从充电柜取头灯",
+  "回走廊",
+  "进东排 B 区",
+  "徒手去掰东排的冻芯"
+ ]
+}

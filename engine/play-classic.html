@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>文字密室逃脱</title>
+<style>
+:root{--bg:#EEF1F6;--card:#FFFFFF;--ink:#1B2233;--mute:#5B667D;--line:#D2D9E6;--acc:#3A56A8;--ok:#1E7A4F;--bad:#B3362B;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1320;--card:#161D30;--ink:#E3E8F4;--mute:#9AA6C2;--line:#2A3452;--acc:#8FA8F0;--ok:#5FCB92;--bad:#F07A6E;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1320;--card:#161D30;--ink:#E3E8F4;--mute:#9AA6C2;--line:#2A3452;--acc:#8FA8F0;--ok:#5FCB92;--bad:#F07A6E;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Noto Sans SC","PingFang SC",system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 16px 80px}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.25;margin:0 0 8px}
+.lead{color:var(--mute)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
+#room{font-weight:700;font-size:18px}
+#log{min-height:96px;max-height:300px;overflow-y:auto;margin:10px 0;color:var(--mute);font-size:15px}
+#log p{margin:4px 0}#log p:last-child{color:var(--ink)}
+button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;cursor:pointer;text-align:left}
+button:hover{border-color:var(--acc)}button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+#acts{display:flex;flex-direction:column;gap:8px}
+.pri{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+</style>
+</head>
+<body>
+<main>
+<h1 id="title">文字密室逃脱</h1>
+<p id="intro" class="lead"></p>
+<!--BUILD:GAME-->
+<section class="card" aria-live="polite">
+<div id="room"></div><div id="inv" class="lead"></div>
+<div id="log"></div><div id="acts"></div>
+<div class="tools"><button id="restart">重新开始</button></div>
+</section>
+<div id="loader" class="card" style="margin-top:16px;display:none">
+<p>浏览器安全策略阻止了直接读取同目录的 game.json（用 file:// 直接打开时会出现这种情况）。</p>
+<p>两种解决方法：</p>
+<ol>
+<li>用 <code>node build.js game.json</code> 打包成单文件 HTML 后再打开（推荐）；</li>
+<li>或点击下方按钮，手动选择本目录中的 game.json 文件。</li>
+</ol>
+<p><input type="file" accept=".json,application/json" id="pickjson"></p>
+</div>
+</main>
+<script>
+(function(){
+var booted=false;
+function boot(G){
+if(booted)return;booted=true;
+var title=G.title||"文字密室逃脱";
+document.title=title;
+document.getElementById("title").textContent=title;
+var intro=G.intro||"",ip=document.getElementById("intro");
+if(intro){ip.textContent=intro}else{ip.style.display="none"}
+var S,logEl=document.getElementById("log");
+function has(s,a){var r=a.req||{};return a.room===s.room&&(r.i||[]).every(function(x){return s.i.indexOf(x)>-1})&&(r.f||[]).every(function(x){return s.f.indexOf(x)>-1})&&(a.n||[]).every(function(x){return s.f.indexOf(x)<0})}
+function avail(s){return s.end?[]:G.acts.filter(function(a){return has(s,a)})}
+function ap(s,a){var e=a.eff||{},i=new Set(s.i),f=new Set(s.f);(e.i||[]).forEach(function(x){i.add(x)});(e.rm||[]).forEach(function(x){i.delete(x)});(e.f||[]).forEach(function(x){f.add(x)});
+return{room:a.go||s.room,i:Array.from(i).sort(),f:Array.from(f).sort(),end:a.end||null}}
+function say(t){var p=document.createElement("p");p.textContent=t;logEl.appendChild(p);logEl.scrollTop=1e5}
+function draw(){document.getElementById("room").textContent=G.rooms[S.room].n;
+document.getElementById("inv").textContent="物品："+(S.i.length?S.i.map(function(x){return G.items[x]}).join("、"):"空");
+var box=document.getElementById("acts");box.innerHTML="";
+if(S.end){var b=document.createElement("button");b.className="pri";b.textContent=S.end==="win"?"通关！再玩一次":"失败了，重新开始";b.onclick=reset;box.appendChild(b);return}
+avail(S).forEach(function(a){var b=document.createElement("button");b.textContent=a.label;b.onclick=function(){
+var t=ap(S,a);S=t;if(a.text)say(a.text);if(a.go)say(G.rooms[S.room].d);draw()};box.appendChild(b)})}
+function reset(){S={room:G.start,i:[],f:[],end:null};logEl.innerHTML="";if(intro)say(intro);say(G.rooms[S.room].d);draw()}
+document.getElementById("restart").onclick=reset;
+reset();
+}
+if(window.__GAME__){boot(window.__GAME__);return}
+fetch("game.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}).then(boot).catch(function(){
+var ld=document.getElementById("loader");ld.style.display="block";
+document.getElementById("pickjson").addEventListener("change",function(e){
+var f=e.target.files[0];if(!f)return;var rd=new FileReader();
+rd.onload=function(){try{boot(JSON.parse(rd.result))}catch(err){alert("game.json 解析失败："+err.message)}};
+rd.readAsText(f,"utf-8")});
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+{
+  "title": "压载回平",
+  "intro": "夜班交到一半，浮船坞忽然朝左舷歪了半度：压载阀昨班调过没复位，阀门铭牌和布置图说的不是一件事。照图认阀、掀对舱口、把压载调平，联锁才放人从舷梯下栈桥。",
+  "start": "deck",
+  "rooms": {
+    "deck": {
+      "n": "主甲板",
+      "d": "主甲板空着，滑道上的垫木码得整齐。夜里结了薄霜，舷墙外就是黑沉沉的水面。走道分别通向压载管廊、集控室、坞墙顶甲板和舷梯口。"
+    },
+    "pipe": {
+      "n": "压载管廊",
+      "d": "管廊低矮，四只阀箱沿通廊排向艏部，铭牌反着灯光。中段开着一口舷侧观察井，井口正对水尺。"
+    },
+    "control": {
+      "n": "集控室",
+      "d": "横倾仪的指针偏在左舷，值班日志摊在台面。墙上贴着压载布置图，图角糊着一条修正纸条，侧门通向工具房。"
+    },
+    "tool": {
+      "n": "工具房",
+      "d": "挂板上最顺手的钩子空着，标签写着舱口扳手。备品架上码着棉纱和备用灯泡，地上摊着半卷缆绳。"
+    },
+    "top": {
+      "n": "坞墙顶甲板",
+      "d": "起重机轨道横过顶甲板，三只舱口盖沿轨道一字排开：靠艏的贴着立柱，中间的盖环新换过，靠艉的压着半幅阴影。风从坞墙口灌上来。"
+    },
+    "pump": {
+      "n": "泵舱",
+      "d": "两台调载泵蹲在机座上，管路按左右舷分成两束。舱壁上一排测深管口，玻璃管的浮子高低不齐。"
+    },
+    "gang": {
+      "n": "舷梯口",
+      "d": "右舷舷梯搭向栈桥，梯口的联锁铃一声接一声。左舷那架梯子因为船身发斜早收了起来，挂钩空荡荡的。"
+    }
+  },
+  "items": {
+    "wrench": "舱口扳手"
+  },
+  "puzzles": [
+    { "id": "值班日志", "solved": "c_log", "clue": "c_plates" },
+    { "id": "横倾仪读数", "solved": "c_inclino", "clue": "c_log" },
+    { "id": "水尺读数", "solved": "c_draft", "clue": "c_inclino" },
+    { "id": "压载布置图", "solved": "c_chart", "clue": "c_plates" },
+    { "id": "端详舱口盖", "solved": "c_lids", "clue": "c_chart" },
+    { "id": "泵舱舱口", "solved": "p_hatch", "clue": "c_lids" },
+    { "id": "压载调平", "solved": "p_level", "clue": "c_sound" }
+  ],
+  "acts": [
+    { "id": "d2p", "room": "deck", "label": "钻进压载管廊", "go": "pipe" },
+    { "id": "p2d", "room": "pipe", "label": "回主甲板", "go": "deck" },
+    { "id": "d2c", "room": "deck", "label": "进集控室", "go": "control" },
+    { "id": "c2d", "room": "control", "label": "回主甲板", "go": "deck" },
+    { "id": "d2t", "room": "deck", "label": "上坞墙顶甲板", "go": "top" },
+    { "id": "t2d", "room": "top", "label": "回主甲板", "go": "deck" },
+    { "id": "d2g", "room": "deck", "label": "去舷梯口", "go": "gang" },
+    { "id": "g2d", "room": "gang", "label": "回主甲板", "go": "deck" },
+    { "id": "c2t", "room": "control", "label": "进工具房", "go": "tool" },
+    { "id": "t2c", "room": "tool", "label": "回集控室", "go": "control" },
+    { "id": "t2p", "room": "top", "label": "掀开的舱口下泵舱", "req": { "f": ["p_hatch"] }, "go": "pump" },
+    { "id": "p2t", "room": "pump", "label": "爬扶梯回顶甲板", "go": "top" },
+    {
+      "id": "look_plates",
+      "room": "pipe",
+      "label": "端详阀箱铭牌",
+      "n": ["c_plates"],
+      "eff": { "f": ["c_plates"] },
+      "text": "四只阀箱从艏到艉编着一到四号，二号铸字最深——右舷前舱。可管廊的走向，跟铸字对不上半分。"
+    },
+    {
+      "id": "look_draft",
+      "room": "pipe",
+      "label": "看观察井里的水尺",
+      "req": { "f": ["c_log"] },
+      "n": ["c_draft"],
+      "eff": { "f": ["c_draft"] },
+      "text": "观察井里左舷水尺没进水里四格，右舷才两格半——左重右轻，坞体朝左歪着，跟横倾仪说的对上了。"
+    },
+    {
+      "id": "open_valve",
+      "room": "pipe",
+      "label": "照铭牌开二号阀放水",
+      "n": ["p_level"],
+      "text": "阀杆吃上了劲，测深管却没什么动静——照铸字开的阀，走的怕是另一舷。"
+    },
+    {
+      "id": "read_log",
+      "room": "control",
+      "label": "翻值班日志",
+      "n": ["c_log"],
+      "eff": { "f": ["c_log"] },
+      "text": "昨班 22:10 调阀试验，动过二号、四号两只阀，交班前没复位。末行一行小字：铭牌是船厂旧铸，管路改装过，以布置图为准。"
+    },
+    {
+      "id": "look_incline",
+      "room": "control",
+      "label": "读横倾仪",
+      "n": ["c_inclino"],
+      "eff": { "f": ["c_inclino"] },
+      "text": "横倾仪停在左舷零点六度，记录针画了个缓坡——从 22 点起一路歪过来。"
+    },
+    {
+      "id": "read_chart",
+      "room": "control",
+      "label": "展开压载布置图",
+      "n": ["c_chart"],
+      "eff": { "f": ["c_chart"] },
+      "text": "布置图标着：阀箱沿管廊从艏起一二三四，二、四号在改装中左右舷对调过，修正条贴在图角；泵舱舱口开在右舷艉部顶甲板。"
+    },
+    {
+      "id": "take_wrench",
+      "room": "tool",
+      "label": "取下舱口扳手",
+      "n": ["w_taken"],
+      "eff": { "f": ["w_taken"], "i": ["wrench"] },
+      "text": "扳手从挂钩上摘下来，柄上缠着防滑布，签条写着泵舱舱口专用。"
+    },
+    {
+      "id": "look_lids",
+      "room": "top",
+      "label": "端详三只舱口盖",
+      "n": ["c_lids"],
+      "eff": { "f": ["c_lids"] },
+      "text": "盖上的编号漆字磨得只剩笔道，三只盖环锈色深浅不一，艉部那只盖沿挂着夜露。"
+    },
+    {
+      "id": "open_hatch",
+      "room": "top",
+      "label": "照布置图掀泵舱舱口盖",
+      "req": { "f": ["c_chart"], "i": ["wrench"] },
+      "n": ["p_hatch"],
+      "eff": { "f": ["p_hatch"] },
+      "text": "扳手咬住盖环，艉部那只盖子吱呀掀开，下面是泵舱的扶梯和灯光。"
+    },
+    {
+      "id": "hatch_a",
+      "room": "top",
+      "label": "掀开靠艏的舱口盖",
+      "n": ["p_hatch"],
+      "text": "盖板下是空压载舱，手电照进去只有一层凝水反光。"
+    },
+    {
+      "id": "hatch_b",
+      "room": "top",
+      "label": "掀开当中那只舱口盖",
+      "n": ["p_hatch"],
+      "text": "下面码着锚链，链环上挂着吊环——这是锚链舱，不是泵舱。"
+    },
+    {
+      "id": "read_sound",
+      "room": "pump",
+      "label": "看测深管浮子",
+      "req": { "f": ["p_hatch"] },
+      "n": ["c_sound"],
+      "eff": { "f": ["c_sound"] },
+      "text": "左舷两束测深管的浮子都比右舷高半管——左舷压载多装着一截，坞体不歪才怪。"
+    },
+    {
+      "id": "level_ballast",
+      "room": "pump",
+      "label": "启动调载泵把压载调平",
+      "req": { "f": ["c_plates", "c_chart", "c_draft", "c_sound"] },
+      "n": ["p_level"],
+      "eff": { "f": ["p_level"] },
+      "text": "泵一启动，左舷两舱的水位顺着测深管缓缓回落，横倾仪的指针一格一格爬回零位，缆绳重新绷直。"
+    },
+    {
+      "id": "leave_gang",
+      "room": "gang",
+      "label": "从右舷舷梯下到栈桥交班",
+      "req": { "f": ["p_level"] },
+      "end": "win",
+      "text": "联锁铃哑了，风灯亮起来，右舷舷梯稳稳搭上栈桥。交班簿最后一行写下：压载回平，横倾归零，二号四号阀按布置图复位。"
+    },
+    {
+      "id": "lean_out",
+      "room": "deck",
+      "label": "探身出舷墙摸水尺零位",
+      "end": "lose",
+      "text": "薄霜把舷墙顶滑得像上了油。探出去的半个身子还没够到零位刻度，坞体一晃，人先滑进了水里——十一月的海面，没人游得回来。"
+    },
+    {
+      "id": "see_frost",
+      "room": "deck",
+      "label": "看甲板上的薄霜",
+      "text": "霜把缆绳的麻花都冻硬了，垫木缝里凝着一层白，踩上去咯吱作响。"
+    },
+    {
+      "id": "see_bell",
+      "room": "gang",
+      "label": "看梯口的联锁铃",
+      "text": "联锁铃响个不停：横倾没回零，安防不放人下梯。铃盖上的漆字描过红边。"
+    }
+  ],
+  "difficulty": { "minSteps": 10, "maxSteps": 28, "maxBranch": 6 }
+}

@@ -1,0 +1,17 @@
+{
+ "game": "g27",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 2,
+ "invalid": 0,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "去井口平台",
+  "翻过护栏贴近井眼"
+ ]
+}

@@ -1,0 +1,17 @@
+{
+ "game": "g42",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 2,
+ "invalid": 1,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "出值班室进观测场",
+  "攀上风向标架子掰冻住的尾翼"
+ ]
+}

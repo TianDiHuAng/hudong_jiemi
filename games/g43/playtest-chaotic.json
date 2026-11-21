@@ -1,0 +1,18 @@
+{
+ "game": "g43",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 3,
+ "invalid": 1,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "出门走过道",
+  "进铸字间",
+  "掀开炉盖看铅水"
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "replay": {
+  "total": 10,
+  "applied": 10,
+  "failedLabel": null
+ },
+ "cleared": true,
+ "steps": 10,
+ "expectedSteps": 10,
+ "match": true
+}

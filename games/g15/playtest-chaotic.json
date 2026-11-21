@@ -1,0 +1,17 @@
+{
+ "game": "g15",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 2,
+ "invalid": 1,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "出帐到场心",
+  "顶着风沙抄近路翻东沙梁"
+ ]
+}

@@ -1,0 +1,79 @@
+{
+  "title": "留话里的走马灯",
+  "intro": "今晚灯会要点你铺里的走马灯，掌柜外出留了话——话里真假掺着，骨架散件摊在案上等手快。",
+  "start": "shop",
+  "rooms": {
+    "shop": {
+      "n": "彩扎铺铺面",
+      "d": "案上摊着骨架散件，篾头都朝一个方向码着。门后钉着掌柜的留话，门角立着一张高凳，凳腿上一道旧裂缝。"
+    },
+    "loft": {
+      "n": "小阁楼",
+      "d": "楼梯口挂着防尘布，一掀一场灰。旧灯样钉在梁下，右下角缺了一块；号簿箱敞着口，虫屑落了一层。"
+    },
+    "store": {
+      "n": "灯坯库",
+      "d": "木柜靠着后墙，柜门挂着三位拨盘铜锁。柜身贴着退色的旧签，写明码取层、骨、篾号三样。"
+    },
+    "bench": {
+      "n": "工棚",
+      "d": "长案上浆糊盆还剩半盆，线轴和蜡块搁在盆边。墙角的竹料筐立着，碎篾扫成一小堆。"
+    },
+    "yard": {
+      "n": "后院晾篾场",
+      "d": "煮过的竹篾一架一架晾着，风过时脆响。墙根的竹料架码着备料，麻雀在上面跳来跳去。"
+    },
+    "door": {
+      "n": "门口灯楼",
+      "d": "灯楼扎在门楣上方，三层楼阁样式，挂钩垂着红绳。烛台早已备好，就等今晚点灯。"
+    }
+  },
+  "items": {
+    "bundle": "骨架散件捆",
+    "wheel": "走马灯叶轮",
+    "gauze": "灯面绢"
+  },
+  "puzzles": [
+    { "id": "旧灯样残角", "solved": "c_sample", "clue": "c_word" },
+    { "id": "篾号旧簿", "solved": "c_book", "clue": "c_sample" },
+    { "id": "灯坯柜暗码", "solved": "p_box", "clue": "c_book" },
+    { "id": "扎主骨", "solved": "c_bone", "clue": "c_book" },
+    { "id": "合灯组合", "solved": "p_face", "clue": "p_box" },
+    { "id": "点灯", "solved": "won", "clue": "p_face" }
+  ],
+  "acts": [
+    { "id": "shop2loft", "room": "shop", "label": "上小阁楼", "go": "loft" },
+    { "id": "loft2shop", "room": "loft", "label": "下铺面", "go": "shop" },
+    { "id": "shop2store", "room": "shop", "label": "进灯坯库", "go": "store" },
+    { "id": "store2shop", "room": "store", "label": "回铺面", "go": "shop" },
+    { "id": "shop2bench", "room": "shop", "label": "去工棚", "go": "bench" },
+    { "id": "bench2shop", "room": "bench", "label": "回铺面", "go": "shop" },
+    { "id": "shop2yard", "room": "shop", "label": "出后门去晾篾场", "go": "yard" },
+    { "id": "yard2shop", "room": "yard", "label": "回铺面", "go": "shop" },
+    { "id": "shop2door", "room": "shop", "label": "到门口灯楼下", "go": "door" },
+    { "id": "door2shop", "room": "door", "label": "回铺面", "go": "shop" },
+
+    { "id": "read_note", "room": "shop", "label": "读门后的留话", "n": ["c_word"], "eff": { "f": ["c_word"] }, "text": "掌柜的字迹匆匆：柜码是三层八骨，主篾今年换五号——别翻旧簿，簿是前年的。叶轮装反了也能转，浆糊别兑水，天黑前挂灯。" },
+    { "id": "look_sample", "room": "loft", "label": "看梁下的旧灯样", "n": ["c_sample"], "eff": { "f": ["c_sample"] }, "text": "走马灯的样角残了半块，墨笔还认得出：层三，大骨八根；样角一行小注——篾号详旧簿。" },
+    { "id": "read_book", "room": "loft", "label": "翻号簿箱里的旧簿", "n": ["c_book"], "eff": { "f": ["c_book"] }, "text": "簿页发脆：走马主篾，历年在册只记三号；五号篾是宫灯的规格，簿上写得明白。" },
+
+    { "id": "dial_383", "room": "store", "label": "把柜码拨成 383", "req": { "f": ["c_sample", "c_book"] }, "n": ["p_box"], "eff": { "f": ["p_box"], "i": ["wheel", "gauze"] }, "text": "拨盘三响，铜锁咔哒退舌——层三、骨八、三号篾，旧签对上了。柜门里躺着走马灯的叶轮和一卷灯面绢。" },
+    { "id": "dial_583", "room": "store", "label": "把柜码拨成 583", "req": { "f": ["c_sample", "c_book"] }, "n": ["p_box"], "text": "拨盘拨到头又弹了回来，锁舌顶着没让。" },
+    { "id": "dial_833", "room": "store", "label": "把柜码拨成 833", "req": { "f": ["c_sample", "c_book"] }, "n": ["p_box"], "text": "铜锁闷闷响了一声，舌头没退——位数倒着来，它不认。" },
+
+    { "id": "collect", "room": "bench", "label": "收拢案上的骨架散件", "n": ["bundle_up"], "eff": { "f": ["bundle_up"], "i": ["bundle"] }, "text": "散件归堆：三只篾圈、八根大骨、一束接头篾，竹性还韧。" },
+    { "id": "build_bone", "room": "bench", "label": "照簿上篾号扎起主骨", "req": { "i": ["bundle"], "f": ["c_book"] }, "n": ["c_bone"], "eff": { "f": ["c_bone"] }, "text": "从散件里挑出三号篾做骨，八根立柱嵌进三道篾圈，接头处蜡线缠紧——主骨立起来，手一推不晃。" },
+    { "id": "wrong_fivew", "room": "bench", "label": "照留话换五号篾扎主骨", "req": { "i": ["bundle"], "f": ["c_word"] }, "n": ["c_bone"], "text": "五号篾粗了一圈，篾圈咬不住槽，扎到第三道就散了架。" },
+    { "id": "mount_wheel", "room": "bench", "label": "把叶轮装上主轴", "req": { "i": ["wheel"], "f": ["c_bone"] }, "n": ["p_wheel"], "eff": { "f": ["p_wheel"] }, "text": "叶轮嵌进中层的轴位，拨了一下，转得轻快。" },
+    { "id": "wrong_wheel", "room": "bench", "label": "叶轮装反试试", "req": { "i": ["wheel"], "f": ["c_bone"] }, "n": ["p_wheel"], "text": "叶面倒扣着咬不住轴，转了半圈就卡死。" },
+    { "id": "paste_face", "room": "bench", "label": "糊灯面描墨", "req": { "i": ["gauze"], "f": ["p_wheel"] }, "n": ["p_face"], "eff": { "f": ["p_face"] }, "text": "灯面绢绷上骨架，浆糊涂匀，墨笔照灯样描出走马人影，晾在案头。" },
+
+    { "id": "climb_stool", "room": "shop", "label": "踩上裂腿的高凳够梁上旧灯壳", "end": "lose", "text": "凳腿咔地折成两截，人仰着摔下去，扯落的旧灯壳连着一串竹圈砸在身上。" },
+    { "id": "look_drybam", "room": "yard", "label": "敲一敲晾着的竹篾", "text": "晾着的竹篾按号分架，敲上去梆梆脆。" },
+    { "id": "look_wall", "room": "yard", "label": "看墙根的竹料架", "text": "竹料架上的备料码得齐整，麻雀扑棱一声飞了。" },
+    { "id": "look_basket", "room": "bench", "label": "看墙角的竹料筐", "text": "竹料筐里躺着几段接头篾，都用得上。" },
+
+    { "id": "light_up", "room": "door", "label": "挂灯点烛", "req": { "f": ["p_wheel", "p_face"] }, "eff": { "f": ["won"] }, "end": "win", "text": "走马灯挂上灯楼，烛一触即燃，热气托着叶轮，人影一圈圈转起来——掌柜赶回来时灯正亮满一条街：层三、骨八、篾三，旧簿没骗人，留话里那句五号篾差点误了事。" }
+  ],
+  "difficulty": { "minSteps": 6, "maxSteps": 20, "maxBranch": 6 }
+}

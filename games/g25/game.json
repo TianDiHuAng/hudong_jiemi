@@ -1,0 +1,342 @@
+{
+  "title": "被调包的二百九十米",
+  "intro": "极夜第九十天，主站来电：这批待复核冰芯里混进了一支不该存在的芯。凭断代影印表和钻孔柱状图把它锁出来，封舱上报——复核组的雪地车已经在路上。",
+  "start": "office",
+  "rooms": {
+    "office": {
+      "n": "库房值班室",
+      "d": "值班台上的日志摊开着，台钩挂着一把拴木牌的铜钥匙。台历停在昨天，暖风机嗡嗡地顶着门缝的风。"
+    },
+    "archive": {
+      "n": "资料间",
+      "d": "铁皮资料柜靠墙立着，柜顶摞着历年复核回执的木盒。灯罩上结了层薄霜，光线发闷。"
+    },
+    "drill": {
+      "n": "钻孔资料间",
+      "d": "两张钻孔柱状图钉满一面墙，图边别着各孔的取芯台账。暖气片半冷，铅笔字冻得发脆。"
+    },
+    "corridor": {
+      "n": "库房走廊",
+      "d": "走廊尽头的库门敞着一扇，地上还留着风灌进来的雪痕。门楣正中钉着一根褪色的红布条，墙上挂着库架平面图。"
+    },
+    "rackA": {
+      "n": "A 区架排",
+      "d": "西排铁架一路排开，架沿的米数刻痕自北端起一段比一段深。头灯的光扫过去，丙位架的标签边角翘着。"
+    },
+    "rackB": {
+      "n": "B 区架排",
+      "d": "东排架位空了大半，几支待年检的旧芯立着，标签卷了边。地面的霜花上印着一串散乱的脚印，裸手贴冰即粘。"
+    },
+    "prep": {
+      "n": "样品前处理间",
+      "d": "比对台的漫射灯管闪了两下才稳住，台面留着上一批样品的蜡痕。除湿机吐着白汽。"
+    },
+    "gear": {
+      "n": "备品间",
+      "d": "头灯充电柜嵌在墙里，三盏绿灯亮着。挂钩上的防寒服袖口冻得硬邦邦，碰一下铮铮作响。"
+    },
+    "core": {
+      "n": "复核舱室",
+      "d": "复核舱立在室中央，舱温表停在零下二十六度。发报机的键钮擦得发亮，天线馈线沿着墙角爬上屋面。"
+    }
+  },
+  "items": {
+    "cabinet_key": "资料柜钥匙",
+    "chart": "断代影印表",
+    "headlamp": "头灯"
+  },
+  "puzzles": [
+    { "id": "资料柜", "solved": "cabinet_open", "clue": "c_keyhook" },
+    { "id": "头灯充电柜", "solved": "lamp_taken", "clue": "c_lamprule" },
+    { "id": "库架平面图", "solved": "map_read", "clue": "c_log" },
+    { "id": "断代比对", "solved": "dated", "clue": "c_table" },
+    { "id": "丙位架定位", "solved": "located", "clue": "c_aisle" },
+    { "id": "指认调包芯", "solved": "suspect", "clue": "dated" },
+    { "id": "封舱复核", "solved": "sealed", "clue": "suspect" }
+  ],
+  "acts": [
+    {
+      "id": "office2archive",
+      "room": "office",
+      "label": "去资料间",
+      "go": "archive"
+    },
+    {
+      "id": "archive2office",
+      "room": "archive",
+      "label": "回值班室",
+      "go": "office"
+    },
+    {
+      "id": "archive2drill",
+      "room": "archive",
+      "label": "去钻孔资料间",
+      "go": "drill"
+    },
+    {
+      "id": "drill2archive",
+      "room": "drill",
+      "label": "回资料间",
+      "go": "archive"
+    },
+    {
+      "id": "office2corridor",
+      "room": "office",
+      "label": "去库房走廊",
+      "go": "corridor"
+    },
+    {
+      "id": "corridor2office",
+      "room": "corridor",
+      "label": "回值班室",
+      "go": "office"
+    },
+    {
+      "id": "corridor2rackA",
+      "room": "corridor",
+      "label": "进西排 A 区",
+      "req": { "i": ["headlamp"] },
+      "go": "rackA"
+    },
+    {
+      "id": "rackA2corridor",
+      "room": "rackA",
+      "label": "退出走廊",
+      "go": "corridor"
+    },
+    {
+      "id": "corridor2rackB",
+      "room": "corridor",
+      "label": "进东排 B 区",
+      "req": { "i": ["headlamp"] },
+      "go": "rackB"
+    },
+    {
+      "id": "rackB2corridor",
+      "room": "rackB",
+      "label": "退出走廊",
+      "go": "corridor"
+    },
+    {
+      "id": "corridor2gear",
+      "room": "corridor",
+      "label": "去备品间",
+      "go": "gear"
+    },
+    {
+      "id": "gear2corridor",
+      "room": "gear",
+      "label": "回走廊",
+      "go": "corridor"
+    },
+    {
+      "id": "corridor2core",
+      "room": "corridor",
+      "label": "去复核舱室",
+      "req": { "i": ["headlamp"] },
+      "go": "core"
+    },
+    {
+      "id": "core2corridor",
+      "room": "core",
+      "label": "回走廊",
+      "go": "corridor"
+    },
+    {
+      "id": "rackA2prep",
+      "room": "rackA",
+      "label": "进前处理间",
+      "go": "prep"
+    },
+    {
+      "id": "prep2rackA",
+      "room": "prep",
+      "label": "回 A 区",
+      "go": "rackA"
+    },
+    {
+      "id": "rackA2core",
+      "room": "rackA",
+      "label": "推芯去复核舱室",
+      "req": { "i": ["headlamp"] },
+      "go": "core"
+    },
+    {
+      "id": "core2rackA",
+      "room": "core",
+      "label": "回 A 区",
+      "go": "rackA"
+    },
+    {
+      "id": "read_log",
+      "room": "office",
+      "label": "读值班日志",
+      "n": ["c_log"],
+      "eff": { "f": ["c_log", "c_keyhook", "c_lamprule"] },
+      "text": "日志停在昨夜：内流大风灌开 B 区门，穿堂风扫过 A 区架排，四支待复核芯的标签吹散后已按原编号贴回。复核规程写着——先比对断代影印表，资料柜钥匙挂值班台钩；极夜巡库，必须先取头灯。"
+    },
+    {
+      "id": "take_key",
+      "room": "office",
+      "label": "从台钩取资料柜钥匙",
+      "n": ["key_taken"],
+      "eff": { "f": ["key_taken"], "i": ["cabinet_key"] },
+      "text": "台钩上的铜钥匙挂着资料柜的木牌，绳结还没松过。"
+    },
+    {
+      "id": "open_cab",
+      "room": "archive",
+      "label": "用铜钥匙开资料柜",
+      "req": { "i": ["cabinet_key"] },
+      "n": ["cabinet_open"],
+      "eff": { "f": ["cabinet_open", "c_table"], "i": ["chart"] },
+      "text": "柜里抽出断代影印表：各标准段位的氧同位素特征印得清清楚楚，边角盖着主站的复核章。"
+    },
+    {
+      "id": "read_bore",
+      "room": "drill",
+      "label": "读两张钻孔柱状图",
+      "n": ["c_bore"],
+      "eff": { "f": ["c_bore"] },
+      "text": "北岭 BH-1 终孔 350 米，柱状图例注着冰体灰白；南岭 BH-2 终孔 260 米——图末的铅笔终止符压在 260 米上，往下根本没取过芯，图例注着冰体夹红棕泥粉带。"
+    },
+    {
+      "id": "read_map",
+      "room": "corridor",
+      "label": "读墙上的库架平面图",
+      "n": ["map_read"],
+      "eff": { "f": ["map_read", "c_aisle"] },
+      "text": "平面图注记：A 区在西排放 200-300 段，B 区在东排放 300 米以上；架位自北端起由浅到深编号，方位一律以磁北为准。"
+    },
+    {
+      "id": "take_lamp",
+      "room": "gear",
+      "label": "从充电柜取头灯",
+      "n": ["lamp_taken"],
+      "eff": { "f": ["lamp_taken"], "i": ["headlamp"] },
+      "text": "四盏头灯亮着三盏绿灯——取走那只满电的，扣上安全帽，光柱劈开黑暗。"
+    },
+    {
+      "id": "date_check",
+      "room": "prep",
+      "label": "在比对台核对四支芯",
+      "req": { "i": ["chart"] },
+      "n": ["dated"],
+      "eff": { "f": ["dated"] },
+      "text": "漫射灯下，四支芯逐一过影印表，两行数字并排抄进记录页——实测氧同位素落段：甲 210、乙 250、丙 240、丁 280；标签登记段位：甲 210、乙 250、丙 290、丁 280。"
+    },
+    {
+      "id": "locate_rack",
+      "room": "rackA",
+      "label": "照平面图走到丙位架",
+      "req": { "f": ["map_read"] },
+      "n": ["located"],
+      "eff": { "f": ["located"] },
+      "text": "A 区西排自北端数到第三架，架沿刻度正是 290——丙位就在这里，标签字迹有描过的痕迹。"
+    },
+    {
+      "id": "pull_c",
+      "room": "rackA",
+      "label": "抽出丙号芯",
+      "req": { "f": ["located", "dated"] },
+      "n": ["suspect"],
+      "eff": { "f": ["suspect"] },
+      "text": "丙芯抽出来，标签写着 290；冰体里夹着几线红棕色泥粉，芯表还沾着同色的泥灰。"
+    },
+    {
+      "id": "pull_a",
+      "room": "rackA",
+      "label": "抽甲号芯核对",
+      "req": { "f": ["located"] },
+      "n": ["suspect"],
+      "text": "甲芯的尘层与 210 段影印特征一一对齐，孔位泥色也对得上北岭——它没被换过。"
+    },
+    {
+      "id": "pull_d",
+      "room": "rackA",
+      "label": "抽丁号芯核对",
+      "req": { "f": ["located"] },
+      "n": ["suspect"],
+      "text": "丁芯的气泡层与 280 段对得整齐，架沿刻度、标签、来源三头相符——它没被换过。"
+    },
+    {
+      "id": "seal_c",
+      "room": "core",
+      "label": "把锁定的那支芯封进复核舱",
+      "req": { "f": ["suspect", "c_bore"] },
+      "n": ["sealed"],
+      "eff": { "f": ["sealed"] },
+      "text": "复核舱的滑槽吃进芯筒，舱侧记录卡逐行抄下原始数据：实测氧同位素落段 240，标签登记段位 290；芯表泥色红棕，图例注南岭冰体夹红棕泥粉带；终孔深度北岭 350 米、南岭 260 米。锁栓扣死，等主站开舱复核。"
+    },
+    {
+      "id": "report_win",
+      "room": "core",
+      "label": "摇键向主站发报",
+      "req": { "f": ["sealed"] },
+      "end": "win",
+      "text": "发报键敲出三短两长：丙位调包属实，假芯已封复核舱待主站复核。窗外雪地车的灯从补给点一路压过来，值班日志最后一行写上了你的名字。"
+    },
+    {
+      "id": "bare_hand",
+      "room": "rackB",
+      "label": "徒手去掰东排的冻芯",
+      "end": "lose",
+      "text": "指腹刚贴上冰面就粘住了，撕下来一层皮——零下二十六度的库房里，没有第二双手来帮你。"
+    },
+    {
+      "id": "amb_cal",
+      "room": "office",
+      "label": "翻看台历",
+      "text": "台历页脚有前值班员划掉的购物清单：电池、暖贴、咖啡。最后一行还没划。"
+    },
+    {
+      "id": "amb_box",
+      "room": "archive",
+      "label": "查看柜顶的木盒",
+      "text": "木盒里码着历年复核回执，最上面一封的火漆完好——这站的流程从没断过。"
+    },
+    {
+      "id": "amb_line",
+      "room": "drill",
+      "label": "摸柱状图的等深线",
+      "text": "等深线密得能数出节理，南岭那张的末端压着铅笔画的终止符。"
+    },
+    {
+      "id": "amb_cloth",
+      "room": "corridor",
+      "label": "看门楣的红布条",
+      "text": "褪色的红布条钉在门楣正中——值班手册说，那一面永远朝磁北。"
+    },
+    {
+      "id": "amb_scale",
+      "room": "rackA",
+      "label": "摸架沿的刻痕",
+      "text": "架沿的米数刻痕被手套摸得发亮，指头从北到南数过去，一段比一段深。"
+    },
+    {
+      "id": "amb_east",
+      "room": "rackB",
+      "label": "看看东排的架位",
+      "text": "东排空架的滑轨上挂着风铃扣，风灌进来时叮当作响——就是昨夜那一阵。"
+    },
+    {
+      "id": "amb_wax",
+      "room": "prep",
+      "label": "擦比对台的灯",
+      "text": "漫射灯管闪了两下才稳住，台面的蜡痕是上一批样品留下的。"
+    },
+    {
+      "id": "amb_plug",
+      "room": "gear",
+      "label": "看充电柜的绿灯",
+      "text": "三盏绿灯一颗颗亮着，第四盏的插头空着——插头拔下来还没凉透。"
+    },
+    {
+      "id": "amb_cabin",
+      "room": "core",
+      "label": "读舱温表",
+      "text": "舱温表停在零下二十六度，表壳贴着复核规程卡片：先核对，后封舱，再上报。"
+    }
+  ],
+  "difficulty": { "minSteps": 14, "maxSteps": 36, "maxBranch": 6 }
+}

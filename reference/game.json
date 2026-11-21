@@ -1,0 +1,238 @@
+{
+ "start": "hall",
+ "rooms": {
+  "hall": {
+   "n": "大厅",
+   "d": "满是灰尘的大厅。墙上挂着一只停摆的钟，一扇铁门通向地下室，一架梯子通向穹顶。"
+  },
+  "lib": {
+   "n": "图书室",
+   "d": "书架倒了一半。书桌上有一个三位数字的密码抽屉。"
+  },
+  "base": {
+   "n": "地下室",
+   "d": "潮湿，角落里有一个红色拉杆和一个木箱。"
+  },
+  "dome": {
+   "n": "穹顶",
+   "d": "巨大的望远镜对着一块裂开的天窗。墙上是一幅星图，旁边有三个按钮：3、7、9。"
+  }
+ },
+ "items": {
+  "key": "铜钥匙",
+  "lens": "透镜"
+ },
+ "puzzles": [
+  {
+   "id": "抽屉密码",
+   "solved": "drawer_open",
+   "clue": "clue_clock"
+  },
+  {
+   "id": "星图按钮",
+   "solved": "won",
+   "clue": "clue_polaris"
+  }
+ ],
+ "acts": [
+  {
+   "id": "clock",
+   "room": "hall",
+   "label": "查看墙上的挂钟",
+   "eff": {
+    "f": [
+     "clue_clock"
+    ]
+   },
+   "text": "挂钟停在 3 点 07 分，秒针卡死了。"
+  },
+  {
+   "id": "h2l",
+   "room": "hall",
+   "label": "去图书室",
+   "go": "lib"
+  },
+  {
+   "id": "h2d",
+   "room": "hall",
+   "label": "爬梯子去穹顶",
+   "go": "dome"
+  },
+  {
+   "id": "unlock",
+   "room": "hall",
+   "label": "用铜钥匙打开地下室的门",
+   "req": {
+    "i": [
+     "key"
+    ]
+   },
+   "n": [
+    "base_open"
+   ],
+   "eff": {
+    "f": [
+     "base_open"
+    ]
+   },
+   "text": "锁咔哒一声开了。"
+  },
+  {
+   "id": "h2b",
+   "room": "hall",
+   "label": "进地下室",
+   "req": {
+    "f": [
+     "base_open"
+    ]
+   },
+   "go": "base"
+  },
+  {
+   "id": "l2h",
+   "room": "lib",
+   "label": "回大厅",
+   "go": "hall"
+  },
+  {
+   "id": "book",
+   "room": "lib",
+   "label": "翻阅《天文年鉴》",
+   "eff": {
+    "f": [
+     "clue_polaris"
+    ]
+   },
+   "text": "书中写道：北极星在星图上的编号是 7。"
+  },
+  {
+   "id": "d111",
+   "room": "lib",
+   "label": "给抽屉输入密码 111",
+   "n": [
+    "drawer_open"
+   ],
+   "text": "锁纹丝不动。"
+  },
+  {
+   "id": "d307",
+   "room": "lib",
+   "label": "给抽屉输入密码 307",
+   "n": [
+    "drawer_open"
+   ],
+   "eff": {
+    "f": [
+     "drawer_open"
+    ],
+    "i": [
+     "key"
+    ]
+   },
+   "text": "抽屉弹开，里面躺着一把铜钥匙。"
+  },
+  {
+   "id": "d703",
+   "room": "lib",
+   "label": "给抽屉输入密码 703",
+   "n": [
+    "drawer_open"
+   ],
+   "text": "锁纹丝不动。"
+  },
+  {
+   "id": "b2h",
+   "room": "base",
+   "label": "回大厅",
+   "go": "hall"
+  },
+  {
+   "id": "lens",
+   "room": "base",
+   "label": "打开木箱",
+   "n": [
+    "has_lens"
+   ],
+   "eff": {
+    "f": [
+     "has_lens"
+    ],
+    "i": [
+     "lens"
+    ]
+   },
+   "text": "箱子里是一枚擦得发亮的透镜。"
+  },
+  {
+   "id": "lever",
+   "room": "base",
+   "label": "拉动红色拉杆",
+   "end": "lose",
+   "text": "水管爆裂，地下室迅速被淹没。"
+  },
+  {
+   "id": "m2h",
+   "room": "dome",
+   "label": "爬梯子回大厅",
+   "go": "hall"
+  },
+  {
+   "id": "scope",
+   "room": "dome",
+   "label": "把透镜装进望远镜",
+   "req": {
+    "i": [
+     "lens"
+    ]
+   },
+   "n": [
+    "scope_ready"
+   ],
+   "eff": {
+    "f": [
+     "scope_ready"
+    ]
+   },
+   "text": "望远镜对准了天窗，星图上的一个编号被照亮了。"
+  },
+  {
+   "id": "p3",
+   "room": "dome",
+   "label": "按下按钮 3",
+   "req": {
+    "f": [
+     "scope_ready"
+    ]
+   },
+   "text": "没有反应。"
+  },
+  {
+   "id": "p7",
+   "room": "dome",
+   "label": "按下按钮 7",
+   "req": {
+    "f": [
+     "scope_ready"
+    ]
+   },
+   "eff": {
+    "f": [
+     "won"
+    ]
+   },
+   "end": "win",
+   "text": "天窗缓缓打开，星光倾泻进来。你逃出来了。"
+  },
+  {
+   "id": "p9",
+   "room": "dome",
+   "label": "按下按钮 9",
+   "req": {
+    "f": [
+     "scope_ready"
+    ]
+   },
+   "text": "没有反应。"
+  }
+ ]
+}

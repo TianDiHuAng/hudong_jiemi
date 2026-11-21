@@ -1,0 +1,18 @@
+{
+ "game": "g29",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 3,
+ "invalid": 1,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "进展厅",
+  "蹲下找展架下的推杆",
+  "踩上不牢靠的陈列凳够射灯"
+ ]
+}

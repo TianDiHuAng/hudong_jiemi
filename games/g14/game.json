@@ -1,0 +1,277 @@
+{
+  "title": "收桥之后",
+  "intro": "夜雨刚歇，树屋旅馆把吊桥全收了。配重筐缺一斤就咬不住齿，把桥一座座放回树冠之间，循着苔痕下到山道去。",
+  "start": "deck",
+  "rooms": {
+    "deck": {
+      "n": "主台",
+      "d": "围着粗壮树干搭出一圈主台，檐下挂着水葫芦，角落堆着成捆缆绳。台沿垂藤直下树冠，藤皮糟朽发黑。两座吊桥的绞盘架分立左右。"
+    },
+    "office": {
+      "n": "值班板房",
+      "d": "管理日志和一杆小秤挂在板房墙上，木柜敞着门。窗缝漏进一线天光，照见浮尘乱舞。"
+    },
+    "eb": {
+      "n": "东桥头",
+      "d": "东桥头的绞盘架下吊着配重筐，筐沿刻着斤两线。桥板收拢在架边，齿条闸咬死不放。"
+    },
+    "et": {
+      "n": "东台",
+      "d": "晒台竹竿上晾着雨衣，木棚门被一团旧缆的死结缠住。台板缝里长着厚苔，雾气贴着树冠飘。"
+    },
+    "wb": {
+      "n": "西桥头",
+      "d": "西桥头同样吊着配重筐，筐边木牌写着斤两规矩。桥索垂进云雾，望不见对头。"
+    },
+    "wt": {
+      "n": "西台",
+      "d": "背阴的西台搭着两块跳板，板底苔痕一厚一薄。台角立着竹牌，字被雨水洇过。"
+    },
+    "exitp": {
+      "n": "出口台",
+      "d": "老榕横枝上架空着出口台，栈道口斜向下通进雾里，口上横着一根带销的木杠。"
+    }
+  },
+  "items": {
+    "stone": "铁石锁",
+    "gourd": "满水的水葫芦",
+    "sand": "贝壳砂袋"
+  },
+  "puzzles": [
+    { "id": "东桥配重", "solved": "p_east", "clue": "c_log" },
+    { "id": "棚门死结", "solved": "p_knot", "clue": "c_knot" },
+    { "id": "西桥配重", "solved": "p_west", "clue": "c_log" },
+    { "id": "老榕跳板", "solved": "p_route", "clue": "c_moss" },
+    { "id": "栈道木杠", "solved": "p_bar", "clue": "c_bar" }
+  ],
+  "acts": [
+    {
+      "id": "deck2office",
+      "room": "deck",
+      "label": "进值班板房",
+      "go": "office"
+    },
+    {
+      "id": "office2deck",
+      "room": "office",
+      "label": "回主台",
+      "go": "deck"
+    },
+    {
+      "id": "read_log",
+      "room": "office",
+      "label": "取下管理日志看",
+      "n": ["c_log"],
+      "eff": { "f": ["c_log"] },
+      "text": "日志末页：东桥筐配三斤，西桥筐配五斤；筐沉不到斤两线，齿条闸就不咬合。下山栈道接在老榕上，老榕偏在溪畔，背阴一面苔最厚。"
+    },
+    {
+      "id": "take_stone",
+      "room": "office",
+      "label": "摘下墙钩上的石锁",
+      "n": ["f_stone"],
+      "eff": { "f": ["f_stone"], "i": ["stone"] },
+      "text": "石锁从墙钩上摘下来，麻绳勒着锁身，掂一掂足有二斤。"
+    },
+    {
+      "id": "take_gourd",
+      "room": "deck",
+      "label": "解下檐下的水葫芦",
+      "n": ["f_gourd"],
+      "eff": { "f": ["f_gourd"], "i": ["gourd"] },
+      "text": "水葫芦晃晃荡荡，塞子塞得紧，一掂是满水的一斤。"
+    },
+    {
+      "id": "deck_lose",
+      "room": "deck",
+      "label": "攀着糟朽垂藤下岩",
+      "end": "lose",
+      "text": "垂藤在离地一半的地方烂了芯，人一坠藤皮应声而断——树冠底下，是望不见底的雾。"
+    },
+    {
+      "id": "deck2eb",
+      "room": "deck",
+      "label": "上东桥头",
+      "go": "eb"
+    },
+    {
+      "id": "eb2deck",
+      "room": "eb",
+      "label": "回主台",
+      "go": "deck"
+    },
+    {
+      "id": "east_hang",
+      "room": "eb",
+      "label": "给配重筐添上称手的东西",
+      "req": { "i": ["stone", "gourd"] },
+      "n": ["p_east"],
+      "eff": { "f": ["p_east"] },
+      "text": "石锁压底，水葫芦挂上钩，筐沿正好沉到三斤刻线。绞盘咯咯倒转，齿条闸咬合出一段脆响。"
+    },
+    {
+      "id": "east_wrong",
+      "room": "eb",
+      "label": "只挂水葫芦就摇绞盘",
+      "req": { "i": ["gourd"] },
+      "n": ["p_east"],
+      "text": "筐才一斤，索一紧齿条就滑脱，桥板颤了颤，没让出半寸。"
+    },
+    {
+      "id": "east_cross",
+      "room": "eb",
+      "label": "过桥去东台",
+      "req": { "f": ["p_east"] },
+      "go": "et"
+    },
+    {
+      "id": "et2eb",
+      "room": "et",
+      "label": "回到东桥头",
+      "go": "eb"
+    },
+    {
+      "id": "knot_look",
+      "room": "et",
+      "label": "端详木棚门的死结",
+      "n": ["c_knot"],
+      "eff": { "f": ["c_knot"] },
+      "text": "旧缆在门鼻上打了三绕两穿的死结，结眼被雨水泡得发涨，硬扯只会越扯越紧。"
+    },
+    {
+      "id": "knot_wrong",
+      "room": "et",
+      "label": "死结硬扯硬拉",
+      "n": ["p_knot"],
+      "text": "死结越拉越死，门鼻被拽得吱嘎作响，就是不肯松半分。"
+    },
+    {
+      "id": "knot_open",
+      "room": "et",
+      "label": "照结眼一步步拆结",
+      "req": { "f": ["c_knot"] },
+      "n": ["p_knot"],
+      "eff": { "f": ["p_knot"], "i": ["sand"] },
+      "text": "顺着结路一环环退去，死结应手而开。棚里码着几袋贝壳砂，最轻一袋拴着斤两牌：二斤。"
+    },
+    {
+      "id": "et_look",
+      "room": "et",
+      "label": "看晾竿上的雨衣",
+      "text": "雨衣干了半边，兜里还兜着半捧干苔藓，前任住客的心思够细的。"
+    },
+    {
+      "id": "deck2wb",
+      "room": "deck",
+      "label": "上西桥头",
+      "go": "wb"
+    },
+    {
+      "id": "wb2deck",
+      "room": "wb",
+      "label": "回主台",
+      "go": "deck"
+    },
+    {
+      "id": "west_hang",
+      "room": "wb",
+      "label": "把称手的分量挪上西桥筐",
+      "req": { "i": ["stone", "gourd", "sand"] },
+      "n": ["p_west"],
+      "eff": { "f": ["p_west"] },
+      "text": "石锁和水葫芦从东桥筐摘下来，连同贝壳砂一起上钩，筐沿沉过五斤刻线。西桥齿条闸重重咬合，桥板朝雾里一节节探出去。"
+    },
+    {
+      "id": "west_wrong",
+      "room": "wb",
+      "label": "缺斤就摇西绞盘",
+      "n": ["p_west"],
+      "text": "筐轻飘飘的，绞盘空转两圈，齿条咔哒退了回去，桥索松松垮垮垂着。"
+    },
+    {
+      "id": "west_cross",
+      "room": "wb",
+      "label": "过西桥去对台",
+      "req": { "f": ["p_west"] },
+      "go": "wt"
+    },
+    {
+      "id": "wt2wb",
+      "room": "wt",
+      "label": "回西桥头",
+      "go": "wb"
+    },
+    {
+      "id": "moss_look",
+      "room": "wt",
+      "label": "俯身看两块跳板的苔痕",
+      "n": ["c_moss"],
+      "eff": { "f": ["c_moss"] },
+      "text": "向溪那块跳板底面苔厚得能拧出水，向崖那块板面干爽发白——背阴向溪，向阳朝崖。"
+    },
+    {
+      "id": "sign_look",
+      "room": "wt",
+      "label": "认竹牌上的字",
+      "n": ["c_sign"],
+      "eff": { "f": ["c_sign"] },
+      "text": "洇过的字还认得出：西台跳板通老榕，老榕下接栈道。字迹下头压着半枚湿脚印。"
+    },
+    {
+      "id": "route_wrong",
+      "room": "wt",
+      "label": "踏上干爽发白的跳板",
+      "n": ["p_route"],
+      "text": "跳板走到尽头是崖口断桩，风从崖下倒灌上来，吹得人直往后仰。"
+    },
+    {
+      "id": "route_ok",
+      "room": "wt",
+      "label": "踏上苔厚的跳板",
+      "req": { "f": ["c_moss"] },
+      "n": ["p_route"],
+      "eff": { "f": ["p_route"] },
+      "go": "exitp",
+      "text": "厚苔跳板又湿又稳，尽头果然接上老榕横枝——栈道口就在枝上。"
+    },
+    {
+      "id": "wt2exitp",
+      "room": "wt",
+      "label": "再走厚苔跳板去老榕",
+      "req": { "f": ["p_route"] },
+      "go": "exitp"
+    },
+    {
+      "id": "exitp2wt",
+      "room": "exitp",
+      "label": "退回西台",
+      "go": "wt"
+    },
+    {
+      "id": "bar_look",
+      "room": "exitp",
+      "label": "端详栈道口的木杠",
+      "n": ["c_bar"],
+      "eff": { "f": ["c_bar"] },
+      "text": "木杠斜插在销槽里，销子一拔就能落杠放行。"
+    },
+    {
+      "id": "bar_open",
+      "room": "exitp",
+      "label": "拔销撤下木杠",
+      "req": { "f": ["p_route"] },
+      "n": ["p_bar"],
+      "eff": { "f": ["p_bar"] },
+      "text": "销子咔地退出销槽，木杠轻轻一抽就卸了下来，栈道口敞开了。"
+    },
+    {
+      "id": "win",
+      "room": "exitp",
+      "label": "顺栈道下到山道",
+      "req": { "f": ["p_bar"] },
+      "end": "win",
+      "text": "栈道一级级降进雾里，苔腥味淡下去，山道的碎石声接了上来。回头望，两座吊桥还悬在树冠之间，稳稳当当。"
+    }
+  ],
+  "difficulty": { "minSteps": 6, "maxSteps": 20, "maxBranch": 6 }
+}

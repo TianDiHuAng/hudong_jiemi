@@ -1,0 +1,16 @@
+{
+ "game": "g14",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 1,
+ "invalid": 1,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "攀着糟朽垂藤下岩"
+ ]
+}

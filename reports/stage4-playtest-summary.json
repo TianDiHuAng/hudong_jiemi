@@ -1,0 +1,619 @@
+{
+ "total": 60,
+ "cautious": {
+  "win": 30,
+  "lose": 0,
+  "stuck": 0,
+  "avgSteps": 31.5,
+  "restarts": 0
+ },
+ "chaotic": {
+  "win": 9,
+  "lose": 21,
+  "stuck": 0,
+  "avgSteps": 14.1,
+  "avgInvalid": 2
+ },
+ "rows": [
+  {
+   "game": "g01",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 33,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g01",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 1,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g02",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 35,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g02",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 3,
+   "invalid": 3,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g03",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 21,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g03",
+   "style": "chaotic",
+   "cleared": true,
+   "end": "win",
+   "steps": 28,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g04",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 50,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g04",
+   "style": "chaotic",
+   "cleared": true,
+   "end": "win",
+   "steps": 62,
+   "invalid": 4,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g05",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 20,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g05",
+   "style": "chaotic",
+   "cleared": true,
+   "end": "win",
+   "steps": 33,
+   "invalid": 3,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g06",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 34,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g06",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 8,
+   "invalid": 3,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g07",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 38,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g07",
+   "style": "chaotic",
+   "cleared": true,
+   "end": "win",
+   "steps": 34,
+   "invalid": 5,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g08",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 24,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g08",
+   "style": "chaotic",
+   "cleared": true,
+   "end": "win",
+   "steps": 20,
+   "invalid": 3,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g09",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 25,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g09",
+   "style": "chaotic",
+   "cleared": true,
+   "end": "win",
+   "steps": 22,
+   "invalid": 4,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g10",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 46,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g10",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 1,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g11",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 33,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g11",
+   "style": "chaotic",
+   "cleared": true,
+   "end": "win",
+   "steps": 29,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g12",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 26,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g12",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 2,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g13",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 31,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g13",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 1,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g14",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 22,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g14",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 5,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g15",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 28,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g15",
+   "style": "chaotic",
+   "cleared": true,
+   "end": "win",
+   "steps": 40,
+   "invalid": 3,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g16",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 33,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g16",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 7,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g17",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 26,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g17",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 25,
+   "invalid": 2,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g18",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 37,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g18",
+   "style": "chaotic",
+   "cleared": true,
+   "end": "win",
+   "steps": 46,
+   "invalid": 5,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g19",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 40,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g19",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 3,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g20",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 23,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g20",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 3,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g21",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 32,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g21",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 4,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g22",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 27,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g22",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 2,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g23",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 36,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g23",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 12,
+   "invalid": 4,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g24",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 39,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g24",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 2,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g25",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 37,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g25",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 6,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g26",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 24,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g26",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 1,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g27",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 25,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g27",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 2,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g28",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 26,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g28",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 13,
+   "invalid": 3,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g29",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 32,
+   "invalid": 0,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g29",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 2,
+   "invalid": 2,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g30",
+   "style": "cautious",
+   "cleared": true,
+   "end": "win",
+   "steps": 41,
+   "invalid": 1,
+   "stuck": false,
+   "stuckRoom": null
+  },
+  {
+   "game": "g30",
+   "style": "chaotic",
+   "cleared": false,
+   "end": "lose",
+   "steps": 5,
+   "invalid": 2,
+   "stuck": false,
+   "stuckRoom": null
+  }
+ ]
+}

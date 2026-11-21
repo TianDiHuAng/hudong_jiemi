@@ -1,0 +1,18 @@
+{
+ "game": "g35",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 3,
+ "invalid": 1,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "去场院",
+  "进塔底进料层",
+  "伸手进暗红的炉膛掏焦块"
+ ]
+}

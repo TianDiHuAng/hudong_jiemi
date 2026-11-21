@@ -1,0 +1,93 @@
+{
+  "title": "备用电源",
+  "intro": "台风刚过，全馆跳电，鲨鱼池的增氧管只剩滴答的余压。柴油应急机趴在设备间，手摇柄断成两截，启动箱的四个回路钮只有一组顺序能把电送进海池。",
+  "start": "duty",
+  "rooms": {
+    "duty": {
+      "n": "值班室",
+      "d": "值班桌上的白板写满交接字迹，一角被雨水糊开。消防柜玻璃裂了缝，工具柜靠墙立着，抽屉半开。"
+    },
+    "corridor": {
+      "n": "员工走廊",
+      "d": "走廊的应急灯发着惨绿的光，地面一道拖痕从值班室弯向泵房。墙上的疏散图泡得卷了边。"
+    },
+    "pump": {
+      "n": "泵房",
+      "d": "三台循环泵停着两台，地沟盖板被涌水冲挪了位。泵房尽头的隔音门挂着设备重地的木牌，侧面是库房的货门。"
+    },
+    "machine": {
+      "n": "设备间",
+      "d": "柴油应急机盘踞在角钢底座上，启动箱面板排着四个回路钮，钮下小字是龟、鲨、母、珊。机身左侧挂着油路阀。"
+    },
+    "store": {
+      "n": "库房",
+      "d": "库房货架倒了半排，备件盒滚了一地。一条写着摇把备件的长条盒卡在货架与墙的夹缝里。"
+    },
+    "tank": {
+      "n": "鲨鱼池展厅",
+      "d": "观展窗后一片墨蓝，鲨鱼背鳍偶尔切开应急灯的反光。水位标尺露出平时看不见的两格。"
+    },
+    "jelly": {
+      "n": "水母厅",
+      "d": "水母缸的灯全灭了，缸体只剩轮廓。厅里比展厅低两度，靠墙的增氧管还在滴答漏水。"
+    }
+  },
+  "items": {
+    "crowbar": "撬棍",
+    "handle_head": "摇把头",
+    "rod": "摇把接杆"
+  },
+  "puzzles": [
+    { "id": "工具柜", "solved": "p_cab", "clue": "c_sched" },
+    { "id": "泵房地沟", "solved": "p_gully", "clue": "c_gully" },
+    { "id": "摇把组装", "solved": "p_crank", "clue": "c_hole" },
+    { "id": "摇机启动", "solved": "p_engine", "clue": "c_valve" },
+    { "id": "回路启动序", "solved": "p_seq", "clue": "c_sched" }
+  ],
+  "acts": [
+    { "id": "d2c", "room": "duty", "label": "出值班室", "go": "corridor" },
+    { "id": "c2d", "room": "corridor", "label": "回值班室", "go": "duty" },
+    { "id": "c2p", "room": "corridor", "label": "进泵房", "go": "pump" },
+    { "id": "p2c", "room": "pump", "label": "回走廊", "go": "corridor" },
+    { "id": "p2s", "room": "pump", "label": "开库房货门", "go": "store" },
+    { "id": "s2p", "room": "store", "label": "回泵房", "go": "pump" },
+    { "id": "p2m", "room": "pump", "label": "推开设备间隔音门", "go": "machine" },
+    { "id": "m2p", "room": "machine", "label": "回泵房", "go": "pump" },
+    { "id": "c2t", "room": "corridor", "label": "去鲨鱼池展厅", "go": "tank" },
+    { "id": "t2c", "room": "tank", "label": "回走廊", "go": "corridor" },
+    { "id": "c2j", "room": "corridor", "label": "去水母厅", "go": "jelly" },
+    { "id": "j2c", "room": "jelly", "label": "回走廊", "go": "corridor" },
+
+    { "id": "read_board", "room": "duty", "label": "读白板上的交接字", "n": ["c_sched"], "eff": { "f": ["c_sched"] }, "text": "设备员老崔留字：停电先摇机，后按回路钮，顺序照投喂——头一步是龟池，再往后一行被雨水洇成一团墨，只认得出末尾的小字：珊瑚缸收尾。旁边补了一句：投喂时序表塑封着，挂在鲨鱼池的投喂口。撬棍收在工具柜里，摇把头去年掉进了泵房地沟。" },
+    { "id": "open_cab", "room": "duty", "label": "开工具柜取撬棍", "req": { "f": ["c_sched"] }, "n": ["p_cab"], "eff": { "f": ["p_cab"], "i": ["crowbar"] }, "text": "工具柜抽屉槽里躺着撬棍，柄上的防滑胶圈还缠得整整齐齐。" },
+    { "id": "look_case", "room": "duty", "label": "看消防柜", "text": "裂缝里露出一截水带，干粉灭火器的压力表指针稳稳停在绿区。" },
+
+    { "id": "look_gully", "room": "pump", "label": "看地沟盖板", "n": ["c_gully"], "eff": { "f": ["c_gully"] }, "text": "盖板被涌水冲挪了半掌宽，缝里的积水面浮着一层油花，隐约卡着一件铁器的一角。" },
+    { "id": "pry_gully", "room": "pump", "label": "用撬棍撬开地沟盖板", "req": { "i": ["crowbar"] }, "n": ["p_gully"], "eff": { "f": ["p_gully"], "i": ["handle_head"] }, "text": "撬棍伸进缝里一压，盖板轰地掀开。沟底淤泥里躺着摇把头，方榫完好，只锈了层浮皮。" },
+    { "id": "wrong_gully", "room": "pump", "label": "撸袖子伸手进地沟", "n": ["p_gully"], "text": "淤泥没过小臂，指尖碰到铁器又滑开——油花底下摸不准，还是得有家伙撬。" },
+    { "id": "look_pump", "room": "pump", "label": "看循环泵铭牌", "text": "半浸的那台泵盘车还能转动，泵壳铭牌上盐度千分之三十一的钢印还算清晰。" },
+
+    { "id": "take_rod", "room": "store", "label": "抽出长条盒里的摇把杆", "n": ["g_rod"], "eff": { "f": ["g_rod"], "i": ["rod"] }, "text": "摇把杆从夹缝里抽出来，杆头的接榫和卡簧都齐，就差一个头。" },
+    { "id": "look_spare", "room": "store", "label": "翻备件盒", "text": "盒里是成排的密封圈和保险丝，标签按年份贴着，最新一排写着今年雨季。" },
+
+    { "id": "look_hole", "room": "machine", "label": "看机身侧面的手摇孔", "n": ["c_hole"], "eff": { "f": ["c_hole"] }, "text": "手摇孔里空着，方榫槽磨得发亮，旁边铭牌刻着：先开油阀，摇机至怠速，方可按箱。" },
+    { "id": "fit_crank", "room": "machine", "label": "把摇把头旋上接杆", "req": { "i": ["rod", "handle_head"] }, "n": ["p_crank"], "eff": { "f": ["p_crank"] }, "text": "接榫对准，卡簧咔地入槽，晃两下不脱不旷——一根完整的摇把立在手边。" },
+    { "id": "open_valve", "room": "machine", "label": "拧开机身左侧的油路阀", "n": ["c_valve"], "eff": { "f": ["c_valve"] }, "text": "油路阀拧开两圈半，油泵的哒哒声从机身底下透出来，透明管里的油面爬上了刻线。" },
+    { "id": "crank_up", "room": "machine", "label": "插摇把摇机启动", "req": { "f": ["p_crank", "c_valve"] }, "n": ["p_engine"], "eff": { "f": ["p_engine"] }, "text": "摇把吃进方榫，头两圈沉得像推磨盘，第三圈忽然一轻——柴油机咳出一股黑烟，稳稳怠速起来。" },
+    { "id": "wrong_crank", "room": "machine", "label": "不开油阀就摇机", "req": { "f": ["p_crank"] }, "n": ["p_engine"], "text": "摇把空转了五六圈，机身只有金属干磨的涩响，排气口连烟星都没有。" },
+    { "id": "btn1", "room": "machine", "label": "按龟池回路钮", "req": { "f": ["p_engine", "c_sched"] }, "n": ["b1"], "eff": { "f": ["b1"] }, "text": "第一个钮按下去，启动箱里继电器吸合，龟字钮上的小灯亮成绿色。" },
+    { "id": "btn2", "room": "machine", "label": "按鲨池回路钮", "req": { "f": ["b1"] }, "n": ["b2"], "eff": { "f": ["b2"] }, "text": "鲨字钮接着亮起，箱内的连锁片依次弹到到位。" },
+    { "id": "btn3", "room": "machine", "label": "按水母缸回路钮", "req": { "f": ["b2"] }, "n": ["b3"], "eff": { "f": ["b3"] }, "text": "母字钮亮了，面板上的送电箭头推进到最后一格。" },
+    { "id": "btn4", "room": "machine", "label": "按珊瑚缸回路钮", "req": { "f": ["b3"] }, "n": ["p_seq"], "eff": { "f": ["p_seq"] }, "text": "珊字钮落位，四盏绿灯一字排开，启动箱发出待合闸的蜂鸣。" },
+    { "id": "wrong_btn1", "room": "machine", "label": "先按珊瑚缸的回路钮", "req": { "f": ["p_engine"] }, "n": ["p_seq"], "text": "珊字钮刚碰到指尖，连锁继电器啪哒一声整排跳开，面板只亮起红灯。" },
+    { "id": "wrong_btn2", "room": "machine", "label": "跳过龟池直接按鲨池", "req": { "f": ["p_engine"] }, "n": ["p_seq"], "text": "鲨字钮按下去没有半点吸合声——连锁片卡在前一级，红灯闪了两下就灭了。" },
+    { "id": "close_main", "room": "machine", "label": "合上应急回路总闸", "req": { "f": ["p_seq"] }, "end": "win", "text": "总闸推到底，机房的灯带先亮，一声泵启动的闷响接着滚过地板。观展窗方向传来哗哗的水声——循环回来了，鲨鱼池的水面泛起了泡。" },
+
+    { "id": "look_glass", "room": "tank", "label": "贴近观展窗看", "text": "鲨鱼贴着玻璃游过去，应急灯的反光在它背脊上滑了一下。" },
+    { "id": "look_feed", "room": "tank", "label": "看池沿投喂口", "text": "投喂口的滑盖落着锁，锁孔周围一圈盐霜。滑盖旁钉着一张塑封投喂时序表，一滴水珠都没沾：七点龟池，十点鲨池，十四点水母缸，十六点半珊瑚缸。" },
+    { "id": "risk_pool", "room": "tank", "label": "踩着结盐霜的池沿去够应急灯", "end": "lose", "text": "池沿的盐霜滑不留脚，一步踏空，人栽进了鲨鱼池的水线以下。" },
+    { "id": "listen_jelly", "room": "jelly", "label": "听增氧管", "text": "滴答声隔着缸壁传来，节拍比记忆里慢——增氧泵也在靠最后的余压撑着。" },
+    { "id": "look_chart", "room": "corridor", "label": "看墙上的疏散图", "text": "疏散图被涌水泡烂了半边，只剩东南角设备间几个字还认得出。" }
+  ],
+  "difficulty": { "minSteps": 6, "maxSteps": 20, "maxBranch": 6 }
+}

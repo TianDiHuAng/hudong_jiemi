@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>文字密室逃脱</title>
+<style>
+:root{--bg:#EEF1F6;--card:#FFFFFF;--ink:#1B2233;--mute:#5B667D;--line:#D2D9E6;--acc:#3A56A8;--acc2:#3A56A822;--ok:#1E7A4F;--bad:#B3362B;--tint:transparent;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1320;--card:#161D30;--ink:#E3E8F4;--mute:#9AA6C2;--line:#2A3452;--acc:#8FA8F0;--acc2:#8FA8F022;--ok:#5FCB92;--bad:#F07A6E;--tint:transparent;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1320;--card:#161D30;--ink:#E3E8F4;--mute:#9AA6C2;--line:#2A3452;--acc:#8FA8F0;--acc2:#8FA8F022;--ok:#5FCB92;--bad:#F07A6E;--tint:transparent;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Noto Sans SC","PingFang SC",system-ui,sans-serif}
+main{max-width:1060px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:clamp(24px,4.5vw,34px);line-height:1.25;margin:0 0 4px}
+.lead{color:var(--mute)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:13px;color:var(--mute)}
+.chip b{color:var(--ink)}
+.layout{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:900px){.layout{grid-template-columns:1.6fr 1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.stage{position:relative;overflow:hidden}
+.stage::before{content:"";position:absolute;inset:0;background:radial-gradient(420px 200px at 88% -8%,var(--tint),transparent 70%);pointer-events:none}
+.stage>*{position:relative}
+#room{font-size:24px;font-weight:800;letter-spacing:.02em}
+#strip{font-size:26px;letter-spacing:.12em;margin:2px 0 8px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+#desc{border-left:3px solid var(--acc);padding:6px 12px;background:var(--acc2);border-radius:0 8px 8px 0;margin:8px 0 12px}
+#log{max-height:220px;overflow-y:auto;margin:0 0 12px;display:flex;flex-direction:column;gap:6px}
+#log p{margin:0;font-size:14.5px;color:var(--mute);background:var(--bg);border-radius:8px;padding:5px 10px}
+#log p:last-child{color:var(--ink);font-weight:600}
+#acts{display:flex;flex-direction:column;gap:6px}
+.grp{font-size:13px;color:var(--mute);margin:8px 0 2px;font-weight:700;letter-spacing:.06em}
+button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;cursor:pointer;text-align:left;transition:border-color .15s,transform .05s}
+button:hover{border-color:var(--acc);transform:translateX(2px)}button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+#acts button::before{content:"› ";color:var(--acc);font-weight:700}
+.pri{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.side .card{padding:12px 14px}
+.side h2{font-size:14px;margin:0 0 8px;color:var(--mute);letter-spacing:.08em;display:flex;align-items:center;justify-content:space-between}
+.mapreset{font-size:11px;padding:1px 8px;border-radius:6px;color:var(--mute);background:transparent}
+.mapreset:hover{color:var(--acc);transform:none}
+#inv{display:flex;flex-wrap:wrap;gap:6px}
+.tag{border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:13.5px;background:var(--bg)}
+.tag .em{margin-right:4px}
+#map{width:100%;height:auto;touch-action:none}
+#map text{font-size:10px;fill:var(--ink);pointer-events:none}
+#map .edge{stroke:var(--line);stroke-width:2;pointer-events:none}
+#map .edge.cur{stroke:var(--acc);stroke-dasharray:4 3}
+#map .node{cursor:grab}
+#map .node rect{fill:var(--bg);stroke:var(--line);stroke-width:1.5}
+#map .node.vis rect{stroke:var(--acc)}
+#map .node.cur rect{fill:var(--acc);stroke:var(--acc)}
+#map .node.cur text{fill:#fff;font-weight:700}
+#map .node.new rect{stroke-dasharray:4 3}
+#map .node.drag rect{stroke-width:2.5}
+#veil{position:fixed;inset:0;background:rgba(10,14,24,.78);display:none;align-items:center;justify-content:center;z-index:9}
+#veil.show{display:flex}
+#veil .panel{background:var(--card);border-radius:16px;padding:36px 44px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#veil .big{font-size:52px;margin-bottom:8px}
+#veil .t{font-size:22px;font-weight:800;margin-bottom:6px}
+#veil .sub{color:var(--mute);font-size:14px;margin-bottom:16px;line-height:1.9}
+#veil button{font-size:16px}
+#loader .card{margin-top:16px}
+</style>
+</head>
+<body>
+<main>
+<h1 id="title">文字密室逃脱</h1>
+<p id="intro" class="lead"></p>
+<script>window.__GAME__={"title":"后半夜的温室","intro":"凌晨两点，恒温系统失灵，主温室已爬到 31.4℃，蝴蝶兰的耐受上限是 28℃。按刻度称配营养液，把手边的零件拼成应急阀，赶在天亮巡检前把喷雾系统开起来。","start":"potting","rooms":{"potting":{"n":"上盆间","d":"夜班台上的登记本摊开着，门口小黑板留着上一班的粉笔字。恒温屏红字跳在 31.4℃，三扇门通向门厅、苗床和药剂间。"},"headhouse":{"n":"门厅值班室","d":"衣帽钩上挂着雨衣和值班表，对讲机在充电座上闪红灯。玻璃门外是园区的黑，保安亭早没了人。"},"store":{"n":"药剂贮藏间","d":"天平架在防酸台面上，砝码盒和母液粉罐排在格架里。屋顶排风扇停了，药味沉甸甸压在灯下。"},"orchid":{"n":"兰花苗床","d":"三排蝴蝶兰的叶尖开始发软，温度计顶在 31℃。苗床尽头一道铁门虚掩着，机房的水泵声隐隐传过来。"},"fern":{"n":"蕨类阴棚","d":"加湿帘淌着水，值班员小林的工具袋挂在门后钉子上。角落的加湿器断了电，叶子上的水珠凝着不动。"},"boiler":{"n":"机房","d":"热水管路爬满墙，喷雾主管的冻裂断口就在阀座旁。地上摊着一只零件箱，旁边贴着中压蒸汽的警示带。"},"workshop":{"n":"工具棚","d":"管钳按尺寸挂了一排，备用阀芯躺在抽屉格上。棚里堆着空营养桶，油灯味混着橡胶圈的气味。"},"mister":{"n":"喷雾控制间","d":"控制柜蒙着防尘罩，吸药座空着。柜门挂着小锁，面板底下贴着一张卷了边的启动口诀。"}},"items":{"powder":"母液粉罐","weights":"砝码盒","can":"配好的营养液壶","valve_core":"备用阀芯","pliers":"管钳","joint":"黄铜接头","gasket":"硅胶垫圈","emergency_valve":"拼好的应急阀","cab_key":"控制柜钥匙"},"puzzles":[{"id":"上一班的小黑板","solved":"board_read","clue":"c_note"},{"id":"称配营养液","solved":"mixed","clue":"c_scale"},{"id":"小林的工具袋","solved":"bag_taken","clue":"c_peg"},{"id":"拼装应急阀","solved":"assembled","clue":"c_log"},{"id":"换装应急阀","solved":"valve_on","clue":"c_mouth"},{"id":"营养液上罐","solved":"dosed","clue":"c_suction"},{"id":"应急喷雾启动","solved":"spray_on","clue":"panel_open"}],"acts":[{"id":"pot2head","room":"potting","label":"去门厅值班室","go":"headhouse"},{"id":"head2pot","room":"headhouse","label":"回上盆间","go":"potting"},{"id":"pot2store","room":"potting","label":"进药剂贮藏间","go":"store"},{"id":"store2pot","room":"store","label":"回上盆间","go":"potting"},{"id":"pot2orchid","room":"potting","label":"去兰花苗床","go":"orchid"},{"id":"orchid2pot","room":"orchid","label":"回上盆间","go":"potting"},{"id":"orchid2fern","room":"orchid","label":"去蕨类阴棚","go":"fern"},{"id":"fern2orchid","room":"fern","label":"回兰花苗床","go":"orchid"},{"id":"orchid2boiler","room":"orchid","label":"穿铁门进机房","go":"boiler"},{"id":"boiler2orchid","room":"boiler","label":"回兰花苗床","go":"orchid"},{"id":"boiler2workshop","room":"boiler","label":"出棚门去工具棚","go":"workshop"},{"id":"workshop2boiler","room":"workshop","label":"回机房","go":"boiler"},{"id":"boiler2mister","room":"boiler","label":"进喷雾控制间","go":"mister"},{"id":"mister2boiler","room":"mister","label":"回机房","go":"boiler"},{"id":"read_log","room":"potting","label":"读夜班登记本","n":["c_log"],"eff":{"f":["c_log","c_note"]},"text":"登记本停在零点一刻：恒温器失灵，应急喷雾主管在机房冻裂，断口阀芯碎了。零件清单写得齐整——阀芯、接头、垫圈、管钳；其余细节抄在门口小黑板上。"},{"id":"read_board","room":"potting","label":"看门口的小黑板","n":["board_read"],"eff":{"f":["board_read","c_scale","c_peg","c_suction"]},"text":"黑板粉笔字三层：苗床桶整十升，母液粉一点二克对一升；控制柜钥匙在小林工具袋里，阴棚门后；喷雾罐上有吸药座，营养液要卡进座里才吸得动。"},{"id":"take_powder","room":"store","label":"取母液粉罐和砝码盒","n":["got_powder"],"eff":{"f":["got_powder"],"i":["powder","weights"]},"text":"母液粉罐和砝码盒并排躺在格架里，罐身标签写着：净剩约四十克。"},{"id":"weigh_mix","room":"store","label":"按配方刻度称母液粉","req":{"i":["powder","weights"]},"n":["mixed"],"eff":{"f":["mixed"],"i":["can"]},"text":"5 克、5 克、2 克三枚砝码压稳秤盘——12 克母液粉倒进量桶冲开，液色淡黄透亮，整桶十升刚刚好。"},{"id":"weigh_all","room":"store","label":"把整罐粉全倒上秤盘","req":{"i":["powder","weights"]},"n":["mixed"],"text":"整罐四十克全压上秤盘——这浓度够把半床老桩烧成焦炭，赶紧原样倒了回去。"},{"id":"weigh_20","room":"store","label":"称二十克母液粉","req":{"i":["powder","weights"]},"n":["mixed"],"text":"秤上二十克，倒进桶里才想起配方是一点二克对一升——浓了一倍，趁叶尖还没卷边，赶紧兑水稀释重称。"},{"id":"take_bag","room":"fern","label":"翻门后的工具袋","n":["bag_taken"],"eff":{"f":["bag_taken"],"i":["cab_key"]},"text":"工具袋里除了一副旧手套，还有一枚拴红签的控制柜钥匙——小林留的。"},{"id":"look_mouth","room":"boiler","label":"端详主管断口","n":["c_mouth"],"eff":{"f":["c_mouth"]},"text":"断口是 G1/2 管牙，旧阀芯碎成三瓣还卡在阀座里，阀座丝扣上还挂着半片碎垫的残角。"},{"id":"take_core","room":"workshop","label":"取备用阀芯和管钳","n":["got_core"],"eff":{"f":["got_core"],"i":["valve_core","pliers"]},"text":"备用阀芯躺在抽屉格上，管钳按尺寸挂了一排，取了把中号的。"},{"id":"open_kit","room":"boiler","label":"拆开地上的零件箱","n":["got_kit"],"eff":{"f":["got_kit"],"i":["joint","gasket"]},"text":"零件箱里躺着黄铜接头和一只硅胶垫圈，防锈脂封口，是上一班备下的。"},{"id":"assemble","room":"boiler","label":"把阀芯接头垫圈拼成阀","req":{"i":["valve_core","joint","gasket"]},"n":["assembled"],"eff":{"f":["assembled"],"i":["emergency_valve"]},"text":"阀芯嵌进黄铜接头，硅胶垫圈按进卡槽——一只拼出来的应急阀躺在掌心，丝扣还带着防锈脂的滑腻。"},{"id":"assemble_wrong","room":"boiler","label":"不用垫圈直接拧阀芯","req":{"i":["valve_core","joint"]},"n":["assembled"],"text":"阀芯直接拧上接头，丝扣咬了两圈就打滑——没有垫圈封压，白汽从接缝里咝咝往外冒。"},{"id":"fit_valve","room":"boiler","label":"用管钳把应急阀拧上断口","req":{"i":["emergency_valve","pliers"],"f":["assembled"]},"n":["valve_on"],"eff":{"f":["valve_on"]},"text":"管钳咬住阀帽拧了五圈，断口的水汽断了，压力表指针慢慢站直。"},{"id":"unlock_panel","room":"mister","label":"用红签钥匙开控制柜","req":{"i":["cab_key"]},"n":["panel_open"],"eff":{"f":["panel_open"]},"text":"柜门弹开，启动口诀贴纸卷着边，中段被撕走一截：只剩头两步的先装阀、再上液，和末尾的后合闸；撕口边沿还认得出半个看字，往后的字全没了。"},{"id":"dose_tank","room":"mister","label":"把营养液壶卡进吸药座","req":{"i":["can"]},"n":["dosed"],"eff":{"f":["dosed"]},"text":"营养液壶咔进吸药座，虹吸管里没进气泡。"},{"id":"spray_on","room":"mister","label":"合上喷雾柜总闸","req":{"f":["valve_on","dosed","panel_open"]},"n":["spray_on"],"eff":{"f":["spray_on"]},"text":"总闸合上，泵声从苗床方向滚过来，雾化头的咝咝声起来了。"},{"id":"spray_wrong","room":"mister","label":"阀没装就合总闸","req":{"f":["panel_open"]},"n":["spray_on"],"text":"泵一启动，断口的水柱直接顶上天花板——你拍下急停，半身都湿透了。"},{"id":"watch_fall","room":"orchid","label":"守着苗床看温度回落","req":{"f":["spray_on"]},"end":"win","text":"雾铺开三层，温控屏从 31.4 一格一格退到 24.8，最娇的那盆魔鬼文心兰叶尖重新挺了回来。你在登记本上补完这一夜，天边刚泛出蟹壳青。"},{"id":"climb_frame","room":"orchid","label":"踩上湿滑的苗床沿去够风口手轮","end":"lose","text":"桁架横梁积着冷凝水汽，脚下一滑——你摔进兰花的花架，几盆老桩当场碎了。"},{"id":"amb_clip","room":"headhouse","label":"翻衣帽钩上的巡检夹","text":"巡检夹里夹着半页排班表，今晚的夜班一栏只有你自己的名字。"},{"id":"amb_cyl","room":"store","label":"翻量具抽屉","text":"量筒量杯排成一排，最小的那支刻度被指甲掐出个记号——一点二克对一升的老习惯。"},{"id":"amb_moss","room":"orchid","label":"摸苗床的基质","text":"水苔干得发脆，指节探下去两寸都见不着潮气——再晚一夜就救不回来了。"},{"id":"amb_pad","room":"fern","label":"听加湿帘滴水","text":"加湿帘还淌着水，滴答声数得清——全温室就剩这一点凉意。"},{"id":"amb_bucket","room":"workshop","label":"翻看空营养桶","text":"空营养桶摞到棚顶，桶底的日期贴纸从春天一路贴到秋末。"},{"id":"amb_dust","room":"mister","label":"擦控制柜面板","text":"防尘罩内侧有一行马克笔交接字：上液后先看压力表，指针站直再合闸——上一班交班时特意描粗过两遍；罩外的灰还蹭着半只手掌印。"}],"difficulty":{"minSteps":10,"maxSteps":28,"maxBranch":6}};</script>
+<div class="chips">
+<span class="chip">谜题 <b id="cPuzzle">–</b></span>
+<span class="chip">步数 <b id="cSteps">0</b></span>
+<span class="chip">物品 <b id="cItems">0</b></span>
+</div>
+<div class="layout">
+<section class="stage card" aria-live="polite">
+<div id="room"></div><div id="strip"></div><div id="desc"></div>
+<div id="log"></div><div id="acts"></div>
+<div class="tools"><button id="restart">重新开始</button></div>
+</section>
+<aside class="side">
+<div class="card"><h2>地 图 <button class="mapreset" id="mapreset">重置布局</button></h2><svg id="map" viewBox="0 0 200 120" aria-label="房间地图"></svg></div>
+<div class="card"><h2>物 品</h2><div id="inv"></div></div>
+</aside>
+</div>
+<div id="veil"><div class="panel"><div class="big" id="veilEm"></div><div class="t" id="veilT"></div><div class="sub" id="veilSub"></div><button class="pri" id="veilBtn">再玩一次</button></div></div>
+<div id="loader" style="display:none">
+<div class="card">
+<p>浏览器安全策略阻止了直接读取同目录的 game.json（用 file:// 直接打开时会出现这种情况）。</p>
+<p>两种解决方法：</p>
+<ol>
+<li>用 <code>node build.js game.json</code> 打包成单文件 HTML 后再打开（推荐）；</li>
+<li>或点击下方按钮，手动选择本目录中的 game.json 文件。</li>
+</ol>
+<p><input type="file" accept=".json,application/json" id="pickjson"></p>
+</div>
+</div>
+</main>
+<script>
+(function(){
+var booted=false;
+/* —— emoji 关键词典：按房间名+描述 / 物品名自动配场景条与物品图标 —— */
+var EMO=[["灯笼","🏮"],["蜡烛","🕯️"],["蜡封","🔏"],["封蜡","🔏"],["火漆","🔏"],["台历","📅"],["罗盘","🧭"],["指南针","🧭"],["平面图","🗺️"],["地图","🗺️"],["收音","📻"],["电台","📡"],["天线","📡"],["电报","📨"],["电话","☎️"],["磁带","📼"],["录音","🎙️"],["胶片","🎞️"],["放映","🎬"],["幻灯","🎞️"],["望远","🔭"],["透镜","🔍"],["放大","🔬"],["相纸","🖼️"],["照片","🖼️"],["显影","🧪"],["定影","🧪"],["药","💊"],["化验","🧪"],["试剂","🧪"],["气球","🎈"],["气囊","🎈"],["保险柜","🔐"],["保险","🔐"],["暗码","🔢"],["密码","🔢"],["口令","🔢"],["铃","🔔"],["哨","📯"],["锣","🥁"],["鼓","🥁"],["琴","🎻"],["弦","🎼"],["乐谱","🎼"],["戏","🎭"],["木偶","🎭"],["面具","🎭"],["提词","📋"],["导播","🎛️"],["推子","🎛️"],["旋钮","🎛️"],["控制台","🎛️"],["播控","🎛️"],["话筒","🎙️"],["监视","🖥️"],["屏幕","🖥️"],["电视","📺"],["影片","🎬"],["电影","🎬"],["字模","🔠"],["活字","🔠"],["铅字","🔠"],["印刷","🖨️"],["报纸","📰"],["书脊","📖"],["装订","📖"],["散页","📄"],["纸捻","🧵"],["浆糊","🥣"],["函套","📚"],["书","📚"],["账","📒"],["簿","📒"],["册","📒"],["记录","📝"],["日志","📝"],["笔记","📝"],["手账","📓"],["留言","✉️"],["信","✉️"],["便条","📄"],["单据","🧾"],["票据","🧾"],["存根","🧾"],["票","🎫"],["地磅","⚖️"],["吊秤","⚖️"],["戥","⚖️"],["秤","⚖️"],["砝码","⚖️"],["配重","🗿"],["石锁","🗿"],["沙袋","🗿"],["砂袋","🗿"],["压铁","🗿"],["阀门","🚰"],["阀","🚰"],["水管","🚿"],["蒸汽","♨️"],["锅炉","🔥"],["炉","🔥"],["烟","💨"],["蒸","♨️"],["火","🔥"],["冰芯","❄️"],["冰","❄️"],["雪","❄️"],["霜","❄️"],["雾","🌫️"],["雨","🌧️"],["风","🌬️"],["沙暴","🏜️"],["沙","🏜️"],["水","💧"],["卤","🧂"],["盐","🧂"],["糖浆","🍬"],["糖","🍬"],["粮","🌾"],["麦","🌾"],["染","🎨"],["颜料","🎨"],["画","🖼️"],["修复","🛠️"],["工具","🧰"],["扳手","🔧"],["钳","🔧"],["锤","🔨"],["剪","✂️"],["刀","🔪"],["锯","🛠️"],["撬","🛠️"],["钥匙","🔑"],["铜锁","🔒"],["挂锁","🔒"],["锁","🔒"],["链","⛓️"],["绳","🪢"],["索","🪢"],["网","🕸️"],["梯","🧗"],["墙","🧱"],["瓦","🧱"],["集装箱","📦"],["箱","📦"],["盒","📦"],["桶","🛢️"],["罐","🏺"],["缸","🏺"],["坛","🏺"],["瓶","🍾"],["杯","☕"],["碗","🥣"],["锅","🍳"],["茶","🍵"],["酒","🍷"],["草","🌿"],["兰","🌺"],["花","🌸"],["苗","🌱"],["树","🌳"],["叶","🍃"],["骨","🦴"],["化石","🦴"],["龙骨","🦴"],["石","🗿"],["碑","🗿"],["墓","🗿"],["拓片","📜"],["香","🕯️"],["供桌","⛩️"],["匾","📋"],["牌","📋"],["签","📋"],["印章","🔏"],["印","🔏"],["花押","🔏"],["机器人","🤖"],["机械","⚙️"],["齿轮","⚙️"],["发电","⚙️"],["电池","🔋"],["保险丝","🔌"],["电源","🔌"],["电闸","⚡"],["闸","⚡"],["电钮","🔘"],["按钮","🔘"],["电","⚡"],["船","⛵"],["锚","⚓"],["坞","⚓"],["舱","🚢"],["甲板","⚓"],["泊位","⚓"],["码头","⚓"],["货柜","📦"],["车厢","🚃"],["火车","🚂"],["地铁","🚇"],["站台","🚉"],["候车","🚉"],["轨道","🛤️"],["道岔","🛤️"],["信号","🚥"],["桥","🌉"],["塔","🗼"],["灯塔","🗼"],["棚","⛺"],["帐篷","⛺"],["马","🐎"],["貂","🐾"],["兽","🐾"],["豹","🐆"],["鸟","🐦"],["鱼","🐟"],["池","🐟"],["蒸馏","⚗️"],["试管","⚗️"],["煤油","🛢️"],["油","🛢️"],["钟","🕰️"],["表","⌚"],["沙漏","⏳"],["门","🚪"],["灯","💡"],["烛","🕯️"]];
+function emojiFor(text,limit){
+limit=limit||6;var got=[],seen={};text=String(text||"");
+for(var i=0;i<EMO.length&&got.length<limit;i++){var k=EMO[i][0];
+if(text.indexOf(k)>-1&&!seen[EMO[i][1]]){seen[EMO[i][1]]=1;got.push(EMO[i][1])}}
+if(!got.length)got=["🚪"];return got.join("")}
+var PALETTE=["#3A56A8","#7A3AA8","#A83A56","#3AA87A","#A8703A","#2B7A9E","#8A5A2B","#5A6B2B"];
+function hash(s){var h=0;s=String(s||"");for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0}return h}
+function boot(G){
+if(booted)return;booted=true;
+var title=G.title||"文字密室逃脱";
+document.title=title;
+document.getElementById("title").textContent=title;
+document.documentElement.style.setProperty("--acc",PALETTE[hash(title)%PALETTE.length]);
+document.documentElement.style.setProperty("--acc2",PALETTE[hash(title)%PALETTE.length]+"22");
+var intro=G.intro||"",ip=document.getElementById("intro");
+if(intro){ip.textContent=intro}else{ip.style.display="none"}
+var S,logEl=document.getElementById("log"),steps=0;
+var visited={},edges={};
+/* —— 地图布局存档：节点可拖拽，按关卡标题持久化 —— */
+var layoutKey="maplayout:"+title,layout={};
+try{layout=JSON.parse(localStorage.getItem(layoutKey)||"{}")||{}}catch(e){layout={}}
+function saveLayout(){try{localStorage.setItem(layoutKey,JSON.stringify(layout))}catch(e){}}
+function has(s,a){var r=a.req||{};return a.room===s.room&&(r.i||[]).every(function(x){return s.i.indexOf(x)>-1})&&(r.f||[]).every(function(x){return s.f.indexOf(x)>-1})&&(a.n||[]).every(function(x){return s.f.indexOf(x)<0})}
+function avail(s){return s.end?[]:G.acts.filter(function(a){return has(s,a)})}
+function ap(s,a){var e=a.eff||{},i=new Set(s.i),f=new Set(s.f);(e.i||[]).forEach(function(x){i.add(x)});(e.rm||[]).forEach(function(x){i.delete(x)});(e.f||[]).forEach(function(x){f.add(x)});
+return{room:a.go||s.room,i:Array.from(i).sort(),f:Array.from(f).sort(),end:a.end||null}}
+function key(s){return s.room+"|"+s.i+"|"+s.f+"|"+(s.end||"")}
+/* —— 通关时一次性 BFS 求理论最短步数（仅结算展示，不剧透路径） —— */
+function shortestSteps(){
+try{var s0={room:G.start,i:[],f:[],end:null},K={},Q=[{s:s0,d:0}];
+K[key(s0)]=1;
+while(Q.length){
+if(Q.length>150000)return -1;
+var it=Q.shift(),s=it.s;
+if(s.end==="win")return it.d;
+var as=avail(s);
+for(var i=0;i<as.length;i++){var t=ap(s,as[i]),k=key(t);
+if(!K[k]){K[k]=1;Q.push({s:t,d:it.d+1})}}}
+return -2}catch(e){return -1}}
+function say(t){var p=document.createElement("p");p.textContent=t;logEl.appendChild(p);logEl.scrollTop=1e5}
+function solvedCount(){return (G.puzzles||[]).filter(function(p){return S.f.indexOf(p.solved)>-1}).length}
+function catOf(a){if(a.go)return["🚪 移动"];
+if(/^(看|读|翻|查|端详|听|问|搜|找|观察|检查|细看|打量|数|对照|比较|核|掀|望|摸|试|探|拨|闻|敲|点)/.test(a.label||""))return["🔍 查看"];
+return["🛠️ 行动"]}
+function drawMap(){
+var D={},cur=S.room;
+Object.keys(visited).forEach(function(r){D[r]=1});
+D[cur]=1;
+var adj={};
+avail(S).forEach(function(a){if(a.go){D[a.go]=1;adj[a.go]=1}});
+var edges={};
+G.acts.forEach(function(a){if(a.go&&(visited[a.room]&&visited[a.go]))edges[[a.room,a.go].sort().join("|")]=1;
+if(a.go&&a.room===cur)edges[[cur,a.go].sort().join("|")]=2});
+var ids=Object.keys(D),depth={};
+ids.forEach(function(r){depth[r]=-1});
+depth[G.start]=0;var q=[G.start];
+while(q.length){var r=q.shift();G.acts.forEach(function(a){if(a.go&&a.room===r&&D[a.go]&&depth[a.go]<0){depth[a.go]=depth[r]+1;q.push(a.go)}})}
+var byLevel={},maxKnown=-1;
+ids.forEach(function(r){if(depth[r]>=0){(byLevel[depth[r]]=byLevel[depth[r]]||[]).push(r);if(depth[r]>maxKnown)maxKnown=depth[r]}});
+var unk=ids.filter(function(r){return depth[r]<0});
+if(unk.length){Array.prototype.push.apply(byLevel[maxKnown+1]=byLevel[maxKnown+1]||[],unk)}
+var levels=Object.keys(byLevel).map(Number).sort(function(a,b){return a-b});
+var pos={};levels.forEach(function(d){byLevel[d].sort();byLevel[d].forEach(function(r,i){
+pos[r]=layout[r]?{x:layout[r].x,y:layout[r].y}:{x:36+d*78,y:22+i*34}})});
+var xs=ids.map(function(r){return pos[r].x}),ys=ids.map(function(r){return pos[r].y});
+var W=Math.max(36+(maxKnown+2)*78+6,Math.max.apply(null,xs.concat([200]))+46);
+var H=Math.max(22+((levels.length?Math.max.apply(null,levels.map(function(d){return byLevel[d].length})):1)+1)*34,Math.max.apply(null,ys.concat([120]))+34);
+var svg=['<svg viewBox="0 0 '+W+" "+H+'" xmlns="http://www.w3.org/2000/svg">'];
+Object.keys(edges).forEach(function(k){var p=k.split("|");
+if(!pos[p[0]]||!pos[p[1]])return;
+svg.push('<line class="edge'+(edges[k]===2?" cur":"")+'" x1="'+pos[p[0]].x+'" y1="'+pos[p[0]].y+'" x2="'+pos[p[1]].x+'" y2="'+pos[p[1]].y+'"/>')});
+ids.forEach(function(r){var p=pos[r],cls="node"+(visited[r]?" vis":"")+(r===cur?" cur":"")+(adj[r]&&!visited[r]?" new":"");
+var name=(r===cur||visited[r]||adj[r])?(G.rooms[r]?G.rooms[r].n:r):"?";
+svg.push('<g class="'+cls+'" data-room="'+r+'"><rect x="'+(p.x-31)+'" y="'+(p.y-12)+'" width="62" height="24" rx="9"/><text x="'+p.x+'" y="'+(p.y+4)+'" text-anchor="middle">'+name.slice(0,6)+"</text></g>")});
+svg.push("</svg>");
+var m=document.getElementById("map");m.setAttribute("viewBox","0 0 "+W+" "+H);m.innerHTML=svg.join("")}
+/* —— 地图节点拖拽（指针事件，布局实时存档） —— */
+(function(){
+var m=document.getElementById("map"),drag=null;
+function svgXY(evt){var pt=m.createSVGPoint();pt.x=evt.clientX;pt.y=evt.clientY;return pt.matrixTransform(m.getScreenCTM().inverse())}
+m.addEventListener("pointerdown",function(e){
+var t=e.target,g=t&&t.closest?t.closest(".node"):null;if(!g)return;
+var id=g.getAttribute("data-room");if(!id)return;
+drag={id:id,off:{x:svgXY(e).x-(layout[id]?layout[id].x:0),y:svgXY(e).y-(layout[id]?layout[id].y:0)}};
+g.classList.add("drag");try{m.setPointerCapture(e.pointerId)}catch(err){}});
+m.addEventListener("pointermove",function(e){
+if(!drag)return;
+var p=svgXY(e);
+layout[drag.id]={x:Math.max(31,Math.round(p.x-drag.off.x)),y:Math.max(12,Math.round(p.y-drag.off.y))};
+drawMap()});
+function up(){if(!drag)return;drag=null;saveLayout();
+document.getElementById("map").querySelectorAll(".node").forEach(function(g){g.classList.remove("drag")})}
+m.addEventListener("pointerup",up);m.addEventListener("pointercancel",up)})();
+document.getElementById("mapreset").onclick=function(){layout={};saveLayout();drawMap()};
+function chips(){document.getElementById("cPuzzle").textContent=(G.puzzles||[]).length?solvedCount()+"/"+G.puzzles.length:"–";
+document.getElementById("cSteps").textContent=steps;document.getElementById("cItems").textContent=S.i.length}
+function draw(){
+document.getElementById("room").textContent=G.rooms[S.room].n;
+document.getElementById("strip").textContent=emojiFor(G.rooms[S.room].n+" "+G.rooms[S.room].d);
+document.getElementById("desc").textContent=G.rooms[S.room].d;
+document.documentElement.style.setProperty("--tint",PALETTE[hash(title+G.rooms[S.room].n)%PALETTE.length]+"1f");
+document.getElementById("inv").innerHTML=S.i.length?S.i.map(function(x){var n=G.items[x]||x;return '<span class="tag"><span class="em">'+emojiFor(n,1)+"</span>"+n+"</span>"}).join(""):'<span class="tag">（空手）</span>';
+if(S.end){document.getElementById("acts").innerHTML="";
+var b=document.createElement("button");b.className="pri";b.textContent=S.end==="win"?"通关！再玩一次":"失败了，重新开始";b.onclick=reset;document.getElementById("acts").appendChild(b);
+var sp=S.end==="win"?shortestSteps():null;
+document.getElementById("veilEm").textContent=S.end==="win"?"🎉":"🕯️";
+document.getElementById("veilT").textContent=S.end==="win"?"通关！":"失败了……";
+var sub=S.end==="win"?("本局 "+steps+" 步 · 解开谜题 "+solvedCount()+"/"+(G.puzzles||[]).length+(sp>0?(" · 理论最短 "+sp+" 步"+(steps===sp?" · 完美路线 🏆":steps<=sp+3?" · 干净利落 ⭐":" · 曲径通幽 🧭")):(sp===-1?" · （状态太多，未计算最短步数）":""))):"";
+document.getElementById("veilSub").textContent=sub;
+document.getElementById("veil").classList.add("show");
+chips();drawMap();return}
+document.getElementById("veil").classList.remove("show");
+var groups={},order=[];
+avail(S).forEach(function(a){var c=catOf(a);if(!groups[c[0]]){groups[c[0]]=[];order.push(c[0])}groups[c[0]].push(a)});
+var box=document.getElementById("acts");box.innerHTML="";
+order.forEach(function(gn){var h=document.createElement("div");h.className="grp";h.textContent=gn;box.appendChild(h);
+groups[gn].forEach(function(a){var b=document.createElement("button");b.textContent=a.label;b.onclick=function(){act(a)};box.appendChild(b)})});
+chips();drawMap()}
+function act(a){var pre=S.room;var t=ap(S,a);S=t;steps++;visited[S.room]=1;
+if(pre!==S.room)edges[[pre,S.room].sort().join("|")]=1;
+if(a.text)say(a.text);if(a.go)say("—— "+G.rooms[S.room].n+" ——");draw()}
+function reset(){S={room:G.start,i:[],f:[],end:null};steps=0;visited={};visited[G.start]=1;edges={};logEl.innerHTML="";
+if(intro)say(intro);say(G.rooms[S.room].d);document.getElementById("veil").classList.remove("show");draw()}
+document.getElementById("restart").onclick=reset;
+document.getElementById("veilBtn").onclick=reset;
+reset();
+}
+if(window.__GAME__){boot(window.__GAME__);return}
+fetch("game.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}).then(boot).catch(function(){
+var ld=document.getElementById("loader");ld.style.display="block";
+document.getElementById("pickjson").addEventListener("change",function(e){
+var f=e.target.files[0];if(!f)return;var rd=new FileReader();
+rd.onload=function(){try{boot(JSON.parse(rd.result))}catch(err){alert("game.json 解析失败："+err.message)}};
+rd.readAsText(f,"utf-8")});
+});
+})();
+</script>
+</body>
+</html>

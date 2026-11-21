@@ -1,0 +1,20 @@
+{
+ "game": "g06",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 5,
+ "invalid": 0,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "进桥头磅房",
+  "不誊单先升杆",
+  "照告示牌填15吨放行",
+  "出后门到猫道梯口",
+  "冒雨上检修猫道"
+ ]
+}

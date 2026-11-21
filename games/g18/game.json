@@ -1,0 +1,105 @@
+{
+  "title": "假档案",
+  "intro": "凌晨两点，地下二十层的档案库自动落了锁。天亮交班前，要把那份混进借阅登记的假档案清出来，带着真卷宗一起从安全门送回总馆核对台。",
+  "start": "duty",
+  "rooms": {
+    "duty": {
+      "n": "值班室",
+      "d": "值班桌摊着没合上的交班本，桌角立着老台历，墙柜挂满钥匙牌。安全门的门禁主机在门边闪着待机灯。"
+    },
+    "hall": {
+      "n": "中央环廊",
+      "d": "环廊顶灯隔一盏亮一盏，三条门道分向图纸间、登记区和消毒间。北头双重门嵌着读卡屏，屏上只亮红灯。"
+    },
+    "plan": {
+      "n": "图纸整理间",
+      "d": "晒图机占了半张案台，图纸筒斜倚在柜边。墙上钉着一张褪色的库区平面图，四角用图钉按得平平整整。"
+    },
+    "reg": {
+      "n": "借阅登记区",
+      "d": "借阅台蒙着防尘布，登记簿摊在台灯下。台后架子上插满待借卷盒，编号牌从甲到丁一排挂开。"
+    },
+    "uv": {
+      "n": "消毒间",
+      "d": "紫外消毒柜占满一面墙，观察窗遮着牛皮纸帘。消毒记录本用铁环串在柜边，纸页翻得起了毛边。"
+    },
+    "corridor": {
+      "n": "北走廊",
+      "d": "双重门后的北走廊只亮应急灯，东西尽端各有一扇门，西端门框包着铜边。温湿度计挂在廊柱上，停在十九度。"
+    },
+    "carea": {
+      "n": "丙区库房",
+      "d": "丙区的密集架面东排开，摇柄铸在每列端头。架列只装到第三列，第四列位空着一块待装的隔板。"
+    },
+    "rare": {
+      "n": "特藏室",
+      "d": "特藏室四壁无窗，恒温柜列沿北墙排开。樟木和防虫药的气味压着尘味，声控灯应声亮起又暗下去。"
+    }
+  },
+  "items": {
+    "card": "门禁副卡",
+    "brass_key": "特藏室铜钥匙",
+    "fake_box": "假档案盒",
+    "real_file": "真卷宗"
+  },
+  "puzzles": [
+    { "id": "值班桌抽屉", "solved": "p_drawer", "clue": "c_note" },
+    { "id": "墙柜特藏钥", "solved": "p_keys", "clue": "c_note" },
+    { "id": "门禁记录终端", "solved": "p_swipe", "clue": "c_reader" },
+    { "id": "丙区密集架", "solved": "p_shelf", "clue": "c_handle" },
+    { "id": "假档案核对", "solved": "p_fake", "clue": "c_ledger" },
+    { "id": "特藏铜边门", "solved": "p_raredoor", "clue": "c_map" },
+    { "id": "恒温柜真卷", "solved": "p_real", "clue": "c_raretag" }
+  ],
+  "acts": [
+    { "id": "duty2hall", "room": "duty", "label": "出值班室到环廊", "go": "hall" },
+    { "id": "hall2duty", "room": "hall", "label": "回值班室", "go": "duty" },
+    { "id": "hall2plan", "room": "hall", "label": "进图纸整理间", "go": "plan" },
+    { "id": "plan2hall", "room": "plan", "label": "回环廊", "go": "hall" },
+    { "id": "hall2reg", "room": "hall", "label": "进借阅登记区", "go": "reg" },
+    { "id": "reg2hall", "room": "reg", "label": "回环廊", "go": "hall" },
+    { "id": "hall2uv", "room": "hall", "label": "进消毒间", "go": "uv" },
+    { "id": "uv2hall", "room": "uv", "label": "回环廊", "go": "hall" },
+    { "id": "swipe_gate", "room": "hall", "label": "刷副卡开双重门", "req": { "i": ["card"] }, "n": ["p_gate"], "eff": { "f": ["p_gate"] }, "text": "读卡屏由红转绿，气密锁泄压的声音顺着门缝传了出来。" },
+    { "id": "hall2cor", "room": "hall", "label": "通过双重门进北走廊", "req": { "f": ["p_gate"] }, "go": "corridor" },
+    { "id": "cor2hall", "room": "corridor", "label": "退回中央环廊", "go": "hall" },
+    { "id": "cor2carea", "room": "corridor", "label": "推丙区库房气密门", "go": "carea" },
+    { "id": "carea2cor", "room": "carea", "label": "回北走廊", "go": "corridor" },
+    { "id": "cor2rare", "room": "corridor", "label": "进特藏室", "req": { "f": ["p_raredoor"] }, "go": "rare" },
+    { "id": "rare2cor", "room": "rare", "label": "退回北走廊", "go": "corridor" },
+
+    { "id": "read_note", "room": "duty", "label": "读库长的交班留言", "n": ["c_note"], "eff": { "f": ["c_note"] }, "text": "交班本里夹着一行红字：核对假档案的事拜托了。门禁副卡压在台历底下、收在抽屉里；特藏柜的铜钥匙挂在墙柜丁字牌后。末尾又添一句：清点完，调换的假盒和真卷要一并送总馆核对台，少一样都算事故。" },
+    { "id": "open_drawer", "room": "duty", "label": "拉开值班桌抽屉", "req": { "f": ["c_note"] }, "n": ["p_drawer"], "eff": { "f": ["p_drawer"], "i": ["card"] }, "text": "台历翻开在二十日那页，底下压着一张门禁副卡，卡面还带着塑封的静电。" },
+    { "id": "open_keycab", "room": "duty", "label": "按丁字牌取墙柜钥匙", "req": { "f": ["c_note"] }, "n": ["p_keys"], "eff": { "f": ["p_keys"], "i": ["brass_key"] }, "text": "丁字牌翻过来，后头的挂钩上挂着一枚黄铜钥匙，牌背錾着特藏二字。" },
+    { "id": "look_host", "room": "duty", "label": "看门禁主机日志", "n": ["c_reader"], "eff": { "f": ["c_reader"] }, "text": "主机屏幕滚着待机画面，末行日志停在昨夜 21:47：库区双重门有过一次刷卡进入，工号栏空白。" },
+    { "id": "query_terminal", "room": "hall", "label": "用副卡调阅门禁记录", "req": { "i": ["card"], "f": ["c_reader"] }, "n": ["p_swipe"], "eff": { "f": ["p_swipe"] }, "text": "壁挂终端吐出半米热敏纸：昨夜 21:47 双重门刷卡一次，未登记领用，回程无出库记录——那趟进来的人还没带东西出去。" },
+    { "id": "hall_lamp", "room": "hall", "label": "看环廊顶灯", "text": "光斑落在地面的导流贴条上，贴条箭头一支支都指向北。" },
+
+    { "id": "read_map", "room": "plan", "label": "展开库区平面图", "n": ["c_map"], "eff": { "f": ["c_map"] }, "text": "图注写得细：丙区面东三列，第四列位留作检修空位；乙区面南五列；丁区面西四列；北走廊东西走向，西端是特藏室，铜边门朝西开，东端是防火门。" },
+    { "id": "plan_machine", "room": "plan", "label": "看晒图机", "text": "滚筒里还留着上一卷图的氨水味，电源灯早就熄了。" },
+
+    { "id": "read_ledger", "room": "reg", "label": "翻借阅登记簿", "n": ["c_ledger"], "eff": { "f": ["c_ledger"] }, "text": "昨夜登记四笔：甲-02-03、乙-05-01、丙-04-02、丁-03-01，各借出一盒。经手人栏四笔全是同一个花押，笔锋却不像同一只手写的。" },
+    { "id": "reg_plates", "room": "reg", "label": "看台后的编号牌", "text": "丙区的牌子背面用铅笔写着一行小字：只有三列，余位未装。" },
+
+    { "id": "read_uv", "room": "uv", "label": "翻消毒记录本", "n": ["c_uv"], "eff": { "f": ["c_uv"] }, "text": "昨夜过灯的只有一盒，编号栏被水渍洇开，只认得出丙字头。备注栏一行小字：归架时摆在东数第二列第二层，盒角崭新无陈灰。" },
+    { "id": "uv_cab", "room": "uv", "label": "看紫外消毒柜", "text": "内壁映出惨白的灯管影，计数器停在零四二一次。" },
+
+    { "id": "look_crank", "room": "carea", "label": "端详架列摇柄", "n": ["c_handle"], "eff": { "f": ["c_handle"] }, "text": "摇柄铸着丙字区号，柄杆挂着防挤手的皮护套，齿轮箱里能听见滚轮的轻响。" },
+    { "id": "crank_shelf", "room": "carea", "label": "摇开丙区的密集架", "req": { "f": ["c_map"] }, "n": ["p_shelf"], "eff": { "f": ["p_shelf"] }, "text": "摇柄转过十几圈，架列沿轨道匀匀让开一条缝。第三列的架板一层层露出来，第四列位果然只有隔板。" },
+    { "id": "inspect_box", "room": "carea", "label": "清点丙区东二列第二层", "req": { "f": ["c_ledger", "c_map", "c_uv", "p_swipe", "p_shelf"] }, "n": ["p_fake"], "eff": { "f": ["p_fake"], "i": ["fake_box"] }, "text": "第二层挤着两盒：里头原编丙-03-02 的封条完好；外头那盒标签赫然写着丙-04-02——一个图纸上不存在的架位。抽出来一掂，纸页崭新，盒角没有一点陈灰。" },
+    { "id": "wrong_pick", "room": "carea", "label": "伸手去够第四列位", "req": { "f": ["p_shelf"] }, "n": ["p_fake"], "text": "第四列位只有待装架的隔板，指节敲上去空空的。图纸上没架子，现实里也没有。" },
+    { "id": "checklist", "room": "carea", "label": "掏出核对单再看一眼", "req": { "f": ["c_ledger"] }, "n": ["p_fake"], "text": "登记台塞的核对单背面写着：摇开丙区架列须凭库区平面图；开盒清点前，借阅登记、门禁调阅、紫外消毒三项记录与平面图缺一不可——缺一样，那盒都清点不得。" },
+
+    { "id": "open_westdoor", "room": "corridor", "label": "用铜钥匙开包铜边的门", "req": { "i": ["brass_key"] }, "n": ["p_raredoor"], "eff": { "f": ["p_raredoor"] }, "text": "铜钥匙进锁转了半圈就到底，铜边门朝西弹开一道缝，樟木味涌了出来。" },
+    { "id": "wrong_door", "room": "corridor", "label": "推东端的防火门", "n": ["p_raredoor"], "text": "防火门的推杠压下去半寸就顶死了，门后是直上地面的排烟井，平时根本不开放。" },
+
+    { "id": "look_tag", "room": "rare", "label": "看柜端木牌", "n": ["c_raretag"], "eff": { "f": ["c_raretag"] }, "text": "木牌刻着：自北墙起数，一柜至六柜。前五柜虚掩着，第六柜挂着自己的小锁。挨个看封条：数到第三柜那道浆糊还发潮、边角挺括，是新换上的；其余五柜封条灰旧起翘。" },
+    { "id": "open_cab3", "room": "rare", "label": "照木牌的数法拉开恒温柜", "req": { "f": ["c_raretag"] }, "n": ["p_real"], "eff": { "f": ["p_real"], "i": ["real_file"] }, "text": "第三柜里卧着防潮卷盒，盒签火漆完好。卷内首页钤着库章：原件待核——正是库长交代要送回总馆的那份。" },
+    { "id": "wrong_cab1", "room": "rare", "label": "拉开南端倒数第三口柜", "req": { "f": ["c_raretag"] }, "n": ["p_real"], "text": "从南端倒数第三口是第四柜，里头立着空盒和一袋防虫药，火漆一颗也没有。" },
+    { "id": "wrong_cab2", "room": "rare", "label": "去够锁着的第六柜", "req": { "f": ["c_raretag"] }, "n": ["p_real"], "text": "第六柜的锁孔积着灰，一年没开过，摇上去纹丝不动。" },
+
+    { "id": "burn_fake", "room": "uv", "label": "把假档案塞进紫外柜销毁", "req": { "i": ["fake_box"] }, "end": "lose", "text": "牛皮纸遮光帘一掀，强紫外灯把盒面的字烤成焦褐。纸屑飘起来的时候，烟感探头把整层库房都叫醒了——库长交代过，这盒是要连同真卷一并送总馆核对台的证物。" },
+    { "id": "open_exit", "room": "duty", "label": "刷副卡退出安全门", "req": { "i": ["card", "fake_box", "real_file"] }, "end": "win", "text": "门禁主机连响两声，绿灯亮起，磁力锁应声脱开。副卡被回收口吞了进去——两只卷盒抱在怀里，天亮前还赶得上总馆的核对台。" }
+  ],
+  "difficulty": { "minSteps": 14, "maxSteps": 36, "maxBranch": 6 }
+}

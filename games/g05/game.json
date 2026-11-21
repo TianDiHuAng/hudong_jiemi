@@ -1,0 +1,172 @@
+{
+  "title": "末班进站前",
+  "intro": "末班回场车 23:52 进站，站牌、钟面与值班排班板却各说各话。按规程把进路备好，一步都不能乱。",
+  "start": "hall",
+  "rooms": {
+    "hall": {
+      "n": "环形站厅",
+      "d": "环形候车厅只亮两盏顶灯，双面钟悬在厅心，秒针走得沉稳。检票口旁立着站牌环柱，柱根包着磨亮的铁箍。"
+    },
+    "office": {
+      "n": "值班室",
+      "d": "值班台的玻璃板下压着交接簿，墙上的排班板缺了一角玻璃。规程手册卷着边，挂钩上的接车信号灯还挂着。"
+    },
+    "platform": {
+      "n": "一站台",
+      "d": "雨棚沿结着冰凌，灯柱顶的红灯匣空着。站台端头的小门敞着，风从道岔区那头顶过来。"
+    },
+    "tool": {
+      "n": "站台工具间",
+      "d": "架上一层薄灰，油壶和棉线手套搁在顺手的位置。墙上的工具描图缺了两件，粉笔圈还新。"
+    },
+    "switch": {
+      "n": "道岔区",
+      "d": "进站道岔的闸杆裹着冰壳，岔尖贴着主线。信号所的砖塔就在岔区上方，瞭望窗透出一点黄光。"
+    },
+    "signal": {
+      "n": "信号所",
+      "d": "一排信号柄靠墙立着，进站柄挂着红牌。瞭望窗正对环线进站方向，玻璃上蒙着水汽。"
+    }
+  },
+  "items": {
+    "lamp": "接车信号灯",
+    "oilcan": "油壶"
+  },
+  "puzzles": [
+    { "id": "三源定道", "solved": "p_sign", "clue": "c_roster" },
+    { "id": "领接车灯", "solved": "p_lamp", "clue": "c_reg" },
+    { "id": "岔杆除冻", "solved": "p_oil", "clue": "c_frost" },
+    { "id": "挂接车灯", "solved": "seq1", "clue": "p_lamp" },
+    { "id": "开进站信号", "solved": "p_seq", "clue": "seq2" }
+  ],
+  "acts": [
+    { "id": "h2office", "room": "hall", "label": "进值班室", "go": "office" },
+    { "id": "office2hall", "room": "office", "label": "回站厅", "go": "hall" },
+    { "id": "h2platform", "room": "hall", "label": "下站台", "go": "platform" },
+    { "id": "platform2hall", "room": "platform", "label": "回站厅", "go": "hall" },
+    { "id": "p2tool", "room": "platform", "label": "进站台工具间", "go": "tool" },
+    { "id": "tool2platform", "room": "tool", "label": "回站台", "go": "platform" },
+    { "id": "p2switch", "room": "platform", "label": "下到道岔区", "go": "switch" },
+    { "id": "switch2platform", "room": "switch", "label": "回站台", "go": "platform" },
+    { "id": "sw2signal", "room": "switch", "label": "上砖塔进信号所", "go": "signal" },
+    { "id": "signal2sw", "room": "signal", "label": "下到道岔区", "go": "switch" },
+    { "id": "sig2plat", "room": "signal", "label": "下到站台", "go": "platform" },
+    { "id": "plat2sig", "room": "platform", "label": "上砖塔回信号所", "go": "signal" },
+    {
+      "id": "look_clock",
+      "room": "hall",
+      "label": "对一对双面钟",
+      "n": ["c_clock"],
+      "eff": { "f": ["c_clock"] },
+      "text": "双面钟指着 23:46，秒针一格不落。排班板上 23:12 的货列早已放行，环线这头只剩 23:52 的末班回场车没接。"
+    },
+    {
+      "id": "look_post",
+      "room": "hall",
+      "label": "端详站牌环与柱根销座",
+      "n": ["c_post"],
+      "eff": { "f": ["c_post"] },
+      "text": "环上的白漆写着 5 道，可环是活的；柱根的销座是铸死的——砂铸道号清清楚楚：三。环转得再欢，也拗不过销座。"
+    },
+    {
+      "id": "look_roster",
+      "room": "office",
+      "label": "读墙上的排班板",
+      "n": ["c_roster"],
+      "eff": { "f": ["c_roster"] },
+      "text": "末行让水汽洇了：23:52 末班回场车，接车站务待填，停泊道次只剩一团墨痕，像三又像五。"
+    },
+    {
+      "id": "read_reg",
+      "room": "office",
+      "label": "翻规程手册接车页",
+      "n": ["c_reg"],
+      "eff": { "f": ["c_reg"] },
+      "text": "接车四条：先挂接车灯，次扳进站道岔，再开进站信号，末了站台举灯接车，一步不依，联锁不放行。扳岔前须给岔杆浇油——工具间的油壶就为这个备着。"
+    },
+    {
+      "id": "take_lamp",
+      "room": "office",
+      "label": "摘下接车信号灯",
+      "req": { "f": ["c_reg"] },
+      "n": ["p_lamp"],
+      "eff": { "f": ["p_lamp"], "i": ["lamp"] },
+      "text": "红玻璃灯罩擦得干净，提梁上拴着老葛的名条——他让雪困在环线那头，这灯今晚归你提。"
+    },
+    {
+      "id": "flip_sign",
+      "room": "hall",
+      "label": "按销座把站牌环翻到3道",
+      "req": { "f": ["c_clock", "c_post", "c_roster"] },
+      "n": ["p_sign"],
+      "eff": { "f": ["p_sign"] },
+      "text": "环牌转到 3 道，卡销落进销座，咔的一声咬住。站牌、钟面、排班板，三处头一回对上了同一个道次。"
+    },
+    {
+      "id": "frost",
+      "room": "switch",
+      "label": "摸一摸岔杆的冰壳",
+      "n": ["c_frost"],
+      "eff": { "f": ["c_frost"] },
+      "text": "冰壳厚得能刮下整片，岔尖和主线冻成了一体。不上油，杆柄扳不到底。"
+    },
+    {
+      "id": "take_oil",
+      "room": "tool",
+      "label": "取下架上的油壶",
+      "n": ["p_oil"],
+      "eff": { "f": ["p_oil"], "i": ["oilcan"] },
+      "text": "油壶还有大半，壶嘴裹着防尘的布——冷夜扳岔先浇油，是这条环线的老规矩。"
+    },
+    {
+      "id": "hang_lamp",
+      "room": "platform",
+      "label": "把接车灯挂上灯柱",
+      "req": { "i": ["lamp"] },
+      "n": ["seq1"],
+      "eff": { "f": ["seq1"] },
+      "text": "灯匣扣好，红灯透过冰凌晕开一团暖光。规程第一条，成了。"
+    },
+    {
+      "id": "throw_switch",
+      "room": "switch",
+      "label": "浇油扳岔进3道",
+      "req": { "i": ["oilcan"], "f": ["seq1", "p_sign"] },
+      "n": ["seq2"],
+      "eff": { "f": ["seq2"] },
+      "text": "油顺着闸杆浇下去，冰壳应声裂开。杆把压到底，岔尖严丝合缝地贴上 3 道轨腹。"
+    },
+    {
+      "id": "wrong_hard",
+      "room": "switch",
+      "label": "硬扳冻住的岔杆",
+      "n": ["seq2"],
+      "text": "杆座冻成了一体，硬扳只会掰断杆柄，你收了手。"
+    },
+    {
+      "id": "clear_signal",
+      "room": "signal",
+      "label": "拔红牌推开进站信号",
+      "req": { "f": ["seq2", "c_clock"] },
+      "n": ["p_seq"],
+      "eff": { "f": ["p_seq"] },
+      "text": "柄推到位，绿灯穿过雨雾亮起来——23:47，离末班进站整差五分钟，卡着规程的点儿。"
+    },
+    {
+      "id": "wrong_noswitch",
+      "room": "signal",
+      "label": "不扳岔直接开信号",
+      "n": ["p_seq"],
+      "text": "柄推到一半就顶死了——岔尖还贴着主线，联锁装置不放行。"
+    },
+    {
+      "id": "win_act",
+      "room": "platform",
+      "label": "举灯立在3道站牌下",
+      "req": { "f": ["p_seq", "p_sign"] },
+      "end": "win",
+      "text": "环线尽头先亮起一对车灯，末班回场车顺着扳好的道岔滑进 3 道，车轮把雨夜碾出长长一声。你举着灯，在接车簿最后一栏填上自己的名字。"
+    }
+  ],
+  "difficulty": { "minSteps": 6, "maxSteps": 20, "maxBranch": 6 }
+}

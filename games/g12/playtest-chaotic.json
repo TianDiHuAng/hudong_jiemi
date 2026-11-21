@@ -1,0 +1,16 @@
+{
+ "game": "g12",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 1,
+ "invalid": 0,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "攀竖梯下泄水井看看"
+ ]
+}

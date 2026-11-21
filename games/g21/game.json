@@ -1,0 +1,95 @@
+{
+  "title": "封箱夜",
+  "intro": "封箱戏散场，正门落了大锁，班主回乡过年，走前撂下一句老例：戏路排对，箱柜自开；封箱香三炷上齐，正门蜡封自酥。后台的角儿们围着炭盆守岁，闲话一句咬着一句。",
+  "start": "house",
+  "rooms": {
+    "house": {
+      "n": "池座",
+      "d": "池座桌椅罩着青布，戏桌上压着散场后的戏单。台口绣金大幕垂着，幕缝里透出后台炭火的烟气。"
+    },
+    "gate": {
+      "n": "门房",
+      "d": "门房小窗的灯还亮着，正门大锁外加两道横闩。墙上历书折了角，正折在腊月三十那页。"
+    },
+    "stage": {
+      "n": "戏台",
+      "d": "台毯上还立着最后一场的大帐，城片斜靠台柱。九龙口后的侧幕黑沉沉，通往后台的道口挂着棉帘。"
+    },
+    "backstage": {
+      "n": "后台",
+      "d": "大衣箱二衣箱摞成半堵墙，铜扣擦得锃亮。水牌立在箱架旁，板上五个空槽干干净净。祖师楼的木梯在角落盘上去。"
+    },
+    "dressing": {
+      "n": "化妆间",
+      "d": "镜台蒙着半幅红布，炭盆烧得正旺，角儿们卸了装围炉守岁，瓜子壳吐了一地。"
+    },
+    "band": {
+      "n": "琴房",
+      "d": "文武场的家伙什靠墙码齐，胡琴匣平放在条案上，松香末的气味混着酒气。锣鼓架上还搭着鼓键。"
+    },
+    "shrine": {
+      "n": "祖师楼",
+      "d": "祖师龛前的香炉积着厚陈灰，龛旁小柜挂着黄铜锁。木楼梯踩上去咯吱作响，龛顶匾额是道光年间的旧物。"
+    }
+  },
+  "items": {
+    "cardbox": "戏码牌盒",
+    "front_key": "前门铜钥匙",
+    "shrine_key": "龛柜钥匙",
+    "incense": "封箱香束",
+    "tinder": "火折子"
+  },
+  "puzzles": [
+    { "id": "胡琴匣牌盒", "solved": "p_cardbox", "clue": "c_talk1" },
+    { "id": "大衣箱字牌锁", "solved": "p_trunk", "clue": "c_prog" },
+    { "id": "镜台文脑", "solved": "p_mirror", "clue": "c_talk4" },
+    { "id": "祖师龛柜", "solved": "p_shrine", "clue": "c_seal" },
+    { "id": "封箱香", "solved": "p_rite", "clue": "c_seal" },
+    { "id": "正门大锁", "solved": "won", "clue": "c_gate" }
+  ],
+  "acts": [
+    { "id": "h2gate", "room": "house", "label": "去门房", "go": "gate" },
+    { "id": "gate2h", "room": "gate", "label": "回池座", "go": "house" },
+    { "id": "h2stage", "room": "house", "label": "上台口", "go": "stage" },
+    { "id": "s2h", "room": "stage", "label": "下台回池座", "go": "house" },
+    { "id": "s2b", "room": "stage", "label": "掀棉帘进后台", "go": "backstage" },
+    { "id": "b2s", "room": "backstage", "label": "回戏台", "go": "stage" },
+    { "id": "b2d", "room": "backstage", "label": "进化妆间", "go": "dressing" },
+    { "id": "d2b", "room": "dressing", "label": "回后台", "go": "backstage" },
+    { "id": "b2band", "room": "backstage", "label": "去琴房", "go": "band" },
+    { "id": "band2b", "room": "band", "label": "回后台", "go": "backstage" },
+    { "id": "b2shrine", "room": "backstage", "label": "上木梯进祖师楼", "go": "shrine" },
+    { "id": "shrine2b", "room": "shrine", "label": "下梯回后台", "go": "backstage" },
+
+    { "id": "read_program", "room": "house", "label": "拿起戏桌上的戏单", "n": ["c_prog"], "eff": { "f": ["c_prog"] }, "text": "戏单是木版印的：封箱五戏——跳加官、麻姑献寿、拾玉镯、打龙袍、挑滑车。末行小字写着：顺序以水牌为准。" },
+    { "id": "look_cur", "room": "house", "label": "看台口绣幕", "text": "绣幕的金线在灯下泛旧，幕角绣的五只蝙蝠缺了一只的金线，露出底布。" },
+
+    { "id": "look_frontdoor", "room": "gate", "label": "看正门大锁", "n": ["c_gate"], "eff": { "f": ["c_gate"] }, "text": "大锁是老式的铜转锁，锁眼外罩着一层蜡封——封箱之后，得等封箱香上了才肯开。" },
+    { "id": "pull_drawer", "room": "gate", "label": "拉门房的抽屉", "text": "抽屉里只有半盒火柴、一本欠账簿和一副旧套碗，没有牌盒的影子。" },
+    { "id": "look_almanac", "room": "gate", "label": "看墙上历书", "text": "折角那页印着：除夕，宜祭祀、封箱，忌动土。" },
+
+    { "id": "look_dr", "room": "stage", "label": "看台上大帐", "text": "大帐上的盘龙金鳞剥了几片，竹竿绑绳还留着检场人手打的结。" },
+
+    { "id": "listen_t1", "room": "dressing", "label": "听花脸老谭说话", "n": ["c_talk1"], "eff": { "f": ["c_talk1"] }, "text": "老谭抿了口酒：班主把牌盒塞在胡琴匣里了，我亲眼见的，错不了。我的打龙袍排在麻姑献寿后头，大轴必是武戏。" },
+    { "id": "listen_t2", "room": "dressing", "label": "听旦角小艳芬说话", "n": ["c_talk2"], "eff": { "f": ["c_talk2"] }, "text": "小艳芬剥着瓜子：老谭喝高了。牌盒分明压在门房抽屉里，栓子亲口跟我说的。我的拾玉镯前头挨着的是麻姑献寿，后头就是老包的龙袍。" },
+    { "id": "listen_t3", "room": "dressing", "label": "听打鼓佬老崔说话", "n": ["c_talk3"], "eff": { "f": ["c_talk3"] }, "text": "老崔敲着鼓键：跳加官打头，这是老例；挑滑车的大靠今晚头一个让我攮鼓，它只能是末一场。牌盒的事别信老谭，他昨晚喝了两壶——不过胡琴匣下午借武场取松香，倒是开过一次。" },
+    { "id": "listen_t4", "room": "dressing", "label": "听检场的顺子说话", "n": ["c_talk4"], "eff": { "f": ["c_talk4"] }, "text": "顺子往炭盆里添了块炭：龛柜钥匙年年班主自己收，今年托了老例——镜台文脑的抽屉里，香束火折都备着，就等封箱香上齐。" },
+    { "id": "open_mirror", "room": "dressing", "label": "拉开镜台的文脑抽屉", "req": { "f": ["c_talk4"] }, "n": ["p_mirror"], "eff": { "f": ["p_mirror"], "i": ["incense", "tinder"] }, "text": "文脑抽屉的暗槽里躺着一束香、一只火折子，香纸包上写着封箱三炷四个小字。" },
+    { "id": "warm_fire", "room": "dressing", "label": "烤烤手", "text": "炭盆里爆出一粒火星，老谭的酒壶坐在盆沿上温着，壶盖一跳一跳。" },
+
+    { "id": "open_huqin", "room": "band", "label": "开胡琴匣找牌盒", "req": { "f": ["c_talk1", "c_talk2", "c_talk3"] }, "n": ["p_cardbox"], "eff": { "f": ["p_cardbox"], "i": ["cardbox"] }, "text": "琴身上压着松香布，掀开一看，牌盒果然卧在匣底——五块小木牌，每块刻着一出戏的名头。" },
+    { "id": "play_qin", "room": "band", "label": "拧一下胡琴弦", "text": "弦轴一拧，哑哑两声，琴筒里的蛇皮松了一角——这把琴今夜不会出声了。" },
+
+    { "id": "order_lock", "room": "backstage", "label": "照推断的戏路拨字牌锁", "req": { "i": ["cardbox"], "f": ["c_prog", "c_talk1", "c_talk2", "c_talk3"] }, "n": ["p_trunk"], "eff": { "f": ["p_trunk", "c_seal"], "i": ["front_key", "shrine_key"] }, "text": "五个字牌槽按着加官、献寿、拾玉镯、打龙袍、挑滑车的次序拨到头，锁簧层层退开。大衣箱掀起来：绒托上搁着前门铜钥匙和一枚小些的龛柜钥匙，压着班主的红纸条——龛柜自取香束，封箱香三炷上齐，正门蜡封自酥。" },
+    { "id": "wrong_lock1", "room": "backstage", "label": "让打龙袍打头试试", "req": { "f": ["c_prog"] }, "n": ["p_trunk"], "text": "第一槽咬进龙袍两个字，后面四槽连着一枚锁簧都没退——老包不能开台，这锁认行头次序。" },
+    { "id": "wrong_lock2", "room": "backstage", "label": "把献寿压到末一场", "req": { "f": ["c_prog"] }, "n": ["p_trunk"], "text": "献寿的牌子刚推进第五槽就弹出来，锁簧咬得死紧——吉庆戏不压轴，这也是老例。" },
+
+    { "id": "open_niche", "room": "shrine", "label": "用龛柜钥匙开小柜", "req": { "i": ["shrine_key"] }, "n": ["p_shrine"], "eff": { "f": ["p_shrine"] }, "text": "黄铜锁转开，小柜里是空净的供格，格底垫着一层新换的黄绸。" },
+    { "id": "light_incense", "room": "shrine", "label": "给祖师爷上封箱香", "req": { "i": ["incense", "tinder"], "f": ["p_shrine"] }, "n": ["p_rite"], "eff": { "f": ["p_rite"] }, "text": "三炷香插进炉灰，火折子一吹就着。青烟笔直升到龛顶，楼下隐约传来正门蜡封酥裂的脆响。" },
+    { "id": "read_plaque", "room": "shrine", "label": "读龛上的旧匾", "text": "道光年间的旧匾写着梨园永护四个字，金漆剥落处露出底木的颜色。" },
+    { "id": "risk_plaque", "room": "shrine", "label": "踩着脆朽的供桌去够龛顶旧匾", "end": "lose", "text": "楼板年份到了，供桌一条腿咔地折断，旧匾连着铁钩砸落，人被压在了祖师楼的地板上。" },
+
+    { "id": "open_front", "room": "gate", "label": "用前门铜钥匙开正门", "req": { "i": ["front_key"], "f": ["p_rite"] }, "eff": { "f": ["won"] }, "end": "win", "text": "蜡封酥成一壳，铜转锁应声退闩，门轴一声长响。街上守岁的爆竹正好炸起来——封箱礼成，回家过年。" }
+  ],
+  "difficulty": { "minSteps": 10, "maxSteps": 28, "maxBranch": 6 }
+}

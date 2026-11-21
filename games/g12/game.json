@@ -1,0 +1,303 @@
+{
+  "title": "闸下的旧番号",
+  "intro": "汛期头一夜，你被困在防洪闸底的人防工事里。出口闸盘认的是工事旧番号，可番号早被人用电报码改了写法；赶在启闭机下一轮测试前，照东口走出去。",
+  "start": "ante",
+  "rooms": {
+    "ante": {
+      "n": "闸底前室",
+      "d": "头顶滚着启闭机的闷响，墙上的出入口方位图边角卷起。三个门洞分通值班室、泵房和中央通道，墙架上挂着一只手电筒。墙角竖梯锈得发红，井下涨着黑水。"
+    },
+    "duty": {
+      "n": "值班室",
+      "d": "值班室里一股旧纸味。桌上摊着值班日志，抽屉上着窄口锁，北墙的小门虚掩着，墙钩上还挂着黄铜指北针。"
+    },
+    "pump": {
+      "n": "泵房",
+      "d": "黑得伸手不见五指，排水泵蹲在坑沿，坑底汪着死水。角落立着一只缠铁丝的工具柜。"
+    },
+    "gallery": {
+      "n": "中央通道",
+      "d": "拱顶通道向三面岔开：东口装着齿条闸门，西口挂着挡板，北口被塌砖堵死。排水槽贴着地面向西延伸。"
+    },
+    "store": {
+      "n": "库房",
+      "d": "挡板后是库房，木架码着桐油桶和麻袋。靠墙的料柜挂着黄铜小锁，锁鼻被摸得油亮。"
+    },
+    "tunnel": {
+      "n": "主口甬道",
+      "d": "出口防护门立在甬道尽头，门楣镶着三枚铅字，门旁闸盘装着三只转轮。旧漆编号 044 被刀刮花了一半。"
+    }
+  },
+  "items": {
+    "flashlight": "手电筒",
+    "compass": "黄铜指北针",
+    "store_key": "拴木牌的小钥匙",
+    "crowbar": "撬棍",
+    "codebook": "半册电码簿"
+  },
+  "puzzles": [
+    { "id": "泵房工具柜", "solved": "p_cabinet", "clue": "c_toolbox" },
+    { "id": "库房料柜", "solved": "p_store", "clue": "c_store" },
+    { "id": "值班抽屉", "solved": "p_drawer", "clue": "c_drawer" },
+    { "id": "认出主口", "solved": "p_route", "clue": "c_log" },
+    { "id": "出口闸盘", "solved": "p_code", "clue": "c_book" }
+  ],
+  "acts": [
+    {
+      "id": "take_light",
+      "room": "ante",
+      "label": "取墙架上的手电筒",
+      "n": ["f_flash"],
+      "eff": { "f": ["f_flash"], "i": ["flashlight"] },
+      "text": "手电筒从铁架上摘下来，摁了两下，灯头还能亮。"
+    },
+    {
+      "id": "ante_map",
+      "room": "ante",
+      "label": "读墙上的方位图",
+      "n": ["c_map"],
+      "eff": { "f": ["c_map"] },
+      "text": "图上主口的箭头是朱笔新描的，朱色还亮着；纸角的水务章却洇黄了——图是旧的，箭头是新的。"
+    },
+    {
+      "id": "ante_lose",
+      "room": "ante",
+      "label": "攀锈蚀的竖梯下泄水井看看",
+      "end": "lose",
+      "text": "竖梯第三节的梯档早锈断了劲，黑水就在脚下涨着——落水声很快盖过了别的动静。"
+    },
+    {
+      "id": "a2duty",
+      "room": "ante",
+      "label": "进值班室",
+      "go": "duty"
+    },
+    {
+      "id": "duty2a",
+      "room": "duty",
+      "label": "回闸底前室",
+      "go": "ante"
+    },
+    {
+      "id": "a2pump",
+      "room": "ante",
+      "label": "下泵房",
+      "go": "pump"
+    },
+    {
+      "id": "pump2a",
+      "room": "pump",
+      "label": "回前室",
+      "go": "ante"
+    },
+    {
+      "id": "a2gal",
+      "room": "ante",
+      "label": "进中央通道",
+      "go": "gallery"
+    },
+    {
+      "id": "gal2a",
+      "room": "gallery",
+      "label": "回前室",
+      "go": "ante"
+    },
+    {
+      "id": "look_tbox",
+      "room": "pump",
+      "label": "端详工具柜",
+      "req": { "i": ["flashlight"] },
+      "n": ["c_toolbox"],
+      "eff": { "f": ["c_toolbox"] },
+      "text": "电筒光扫过去：柜门缠着三道铁丝，拧得死紧，门缝里透出金属的凉气。"
+    },
+    {
+      "id": "open_tbox",
+      "room": "pump",
+      "label": "拧开铁丝开工具柜",
+      "req": { "i": ["flashlight"] },
+      "n": ["p_cabinet"],
+      "eff": { "f": ["p_cabinet"], "i": ["store_key"] },
+      "text": "铁丝一圈圈退下来，柜门吱呀开了。上层搁着一把拴木牌的小钥匙，牌上刻着：料柜。"
+    },
+    {
+      "id": "pump_look",
+      "room": "pump",
+      "label": "俯身看泵坑的积水",
+      "text": "坑里死水泛着灰沫，浮沫聚在泵座四周，水位比管壁的锈痕低了一截。"
+    },
+    {
+      "id": "gal2store",
+      "room": "gallery",
+      "label": "推开西口挡板进库房",
+      "go": "store"
+    },
+    {
+      "id": "store2gal",
+      "room": "store",
+      "label": "回中央通道",
+      "go": "gallery"
+    },
+    {
+      "id": "look_cab",
+      "room": "store",
+      "label": "端详料柜",
+      "n": ["c_store"],
+      "eff": { "f": ["c_store"] },
+      "text": "黄铜小锁不见锈色，锁孔边的柜皮被摸出一圈油亮——是把常开常用的锁。"
+    },
+    {
+      "id": "open_cab",
+      "room": "store",
+      "label": "用料柜钥匙开料柜",
+      "req": { "i": ["store_key"] },
+      "n": ["p_store"],
+      "eff": { "f": ["p_store"], "i": ["crowbar"] },
+      "text": "小锁啪嗒弹开，柜里横着一根撬棍，棍头缠着防滑的麻布。"
+    },
+    {
+      "id": "store_look",
+      "room": "store",
+      "label": "翻看木架上的器材",
+      "text": "桐油桶封着泥头，麻袋摞到梁下，架顶压着一卷发脆的旧图纸。"
+    },
+    {
+      "id": "gal2duty",
+      "room": "gallery",
+      "label": "穿北墙小门进值班室",
+      "go": "duty"
+    },
+    {
+      "id": "duty2gal",
+      "room": "duty",
+      "label": "穿小门回中央通道",
+      "go": "gallery"
+    },
+    {
+      "id": "take_compass",
+      "room": "duty",
+      "label": "摘下墙钩上的指北针",
+      "n": ["f_compass"],
+      "eff": { "f": ["f_compass"], "i": ["compass"] },
+      "text": "黄铜指北针沉甸甸的，磁针抖了两下，稳稳指北。"
+    },
+    {
+      "id": "look_drawer",
+      "room": "duty",
+      "label": "端详抽屉上的窄口锁",
+      "n": ["c_drawer"],
+      "eff": { "f": ["c_drawer"] },
+      "text": "窄口锁孔，锁舌是整条簧片——空手别不开，得找根吃劲的家伙。"
+    },
+    {
+      "id": "pry_drawer",
+      "room": "duty",
+      "label": "用撬棍撬开抽屉",
+      "req": { "i": ["crowbar"] },
+      "n": ["p_drawer"],
+      "eff": { "f": ["p_drawer"], "i": ["codebook"] },
+      "text": "撬棍探进缝里一别，簧片咯地让了路。抽屉里躺着半册卷了角的电码簿。"
+    },
+    {
+      "id": "read_book",
+      "room": "duty",
+      "label": "翻电码簿",
+      "req": { "i": ["codebook"] },
+      "n": ["c_book"],
+      "eff": { "f": ["c_book"] },
+      "text": "簿页残了大半，还认得出三字：汛 0103，防 1283，通 4382。扉页夹着便条：编号牌早换成电报码，各字取末一位，照牌自左至右连读。"
+    },
+    {
+      "id": "read_log",
+      "room": "duty",
+      "label": "读值班日志",
+      "n": ["c_log"],
+      "eff": { "f": ["c_log"] },
+      "text": "末页写着：主口朝东，汛期封北口检修，西口只作库房。进出认东口闸盘，闸盘认工事番号。"
+    },
+    {
+      "id": "probe_e",
+      "room": "gallery",
+      "label": "举指北针探东口的风",
+      "req": { "i": ["compass"] },
+      "text": "罗盘贴着门框，指针稳指正东；门缝灌进来的风带着水汽，吹得人睁不开眼。"
+    },
+    {
+      "id": "probe_n",
+      "room": "gallery",
+      "label": "举指北针探北口的风",
+      "req": { "i": ["compass"] },
+      "text": "门框正北，塌砖后头一丝风也没有，罗盘的针在这里抖得厉害。"
+    },
+    {
+      "id": "route_map",
+      "room": "gallery",
+      "label": "照方位图的箭头进西口",
+      "req": { "f": ["c_map"] },
+      "n": ["p_route"],
+      "text": "朱笔箭头把人往西口领，可西口通着库房，连扇窗都没有——这图上的东西南北被人调换过。"
+    },
+    {
+      "id": "route_ok",
+      "room": "gallery",
+      "label": "推开东口的闸门",
+      "req": { "i": ["compass"], "f": ["c_log"] },
+      "eff": { "f": ["p_route"] },
+      "go": "tunnel",
+      "text": "齿条闸门比想的重，铰链吱呀让开。门洞里的风迎面扑来，方向和日志写的一个不差——这就是主口。"
+    },
+    {
+      "id": "tunnel2gal",
+      "room": "tunnel",
+      "label": "回中央通道",
+      "go": "gallery"
+    },
+    {
+      "id": "look_plaque",
+      "room": "tunnel",
+      "label": "摸门楣上的铅字牌",
+      "n": ["c_plaque"],
+      "eff": { "f": ["c_plaque"] },
+      "text": "三枚铅字按旧拼法嵌在门楣里：汛、防、通。指腹能摸出铸字的毛边。"
+    },
+    {
+      "id": "dial_233",
+      "room": "tunnel",
+      "label": "拨闸盘 233",
+      "n": ["p_code"],
+      "text": "转轮逐个咬到位，锁舌却没让出半分。"
+    },
+    {
+      "id": "dial_014",
+      "room": "tunnel",
+      "label": "拨闸盘 014",
+      "n": ["p_code"],
+      "text": "转轮轻得反常，空滑了半圈——这几个数根本不在这套齿上。"
+    },
+    {
+      "id": "dial_044",
+      "room": "tunnel",
+      "label": "拨闸盘 044",
+      "n": ["p_code"],
+      "text": "照刮剩的旧漆号拨盘，锁槽里咔的一响，又弹了回去。"
+    },
+    {
+      "id": "dial_332",
+      "room": "tunnel",
+      "label": "拨闸盘 332",
+      "req": { "f": ["c_book", "c_plaque"] },
+      "n": ["p_code"],
+      "eff": { "f": ["p_code"] },
+      "text": "汛、防、通，末位连读正是三三二。三只转轮依次咬死，防护门的锁舌咯噜噜缩了回去。"
+    },
+    {
+      "id": "win",
+      "room": "tunnel",
+      "label": "推开防护门上闸桥",
+      "req": { "f": ["p_code"] },
+      "end": "win",
+      "text": "防护门朝外推开，闸桥的风扑面而来。天际泛起灰白，头顶启闭机的闷响还在滚动——踩着湿滑的桥板，一步一步走出了闸底。"
+    }
+  ],
+  "difficulty": { "minSteps": 6, "maxSteps": 20, "maxBranch": 6 }
+}

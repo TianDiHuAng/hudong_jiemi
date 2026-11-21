@@ -1,0 +1,236 @@
+{
+  "title": "临川路永不到站",
+  "intro": "末班车在隧道里断电停靠，广播却循环报着一个线路图上不存在的站——临川路。趁备用电池耗尽之前解开驾驶台的区间封锁，从疏散门下到隧道平台。",
+  "start": "car6",
+  "rooms": {
+    "car6": {
+      "n": "六号车厢",
+      "d": "应急灯只亮半排，空车厢里全是广播的电流声。通五号车厢的门敞着，往七号那扇门的门楣上钉着一块手写木牌。"
+    },
+    "car5": {
+      "n": "五号车厢",
+      "d": "座椅上落着没清点的失物，广告灯箱闪着半边光。踩着座椅能够到车顶——那里趴着带电的接触网母线。"
+    },
+    "car4": {
+      "n": "四号车厢",
+      "d": "车尾端墙上贴着全线示意图，灯箱管一明一灭。折叠桌板上摊着乘务日志，字迹被急刹划得歪斜。"
+    },
+    "car7": {
+      "n": "七号车厢",
+      "d": "乘客早下空了，乘务室门上着锁，旁边嵌着一只乘务备品柜。车端铭牌在应急灯下发亮，往外就是贯通道。"
+    },
+    "conn": {
+      "n": "前端通过台",
+      "d": "贯通道踏板随残余风压微微起伏，端门玻璃后是驾驶室的背影。风从门缝灌进来，带着铁轨和机油味。"
+    },
+    "cab": {
+      "n": "司机室",
+      "d": "主控台黑着屏，区间解锁轮盘嵌在台面右侧。侧墙并排两扇窄端门，摇柄卡座空着，联锁灯灭着。"
+    }
+  },
+  "items": {
+    "crew_key": "乘务钥匙",
+    "master_key": "主控电钥匙",
+    "crank": "疏散摇柄"
+  },
+  "puzzles": [
+    { "id": "全线示意图", "solved": "map_read", "clue": "c_broadcast" },
+    { "id": "座椅失物袋", "solved": "bag_taken", "clue": "c_lost" },
+    { "id": "乘务备品柜", "solved": "box_open", "clue": "c_lock" },
+    { "id": "临川路站码", "solved": "code_ok", "clue": "c_chart" },
+    { "id": "主控台", "solved": "console_on", "clue": "c_console" },
+    { "id": "疏散端门", "solved": "exit_ready", "clue": "c_return" }
+  ],
+  "acts": [
+    {
+      "id": "listen_pa",
+      "room": "car6",
+      "label": "听清广播报的站名",
+      "n": ["c_broadcast"],
+      "eff": { "f": ["c_broadcast"] },
+      "text": "备电喇叭滋啦两声：下一站，临川路，请从列车运行方向左侧车门下车。可这条线上，根本没有临川路。"
+    },
+    {
+      "id": "c6toc5",
+      "room": "car6",
+      "label": "去五号车厢",
+      "go": "car5"
+    },
+    {
+      "id": "c5toc6",
+      "room": "car5",
+      "label": "回六号车厢",
+      "go": "car6"
+    },
+    {
+      "id": "c6toc7",
+      "room": "car6",
+      "label": "去七号车厢",
+      "go": "car7"
+    },
+    {
+      "id": "c7toc6",
+      "room": "car7",
+      "label": "回六号车厢",
+      "go": "car6"
+    },
+    {
+      "id": "c5toc4",
+      "room": "car5",
+      "label": "去车尾四号车厢",
+      "go": "car4"
+    },
+    {
+      "id": "c4toc5",
+      "room": "car4",
+      "label": "往五号车厢走",
+      "go": "car5"
+    },
+    {
+      "id": "read_map",
+      "room": "car4",
+      "label": "看全线示意图",
+      "n": ["map_read"],
+      "eff": { "f": ["map_read"] },
+      "text": "示意图右下角有一行注记：本线疏散平台设于列车运行方向左侧。图上自东向西数完十九个站，并没有临川路。"
+    },
+    {
+      "id": "read_log",
+      "room": "car4",
+      "label": "读乘务日志",
+      "n": ["c_lost"],
+      "eff": { "f": ["c_lost", "c_return", "c_lock"] },
+      "text": "日志停在 22:47：区间封锁，全列反向折返，改由七号端驾驶室操控，当前朝四号方向待命。另有两行小字——五号车厢 12 排 A 座压着乘客失物袋；备品柜的三角锁孔只认乘务钥匙。"
+    },
+    {
+      "id": "pick_bag",
+      "room": "car5",
+      "label": "摸出座椅下的失物袋",
+      "n": ["bag_taken"],
+      "eff": { "f": ["bag_taken"], "i": ["crew_key"] },
+      "text": "12 排 A 座的布缝里挂着一只帆布袋，袋底坠着一把拴号牌的乘务钥匙。"
+    },
+    {
+      "id": "read_chart",
+      "room": "car6",
+      "label": "看门楣上的木牌",
+      "n": ["c_chart"],
+      "eff": { "f": ["c_chart"] },
+      "text": "木牌是车载广播的自检说明：假站名临川路只用于试音。字码对照只有头两个字还清楚——临 3，川 1；路字码那一格磨得只剩浅痕，括注一行小字：末字见车端铭牌副注。连拨次序照报站词。"
+    },
+    {
+      "id": "open_box",
+      "room": "car7",
+      "label": "用乘务钥匙开备品柜",
+      "req": { "i": ["crew_key"] },
+      "n": ["box_open"],
+      "eff": { "f": ["box_open", "c_console"], "i": ["master_key", "crank"] },
+      "text": "三角锁孔咔地让开。柜格里插着主控电钥匙，疏散摇柄卡在支架旁，台签写着：先解锁区段，再动端门。"
+    },
+    {
+      "id": "c7toconn",
+      "room": "car7",
+      "label": "穿贯通道往前",
+      "go": "conn"
+    },
+    {
+      "id": "conntoc7",
+      "room": "conn",
+      "label": "退回七号车厢",
+      "go": "car7"
+    },
+    {
+      "id": "conntocab",
+      "room": "conn",
+      "label": "推开驾驶室隔门",
+      "go": "cab"
+    },
+    {
+      "id": "cabtoconn",
+      "room": "cab",
+      "label": "退回通过台",
+      "go": "conn"
+    },
+    {
+      "id": "wake_console",
+      "room": "cab",
+      "label": "插电钥匙唤醒主控台",
+      "req": { "i": ["master_key"] },
+      "n": ["console_on"],
+      "eff": { "f": ["console_on"] },
+      "text": "屏幕逐格亮起，联锁灯转绿：区间封锁解除前，疏散端门保持闭锁。"
+    },
+    {
+      "id": "dial_316",
+      "room": "cab",
+      "label": "照字码对照连拨轮盘",
+      "req": { "f": ["console_on", "c_chart"] },
+      "n": ["code_ok"],
+      "eff": { "f": ["code_ok"] },
+      "text": "轮盘咬合到第三位，联锁灯由黄转绿：区段解锁，端门气锁释放。"
+    },
+    {
+      "id": "dial_613",
+      "room": "cab",
+      "label": "把字码倒着拨一遍",
+      "req": { "f": ["console_on", "c_chart"] },
+      "n": ["code_ok"],
+      "text": "轮盘弹回零位，屏上打出四个字：词序不符。"
+    },
+    {
+      "id": "door_left",
+      "room": "cab",
+      "label": "推开左侧的疏散端门",
+      "req": { "i": ["crank"], "f": ["code_ok", "map_read", "c_return"] },
+      "eff": { "f": ["exit_ready"] },
+      "end": "win",
+      "text": "摇柄转满三圈，左侧窄门朝平台敞开——应急荧光漆一路刷向隧道联络道，值班员的手电光正迎面晃过来。"
+    },
+    {
+      "id": "door_right",
+      "room": "cab",
+      "label": "推开右侧的疏散端门",
+      "req": { "i": ["crank"], "f": ["code_ok"] },
+      "n": ["exit_ready"],
+      "text": "摇柄转过半圈就顶死了，门缝里只有冷风——这一侧是隧道壁。"
+    },
+    {
+      "id": "roof_touch",
+      "room": "car5",
+      "label": "踩座椅去够车顶母线",
+      "end": "lose",
+      "text": "鞋底刚沾上母线护套，腕口一麻就失去了知觉——隧道里，没有人会及时赶到。"
+    },
+    {
+      "id": "amb_seat",
+      "room": "car6",
+      "label": "挨个拍亮应急灯",
+      "text": "半排应急灯闪了闪，另一半彻底灭了——备用电池撑不到天亮。"
+    },
+    {
+      "id": "amb_window",
+      "room": "car5",
+      "label": "贴窗看隧道深处",
+      "text": "窗外黑得发闷，只有轨旁的红色闪灯隔几秒亮一次，照不出十米。"
+    },
+    {
+      "id": "amb_tail",
+      "room": "car4",
+      "label": "试试尾门应急阀",
+      "text": "尾门的应急阀胶封完好，拉环上还挂着点检牌：上月 28 日，状态正常。"
+    },
+    {
+      "id": "amb_plate",
+      "room": "car7",
+      "label": "凑近看车端铭牌",
+      "text": "铭牌字号被安全帽蹭花了半边：本列编组 7 节，定员 1460 人。下沿一行自检副注倒还清晰：路字码 6。"
+    },
+    {
+      "id": "amb_gap",
+      "room": "conn",
+      "label": "查看贯通道踏板",
+      "text": "踏板下的风囊嘶嘶漏气，每过一分钟，车厢就往下沉半指。"
+    }
+  ],
+  "difficulty": { "minSteps": 6, "maxSteps": 20, "maxBranch": 6 }
+}

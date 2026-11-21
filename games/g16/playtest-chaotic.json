@@ -1,0 +1,32 @@
+{
+ "game": "g16",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 17,
+ "invalid": 2,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "去播控室",
+  "读台沿的排播单",
+  "进唱片间",
+  "摇两下手摇唱机",
+  "进储藏间",
+  "翻看储藏架",
+  "回唱片间",
+  "回播控室",
+  "回值班室",
+  "读桌上的值班日志",
+  "从台历架后摸出铜钥匙",
+  "去门厅",
+  "撞玻璃大门",
+  "找家伙撬门缝",
+  "回值班室",
+  "上天台",
+  "踩着天线座的斜索往外挪"
+ ]
+}

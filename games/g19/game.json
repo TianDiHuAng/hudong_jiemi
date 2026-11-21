@@ -1,0 +1,100 @@
+{
+  "title": "摆砣的分量",
+  "intro": "打烊的卷帘落了一半又被人从外面锁死，老板临走把前门铜钥匙收进了老保险柜。柜门上那面塔钟表盘改的密码盘，要靠三只摆砣的分量来转开。",
+  "start": "shop",
+  "rooms": {
+    "shop": {
+      "n": "营业厅",
+      "d": "玻璃柜台圈出半个店堂，挂钟墙上的摆一左一右错着拍子。柜台后立着老保险柜，柜门嵌一面拆下来的塔钟表盘，刻度从一排到九十九。"
+    },
+    "vest": {
+      "n": "门厅",
+      "d": "门厅里立着穿衣镜和插满长柄伞的伞架，架子头重脚轻。前门一道黄铜弹子锁外加一根横闩。卷帘落到一半，锁死在导轨里。"
+    },
+    "hall": {
+      "n": "后过道",
+      "d": "过道窄得只容错身，墙上挂着泛黄的价目牌，尽头两扇门分别通向修理间和储藏间。"
+    },
+    "back": {
+      "n": "账房",
+      "d": "账房一桌一柜一铺炕，算盘珠子上着蜡。炕桌摊着修配台账，蓝布封皮磨出了白边。"
+    },
+    "repair": {
+      "n": "修理间",
+      "d": "修理间案台上拆着一座座钟，机芯零件分格码在木盘里。戥秤架在案头，秤盘擦得能照出人影。"
+    },
+    "store": {
+      "n": "储藏间",
+      "d": "储藏间没有灯，纸箱堆到齐腰，箱皮上毛笔写的年份一层压一层。门口垂着一根灯绳。"
+    },
+    "loft": {
+      "n": "阁楼",
+      "d": "阁楼低得直不起腰，铺盖卷靠墙立着。天窗的插销从里头别死，窗纸破角处透进檐下的雪光。"
+    }
+  },
+  "items": {
+    "backdoor_key": "账房钥匙",
+    "cab_key": "工具柜钥匙",
+    "weights_box": "砝码盒",
+    "screwdriver": "螺丝刀",
+    "torch": "手电",
+    "bob_big": "黄铜大砣",
+    "bob_mid": "黑檀壳中砣",
+    "bob_small": "小乌木砣",
+    "front_key": "前门铜钥匙"
+  },
+  "puzzles": [
+    { "id": "柜台抽屉", "solved": "p_drawer", "clue": "c_note" },
+    { "id": "储藏箱堆", "solved": "p_box", "clue": "c_lamp" },
+    { "id": "工具柜", "solved": "p_tool", "clue": "c_ledger" },
+    { "id": "座钟机芯匣", "solved": "p_case", "clue": "c_case" },
+    { "id": "摆砣称重", "solved": "p_weights", "clue": "c_ledger" },
+    { "id": "保险柜暗号", "solved": "p_safe", "clue": "c_rule" }
+  ],
+  "acts": [
+    { "id": "s2vest", "room": "shop", "label": "穿过门厅", "go": "vest" },
+    { "id": "vest2s", "room": "vest", "label": "回营业厅", "go": "shop" },
+    { "id": "s2hall", "room": "shop", "label": "绕到后过道", "go": "hall" },
+    { "id": "hall2s", "room": "hall", "label": "回营业厅", "go": "shop" },
+    { "id": "open_back", "room": "shop", "label": "用小铜钥匙开腰门", "req": { "i": ["backdoor_key"] }, "n": ["p_back"], "eff": { "f": ["p_back"] }, "text": "锁舌缩回去的动静在打烊后的店堂里格外响，账房的腰门开了。" },
+    { "id": "s2back", "room": "shop", "label": "进账房", "req": { "f": ["p_back"] }, "go": "back" },
+    { "id": "back2s", "room": "back", "label": "回营业厅", "go": "shop" },
+    { "id": "h2repair", "room": "hall", "label": "进修理间", "go": "repair" },
+    { "id": "repair2h", "room": "repair", "label": "回后过道", "go": "hall" },
+    { "id": "h2store", "room": "hall", "label": "进储藏间", "go": "store" },
+    { "id": "store2h", "room": "store", "label": "回后过道", "go": "hall" },
+    { "id": "s2loft", "room": "store", "label": "爬梯上阁楼", "go": "loft" },
+    { "id": "loft2s", "room": "loft", "label": "下梯回储藏间", "go": "store" },
+
+    { "id": "look_note", "room": "shop", "label": "看玻璃板下的字条", "n": ["c_note"], "eff": { "f": ["c_note"] }, "text": "玻璃板下压着半页便条，老板的字：账房钥匙照旧搁在柜台抽屉的绒槽里，走前忘了收，明早自取。" },
+    { "id": "open_drawer", "room": "shop", "label": "拉开柜台抽屉", "req": { "f": ["c_note"] }, "n": ["p_drawer"], "eff": { "f": ["p_drawer"], "i": ["backdoor_key"] }, "text": "绒槽里躺着一枚小铜钥匙，柄上锉着一个账字。" },
+    { "id": "take_bobA", "room": "shop", "label": "摘下座钟的黄铜大砣", "n": ["g_bobA"], "eff": { "f": ["g_bobA"], "i": ["bob_big"] }, "text": "木壳门一开，摆就有节奏地停了。砣杆顶端的黄铜大砣旋两圈脱了扣，掂着压手。" },
+    { "id": "look_case", "room": "shop", "label": "看座钟的机芯匣", "n": ["c_case"], "eff": { "f": ["c_case"] }, "text": "机芯匣的螺丝有新拧过的亮口，匣板缝里露出一角蓝纸，像台账附页的蓝。" },
+    { "id": "open_movement", "room": "shop", "label": "用螺丝刀卸开机芯匣", "req": { "i": ["screwdriver"] }, "n": ["p_case"], "eff": { "f": ["p_case", "c_rule"] }, "text": "四颗螺丝卸下来，匣板后头果然夹着台账附页：柜盘暗号三数，取三砣克数，自轻而重两两相减，末一位取首尾之差，转盘认刻不认重。" },
+    { "id": "open_safe", "room": "shop", "label": "照差值转开保险柜", "req": { "f": ["p_weights", "c_rule"] }, "n": ["p_safe"], "eff": { "f": ["p_safe"], "i": ["front_key"] }, "text": "先转三十五，再过五十，最后停在八十五——第三格刻度吃进锁轮，柜门闷闷地吐出一条缝，里层绒托上别着前门铜钥匙。" },
+    { "id": "wrong_safe1", "room": "shop", "label": "把砣的克数直接转上去", "req": { "f": ["p_weights"] }, "n": ["p_safe"], "text": "二十七、六十二、一百一十二一个个转过去，锁轮空转三格，柜门连颤都没颤一下——克数是分量，不是暗号。" },
+    { "id": "wrong_safe2", "room": "shop", "label": "从最重的差值倒着转", "req": { "f": ["p_weights", "c_rule"] }, "n": ["p_safe"], "text": "八十五、五十、三十五倒着走了一遍，转盘走到一半被锁轮顶了回来，指针弹回零位。" },
+    { "id": "wrong_safe3", "room": "shop", "label": "只转头两个差值", "req": { "f": ["p_weights", "c_rule"] }, "n": ["p_safe"], "text": "两个差值转完，第三格还空着，锁轮咬合的声音差着半口气——这柜认三个数，缺一不可。" },
+    { "id": "look_wall", "room": "shop", "label": "看挂钟墙", "text": "墙上的钟摆一左一右错着拍子，没有哪两只是同步的。" },
+    { "id": "vest_mirror", "room": "vest", "label": "照照穿衣镜", "text": "镜子里映出半面挂钟墙，摆的影子一晃一晃，衬得店堂更空。" },
+
+    { "id": "read_ledger", "room": "back", "label": "翻修配台账", "n": ["c_ledger"], "eff": { "f": ["c_ledger"] }, "text": "台账末页记着换砣旧例：砝码盒和螺丝刀收在工具柜，工具柜的钥匙拴在戥秤架背后；那只小乌木砣，去年滚进了储藏间的箱堆。" },
+    { "id": "abacus", "room": "back", "label": "拨两下算盘", "text": "档上停着一笔没打完的账，末珠拨在进位一半的地方，按下去又弹回来。" },
+
+    { "id": "lift_rake", "room": "repair", "label": "翻戥秤架背后", "req": { "f": ["c_ledger"] }, "n": ["f_rake"], "eff": { "f": ["f_rake"], "i": ["cab_key"] }, "text": "秤架背板的挂钩上拴着一枚长柄钥匙，牌上写着工具柜三个字。" },
+    { "id": "open_toolcab", "room": "repair", "label": "用长柄钥匙开工具柜", "req": { "i": ["cab_key"] }, "n": ["p_tool"], "eff": { "f": ["p_tool"], "i": ["weights_box", "screwdriver", "torch"] }, "text": "柜门一开分三层：顶层砝码盒，五枚砝码码得整齐；中层螺丝刀；底层压着一支手电，电珠居然还亮。" },
+    { "id": "take_bobB", "room": "repair", "label": "翻零件盘找中砣", "n": ["g_bobB"], "eff": { "f": ["g_bobB"], "i": ["bob_mid"] }, "text": "第三格里躺着黑檀木壳的中砣，砣底錾着商号戳记，木壳温润，没上过漆。" },
+    { "id": "weigh", "room": "repair", "label": "逐只称三只摆砣", "req": { "i": ["weights_box", "bob_big", "bob_mid", "bob_small"] }, "n": ["p_weights"], "eff": { "f": ["p_weights"] }, "text": "小砣上左盘，右盘添到二十加五加二才见平——二十七克；中砣压得右盘直翘，换五十加十加二压稳——六十二克；大砣连满盒砝码都按不住，便拿小砣和全套砝码作对重，撤下两克那枚才平——二十七加八十五，整整一百一十二克。自轻而重：小、中、大。" },
+    { "id": "scale_light", "room": "repair", "label": "看案上的戥秤", "text": "秤杆上的星点磨得发亮，刀口悬着不动，像在等下一件东西上盘。" },
+
+    { "id": "pull_cord", "room": "store", "label": "拉储藏间的灯绳", "n": ["c_lamp"], "eff": { "f": ["c_lamp"] }, "text": "灯丝只红了一下就灭了，箱堆深处黑得伸手不见五指——翻东西得有支手电。" },
+    { "id": "take_bobC", "room": "store", "label": "借手电翻箱堆", "req": { "i": ["torch"] }, "n": ["p_box"], "eff": { "f": ["p_box"], "i": ["bob_small"] }, "text": "手电扫过第三层，一只小乌木砣卡在两箱夹缝里，砣底的商号戳记磨得发亮。" },
+    { "id": "store_boxes", "room": "store", "label": "看箱皮的年份", "text": "年份从光绪一路写到民国，最上一箱的毛笔字叮嘱着：玻璃罩勿压。" },
+    { "id": "loft_bed", "room": "loft", "label": "掀铺盖卷", "text": "铺盖卷里裹着一只火柴匣，匣里空空，只剩半截燎黑的火柴梗。" },
+    { "id": "loft_window", "room": "loft", "label": "推天窗", "text": "插销从里头别死了，半块砖压着的窗纸破了一角，透进檐下的雪光。" },
+
+    { "id": "climb_frame", "room": "vest", "label": "攀伞架去够门楣气窗", "end": "lose", "text": "气窗玻璃碎的时候整架伞倒了过来，长柄伞劈头盖脸砸下，人仰面磕在门槛石上。" },
+    { "id": "open_front", "room": "vest", "label": "用前门铜钥匙开锁推闩", "req": { "i": ["front_key"] }, "end": "win", "text": "弹子锁先退，横闩后拉，卷帘升到顶。夜风卷着雪末灌进来，街口的钟楼正敲两点——柜台里的挂钟墙，报时的声音跟它分毫不差。" }
+  ],
+  "difficulty": { "minSteps": 10, "maxSteps": 28, "maxBranch": 6 }
+}

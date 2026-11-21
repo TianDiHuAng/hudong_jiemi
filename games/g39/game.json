@@ -1,0 +1,297 @@
+{
+  "title": "定影时限",
+  "intro": "冲片机卡了壳，K-117 的显影段刚走完，湿片夹在竹夹上等下一道。四只药槽的槽牌被人插乱，工艺卡上的定影时限一小时一衰——手工走槽，认对药、走对序、归对架，明早八点交片。",
+  "start": "bench",
+  "rooms": {
+    "bench": {
+      "n": "车间走廊",
+      "d": "红安全灯把走廊染成一片暗橙，灯箱嗡嗡响着。两侧门通向配药间、冲洗间、暗室、烘干间，两头分别是值班台和师傅办公室，片库铁门蹲在角上。"
+    },
+    "counter": {
+      "n": "值班台",
+      "d": "台面摊着冲洗工艺卡和交接记录，玻璃板下压着排班表。挂钟走到 23:40，台历上圈着明早交片的日子。"
+    },
+    "mix": {
+      "n": "配药间",
+      "d": "配药台上立着一杆归了零的药秤，棕瓶按酸碱分两层搁着。配药登记本摊在角上，水槽里泡着量筒。"
+    },
+    "tank": {
+      "n": "冲洗间",
+      "d": "四只药槽一字排开，槽牌插在边框上，槽沿搭着竹夹。恒温棒嗡嗡响着，墙上钉着一盒酸碱试纸，水表的字迹模糊。"
+    },
+    "dark": {
+      "n": "暗室",
+      "d": "暗室的红灯下是观片灯和裁片台，挂钩上空着。门缝堵着黑绒布，一丝白光都不许漏进来。"
+    },
+    "dry": {
+      "n": "烘干间",
+      "d": "烘干炉的炉口透着暗红，立式晾片架空着一半。墙上操作牌写着炉温规程，地上码着几只空片盒。"
+    },
+    "office": {
+      "n": "师傅办公室",
+      "d": "师傅的工装挂在椅背，口袋鼓着一角。桌上是片库台账，翻在今夜这批；窗台的水仙抽了第三支箭。"
+    },
+    "vault": {
+      "n": "片库",
+      "d": "铁架分南北两排立着，排头挂着架位牌，插签洇糊了两块。防潮指示灯亮着绿，门后排架图正对过道。"
+    }
+  },
+  "items": {
+    "wet_film": "湿底片卷",
+    "vault_key": "片库黄铜钥匙",
+    "film_can": "K-117 片盒"
+  },
+  "puzzles": [
+    { "id": "起出湿片", "solved": "film_up", "clue": "c_shut" },
+    { "id": "恢复冲洗水", "solved": "p_water", "clue": "c_shut" },
+    { "id": "槽牌辨认", "solved": "p_tanks", "clue": "c_ph" },
+    { "id": "手工走槽", "solved": "p_dry", "clue": "c_proc" },
+    { "id": "暗室验透", "solved": "c_transp", "clue": "fix1" },
+    { "id": "片库挂锁", "solved": "p_key", "clue": "c_ledger" },
+    { "id": "片盒归架", "solved": "p_store", "clue": "p_key" }
+  ],
+  "acts": [
+    { "id": "b2c", "room": "bench", "label": "去值班台", "go": "counter" },
+    { "id": "c2b", "room": "counter", "label": "回走廊", "go": "bench" },
+    { "id": "b2m", "room": "bench", "label": "进配药间", "go": "mix" },
+    { "id": "m2b", "room": "mix", "label": "回走廊", "go": "bench" },
+    { "id": "b2t", "room": "bench", "label": "进冲洗间", "go": "tank" },
+    { "id": "t2b", "room": "tank", "label": "回走廊", "go": "bench" },
+    { "id": "b2k", "room": "bench", "label": "进暗室", "go": "dark" },
+    { "id": "k2b", "room": "dark", "label": "回走廊", "go": "bench" },
+    { "id": "b2d", "room": "bench", "label": "进烘干间", "go": "dry" },
+    { "id": "d2b", "room": "dry", "label": "回走廊", "go": "bench" },
+    { "id": "b2o", "room": "bench", "label": "进师傅办公室", "go": "office" },
+    { "id": "o2b", "room": "office", "label": "回走廊", "go": "bench" },
+    {
+      "id": "read_cards",
+      "room": "counter",
+      "label": "细读值班台的工艺卡",
+      "n": ["c_proc"],
+      "eff": { "f": ["c_proc", "c_chem"] },
+      "text": "工艺卡排着次序：一停显、二定影、三验透、四水洗、五晾干，定影限时八分钟，超时药膜发灰。背页的药性速查印着：显影强碱，停显强酸，定影弱酸，水洗中性。"
+    },
+    {
+      "id": "read_shift",
+      "room": "counter",
+      "label": "翻交接记录",
+      "n": ["c_shut"],
+      "eff": { "f": ["c_shut"] },
+      "text": "昨班末行：总水阀已关，滤网拆下清着，恢复走水先开阀；显影段走完了，湿片夹在竹夹上等下一道。"
+    },
+    {
+      "id": "see_roster",
+      "room": "counter",
+      "label": "看玻璃板下的排班表",
+      "text": "排班表上今夜只排了你一个人，底下压着师傅的字条：早交片，别赶火。"
+    },
+    {
+      "id": "read_recipe",
+      "room": "mix",
+      "label": "读配药登记本",
+      "n": ["c_mix"],
+      "eff": { "f": ["c_mix"] },
+      "text": "昨夜新配：显影 20 升，停显 5 升，定影 15 升。页边师傅注了一句——停显配得最少，液位最浅的那槽就是它。"
+    },
+    {
+      "id": "see_scale",
+      "room": "mix",
+      "label": "看药秤和棕瓶",
+      "text": "药秤归了零，棕瓶按酸碱分两层搁着，标签一律朝外，取哪瓶都不用摸黑。"
+    },
+    {
+      "id": "test_tanks",
+      "room": "tank",
+      "label": "对照槽牌逐槽测酸碱",
+      "n": ["c_ph"],
+      "eff": { "f": ["c_ph"] },
+      "text": "四块槽牌插着：一号停显、二号水洗、三号显影、四号定影。试纸报数：一号中性，二号强酸、液位最浅，三号弱酸，四号弱碱——四号槽里插着恒温棒，二十度整。"
+    },
+    {
+      "id": "fix_plates",
+      "room": "tank",
+      "label": "把槽牌按检测结果重插",
+      "req": { "f": ["c_ph", "c_mix", "c_chem"] },
+      "n": ["p_tanks"],
+      "eff": { "f": ["p_tanks"] },
+      "text": "四块牌重新插正：一号水洗、二号停显、三号定影、四号显影——恒温棒那槽果然是显影。走片就照这份新序来。"
+    },
+    {
+      "id": "open_valve",
+      "room": "tank",
+      "label": "拧开冲洗水阀",
+      "req": { "f": ["c_shut"] },
+      "n": ["p_water"],
+      "eff": { "f": ["p_water"] },
+      "text": "阀杆拧开三圈，水表走了字，洗槽的进水口哗哗地流起来。"
+    },
+    {
+      "id": "lift_film",
+      "room": "tank",
+      "label": "起出竹夹上的湿片",
+      "n": ["film_up"],
+      "eff": { "f": ["film_up"], "i": ["wet_film"] },
+      "text": "竹夹把整卷湿片从显影段托出来，药膜挂着水光，边缘已经透出影像的影子。"
+    },
+    {
+      "id": "bath_stop",
+      "room": "tank",
+      "label": "送湿片过停显槽",
+      "req": { "f": ["p_tanks"], "i": ["wet_film"] },
+      "n": ["stop1"],
+      "eff": { "f": ["stop1"] },
+      "text": "湿片进二号槽，酸一沾上，显影的劲头立刻刹住，竹夹提了三回才利索。"
+    },
+    {
+      "id": "bath_fix",
+      "room": "tank",
+      "label": "送湿片入定影槽",
+      "req": { "f": ["stop1"] },
+      "n": ["fix1"],
+      "eff": { "f": ["fix1"] },
+      "text": "定影液咬住药膜，槽沿的沙漏翻过来开始漏——规程卡上那行时限，从现在起往回数。"
+    },
+    {
+      "id": "bath_wash",
+      "room": "tank",
+      "label": "送湿片入水洗槽",
+      "req": { "f": ["c_transp", "p_water"] },
+      "n": ["wash1"],
+      "eff": { "f": ["wash1"] },
+      "text": "流动水一遍遍过槽，海波味淡下去，片基透得像玻璃。"
+    },
+    {
+      "id": "skip_stop",
+      "room": "tank",
+      "label": "不过停显直接入定影",
+      "req": { "f": ["p_tanks"], "i": ["wet_film"] },
+      "n": ["p_dry"],
+      "text": "显影液跟着片子带进定影槽，两股药一见面就浑了——这一道等于白走。"
+    },
+    {
+      "id": "wash_early",
+      "room": "tank",
+      "label": "湿片没验透就进水洗",
+      "req": { "f": ["p_water"], "i": ["wet_film"] },
+      "n": ["p_dry"],
+      "text": "水一冲，药膜泛起一层乳白——定影没透，见了水就花了。"
+    },
+    {
+      "id": "plate_wrong",
+      "room": "tank",
+      "label": "照旧槽牌把湿片递进三号槽",
+      "req": { "i": ["wet_film"] },
+      "n": ["p_tanks"],
+      "text": "三号槽牌写着显影，试纸却报弱酸——照牌子走片，药就全串了。"
+    },
+    {
+      "id": "check_clear",
+      "room": "dark",
+      "label": "红灯下验片缘",
+      "req": { "f": ["fix1"] },
+      "n": ["c_transp"],
+      "eff": { "f": ["c_transp"] },
+      "text": "举片对灯：药膜边缘透亮，定得透透的，没有一点灰雾。"
+    },
+    {
+      "id": "check_early",
+      "room": "dark",
+      "label": "定影没几分钟就急着验",
+      "req": { "f": ["fix1"] },
+      "n": ["c_transp"],
+      "text": "边缘还蒙着一层乳白——没定透，回去接着泡。"
+    },
+    {
+      "id": "pack_can",
+      "room": "dry",
+      "label": "等片子干透装进片盒",
+      "req": { "f": ["wash1"] },
+      "n": ["p_dry"],
+      "eff": { "f": ["p_dry"], "i": ["film_can"] },
+      "text": "热风烘到片基发挺，竹夹取下卷紧，装进空片盒，盒签写上批号 K-117。"
+    },
+    {
+      "id": "reach_oven",
+      "room": "dry",
+      "label": "不等炉子降温就伸手取片",
+      "end": "lose",
+      "text": "炉口那格还在暗红。指尖刚探进去，皮就一声轻响粘在烘板上——今晚剩下的工序，只能等人来接手了。"
+    },
+    {
+      "id": "read_drysign",
+      "room": "dry",
+      "label": "看墙上的操作牌",
+      "text": "操作牌写着：烘干取片须待炉温降下，炉口发红时开炉门属违章操作，违者通报。"
+    },
+    {
+      "id": "read_ledger",
+      "room": "office",
+      "label": "翻师傅的片库台账",
+      "n": ["c_ledger"],
+      "eff": { "f": ["c_ledger"] },
+      "text": "台账今夜这行：K-117 彩色负片一盒，待归架。页边批注：彩色归南排，东起按批号顺排；上一位 K-116 在南排东起第五格。"
+    },
+    {
+      "id": "dig_pocket",
+      "room": "office",
+      "label": "照批注摸工装口袋",
+      "req": { "f": ["c_ledger"] },
+      "n": ["pocket_dug"],
+      "eff": { "f": ["pocket_dug"], "i": ["vault_key"] },
+      "text": "左袋里一枚黄铜钥匙，牌上刻着片库两个字，绳圈磨得发亮。"
+    },
+    {
+      "id": "see_flower",
+      "room": "office",
+      "label": "看窗台的水仙",
+      "text": "水仙抽了第三支箭，花苞裹得紧——师傅算着日子养它，就等交片那天开。"
+    },
+    {
+      "id": "enter_vault",
+      "room": "bench",
+      "label": "开挂锁进片库",
+      "req": { "i": ["vault_key"] },
+      "go": "vault",
+      "eff": { "f": ["p_key", "c_chart"] },
+      "text": "挂锁弹开，铁门沉甸甸让开一条缝。门后排架图正对门口：南排归彩色、北排归黑白，各排东起按批号顺排。"
+    },
+    {
+      "id": "v2b",
+      "room": "vault",
+      "label": "回走廊",
+      "go": "bench"
+    },
+    {
+      "id": "shelve",
+      "room": "vault",
+      "label": "把片盒归进架位",
+      "req": { "i": ["film_can"], "f": ["c_chart", "c_ledger"] },
+      "n": ["p_store"],
+      "eff": { "f": ["p_store"] },
+      "text": "K-117 推进南排东起第六格，与 K-116 齐平。防潮灯闪了一下转绿，台账那行可以销了。"
+    },
+    {
+      "id": "shelve_wrong",
+      "room": "vault",
+      "label": "把片盒塞进北排空格",
+      "req": { "i": ["film_can"] },
+      "n": ["p_store"],
+      "text": "黑白区混进彩色底片，下回抽调对不上色，整套片子都得翻个底朝天。"
+    },
+    {
+      "id": "see_slots",
+      "room": "vault",
+      "label": "看架位上的插签",
+      "text": "南排的插签从东头排到第五格，再往西空着两格，格牌上积着灰；北排插满黑白签。"
+    },
+    {
+      "id": "finish_shift",
+      "room": "vault",
+      "label": "锁上片库回台签退",
+      "req": { "f": ["p_store"] },
+      "end": "win",
+      "text": "挂锁咔哒归位，值班台的钟走到 00:52。工艺卡上定影时限那行打了勾——明早八点，K-117 准时送到剪辑台上。"
+    }
+  ],
+  "difficulty": { "minSteps": 14, "maxSteps": 36, "maxBranch": 6 }
+}

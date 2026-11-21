@@ -1,0 +1,18 @@
+{
+ "game": "g34",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 3,
+ "invalid": 1,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "进报房",
+  "出后门上天线场",
+  "攀结了霜的铁梯查天线"
+ ]
+}

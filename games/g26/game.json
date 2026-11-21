@@ -1,0 +1,288 @@
+{
+  "title": "背板上的旧账",
+  "intro": "拍卖行明早九点来提画。匿名条、电话留言和两册台账各说各话，画框背板的暗号也被人换了一套字母——让真话获胜，打开背板夹层，取出那份盖火漆的原始鉴定书。",
+  "start": "bench",
+  "rooms": {
+    "bench": {
+      "n": "修复台区",
+      "d": "画架上的老油画背板朝外，右下角的封蜡压着火漆印——百年光油层脆，动刀即毁。三盏修图灯只亮一盏，窗外是晚风拍打百叶的声音。"
+    },
+    "crate": {
+      "n": "画箱暂存间",
+      "d": "空画箱立在架子旁，内衬掀起一角。地上散落着包装钉，标签写着明早九点提货。"
+    },
+    "dark": {
+      "n": "观察间",
+      "d": "红灯把整间屋子泡成暗棕色，观察台上摆着红外底片格，壁柜里挂着放大夹。窗帘拉得严实。"
+    },
+    "store": {
+      "n": "颜料库",
+      "d": "台账架立在门口，新旧两册并排插着。货架上色粉罐按色系排开，罐身的进口批号字头磨得发亮。"
+    },
+    "office": {
+      "n": "驻点办公桌",
+      "d": "办公桌上是委托合同和提货单，电话留言机的红灯一闪一闪。椅背上搭着拍卖行的制服外套。"
+    },
+    "hall": {
+      "n": "楼梯间",
+      "d": "应急灯绿着，门禁面板黑着屏。公告栏贴着明早的提货流程，骑缝章在纸角压出半个圆。"
+    },
+    "loft": {
+      "n": "夹层资料阁",
+      "d": "木梯上去的夹层低得顶头，修复手册和周先生的笔记排在一格。灰尘在灯柱里浮着，落得很慢。"
+    },
+    "sink": {
+      "n": "清洗间",
+      "d": "水槽里泡着几支洗笔，溶剂柜贴着挥发性标签。窗台那盆绿萝蔫着，叶尖卷了边。"
+    }
+  },
+  "items": {
+    "old_liner": "旧衬板",
+    "magnifier": "放大镜",
+    "appraisal": "原始鉴定书"
+  },
+  "puzzles": [
+    { "id": "红外底片", "solved": "ir_done", "clue": "c_wax" },
+    { "id": "台账比对", "solved": "ledger_done", "clue": "c_note" },
+    { "id": "电话留言机", "solved": "phone_heard", "clue": "c_ledger" },
+    { "id": "三处说法比对", "solved": "truth", "clue": "c_phone" },
+    { "id": "修复手册", "solved": "manual_read", "clue": "c_ir" },
+    { "id": "背板暗格", "solved": "box_open", "clue": "c_layer" }
+  ],
+  "acts": [
+    {
+      "id": "bench2dark",
+      "room": "bench",
+      "label": "进观察间",
+      "go": "dark"
+    },
+    {
+      "id": "dark2bench",
+      "room": "dark",
+      "label": "回修复台区",
+      "go": "bench"
+    },
+    {
+      "id": "dark2crate",
+      "room": "dark",
+      "label": "去画箱暂存间",
+      "go": "crate"
+    },
+    {
+      "id": "crate2dark",
+      "room": "crate",
+      "label": "回观察间",
+      "go": "dark"
+    },
+    {
+      "id": "dark2sink",
+      "room": "dark",
+      "label": "去清洗间",
+      "go": "sink"
+    },
+    {
+      "id": "sink2dark",
+      "room": "sink",
+      "label": "回观察间",
+      "go": "dark"
+    },
+    {
+      "id": "bench2store",
+      "room": "bench",
+      "label": "去颜料库",
+      "go": "store"
+    },
+    {
+      "id": "store2bench",
+      "room": "store",
+      "label": "回修复台区",
+      "go": "bench"
+    },
+    {
+      "id": "store2office",
+      "room": "store",
+      "label": "去驻点办公桌",
+      "go": "office"
+    },
+    {
+      "id": "office2store",
+      "room": "office",
+      "label": "回颜料库",
+      "go": "store"
+    },
+    {
+      "id": "bench2hall",
+      "room": "bench",
+      "label": "去楼梯间",
+      "go": "hall"
+    },
+    {
+      "id": "hall2bench",
+      "room": "hall",
+      "label": "回修复台区",
+      "go": "bench"
+    },
+    {
+      "id": "hall2loft",
+      "room": "hall",
+      "label": "爬木梯上夹层",
+      "go": "loft"
+    },
+    {
+      "id": "loft2hall",
+      "room": "loft",
+      "label": "下梯回楼梯间",
+      "go": "hall"
+    },
+    {
+      "id": "take_liner",
+      "room": "crate",
+      "label": "抽出画箱底压着的旧衬板",
+      "n": ["liner_taken"],
+      "eff": { "f": ["liner_taken", "c_note"], "i": ["old_liner"] },
+      "text": "衬板抽出，内衬下压着一张字条：拍卖提货前看看背板，暗号早被换过——信九二年的旧台账，别信补写过的。落款只画了一个画框。"
+    },
+    {
+      "id": "read_ir",
+      "room": "dark",
+      "label": "读红外底片",
+      "n": ["ir_done"],
+      "eff": { "f": ["ir_done", "c_ir"] },
+      "text": "底片上，背板右下角刻着 C R V K 四个字母，笔画底下还压着一层被铲平的旧刻痕；底色层里有几笔近年补上的描线。边角一行周先生的小楷：验层位，查夹层手册。"
+    },
+    {
+      "id": "inspect_liner",
+      "room": "bench",
+      "label": "把旧衬板对着背板比封蜡",
+      "req": { "i": ["old_liner"] },
+      "n": ["c_wax"],
+      "eff": { "f": ["c_wax"] },
+      "text": "衬板火漆印与背板压痕吻合，蜡面却有重新压过的亮边——这只背板，最近被人打开过又草草封上。"
+    },
+    {
+      "id": "take_lens",
+      "room": "store",
+      "label": "从工具格取放大镜",
+      "n": ["lens_taken"],
+      "eff": { "f": ["lens_taken"], "i": ["magnifier"] },
+      "text": "放大镜的铜柄包浆温润，镜片下缘还贴着周先生的姓名缩写。"
+    },
+    {
+      "id": "compare_ledger",
+      "room": "store",
+      "label": "用放大镜比对两册台账",
+      "req": { "i": ["magnifier"] },
+      "n": ["ledger_done"],
+      "eff": { "f": ["ledger_done", "c_ledger"] },
+      "text": "新册批号页纸色发白，墨浮在纸面上，是后补的；旧册从九二年起批次连续无断，批号页按罐身进口字头登记——C 铅白第 2 批、R 赭石第 7 批、V 群青第 4 批、K 炭黑第 1 批。"
+    },
+    {
+      "id": "listen_phone",
+      "room": "office",
+      "label": "听电话留言机",
+      "n": ["phone_heard"],
+      "eff": { "f": ["phone_heard", "c_phone"] },
+      "text": "经理的留言带着酒气：批号对照以柜里那本新台账为准，旧册子年份记错了——明早九点提画，别掉链子。"
+    },
+    {
+      "id": "read_manual",
+      "room": "loft",
+      "label": "读修复手册",
+      "n": ["manual_read"],
+      "eff": { "f": ["manual_read", "c_layer"] },
+      "text": "周先生的规矩：背板记号按画面结构层自下而上读——底色、躯干、罩染、签名；底色铅白，躯干赭石，罩染群青，落款炭黑。"
+    },
+    {
+      "id": "compare_truth",
+      "room": "bench",
+      "label": "把三处说法摊开比对",
+      "req": { "f": ["c_note", "c_ledger", "c_phone", "c_ir", "c_wax"] },
+      "n": ["truth"],
+      "eff": { "f": ["truth"] },
+      "text": "三份说法里，只有字条、旧台账和底片互相咬合：新册批号页是后补的，经理的话跟着新册一起错——背板暗号，按旧台账换算。"
+    },
+    {
+      "id": "dial_box",
+      "room": "bench",
+      "label": "照旧台账批号拨 2741",
+      "req": { "f": ["truth", "c_layer"] },
+      "n": ["box_open"],
+      "eff": { "f": ["box_open"], "i": ["appraisal"] },
+      "text": "四位转盘依次咬合，背板夹层咔地弹开——里面平躺着盖火漆的原始鉴定书，纸边还带着樟脑味。"
+    },
+    {
+      "id": "dial_new",
+      "room": "bench",
+      "label": "照新台账批号拨 9263",
+      "req": { "f": ["ledger_done", "truth"] },
+      "n": ["box_open"],
+      "text": "转盘走到第二位就被阻铁顶了回来——这套数对不上刻盘的缺口。"
+    },
+    {
+      "id": "dial_rev",
+      "room": "bench",
+      "label": "倒着拨 1472",
+      "req": { "f": ["truth"] },
+      "n": ["box_open"],
+      "text": "转盘空转了三圈，簧片一下都没咬住。"
+    },
+    {
+      "id": "return_doc",
+      "room": "bench",
+      "label": "把鉴定书归回背板夹层",
+      "req": { "i": ["appraisal"], "f": ["box_open"] },
+      "end": "win",
+      "text": "火漆印对上旧衬板，鉴定书归回夹层重新封蜡——明早九点的提货单上，这幅画的名字后面不再有星号。"
+    },
+    {
+      "id": "scratch_paint",
+      "room": "bench",
+      "label": "用美工刀刮开光油层",
+      "end": "lose",
+      "text": "刀尖一歪，划穿了一八九〇年的底色层——楼梯上传来提前巡夜的脚步声。"
+    },
+    {
+      "id": "amb_nail",
+      "room": "crate",
+      "label": "清点地上的包装钉",
+      "text": "包装钉数了三遍都差一枚——垫在衬板下的那枚，钉尖还挂着蜡屑。"
+    },
+    {
+      "id": "amb_curtain",
+      "room": "dark",
+      "label": "拉严观察帘",
+      "text": "帘布拉到底，红灯把整间屋子泡得更暗，底片格里的影像反而清楚起来。"
+    },
+    {
+      "id": "amb_can",
+      "room": "store",
+      "label": "看色粉罐的批号字头",
+      "text": "C 字头的罐子是铅白，R 是赭石，V 是群青，K 是炭黑——老周数罐子的习惯，字头一律朝外。"
+    },
+    {
+      "id": "amb_order",
+      "room": "office",
+      "label": "翻看提货单",
+      "text": "提货单抬头盖了骑缝章，备注栏一行小字：随附原始鉴定书，缺件不收。"
+    },
+    {
+      "id": "amb_gate",
+      "room": "hall",
+      "label": "看门禁面板",
+      "text": "门禁面板黑着屏，明早六点才供电——今夜这间屋子，进得来出不去。"
+    },
+    {
+      "id": "amb_dust",
+      "room": "loft",
+      "label": "掸修复手册上的灰",
+      "text": "手册书脊的烫金字磨平了，翻口却压着新鲜的指印。"
+    },
+    {
+      "id": "amb_sink",
+      "room": "sink",
+      "label": "拧溶剂柜的阀门",
+      "text": "阀门拧到头也不滴漏，水槽水面浮着一层薄薄的松节油晕。"
+    }
+  ],
+  "difficulty": { "minSteps": 10, "maxSteps": 28, "maxBranch": 6 }
+}

@@ -1,0 +1,339 @@
+{
+  "title": "后半夜的温室",
+  "intro": "凌晨两点，恒温系统失灵，主温室已爬到 31.4℃，蝴蝶兰的耐受上限是 28℃。按刻度称配营养液，把手边的零件拼成应急阀，赶在天亮巡检前把喷雾系统开起来。",
+  "start": "potting",
+  "rooms": {
+    "potting": {
+      "n": "上盆间",
+      "d": "夜班台上的登记本摊开着，门口小黑板留着上一班的粉笔字。恒温屏红字跳在 31.4℃，三扇门通向门厅、苗床和药剂间。"
+    },
+    "headhouse": {
+      "n": "门厅值班室",
+      "d": "衣帽钩上挂着雨衣和值班表，对讲机在充电座上闪红灯。玻璃门外是园区的黑，保安亭早没了人。"
+    },
+    "store": {
+      "n": "药剂贮藏间",
+      "d": "天平架在防酸台面上，砝码盒和母液粉罐排在格架里。屋顶排风扇停了，药味沉甸甸压在灯下。"
+    },
+    "orchid": {
+      "n": "兰花苗床",
+      "d": "三排蝴蝶兰的叶尖开始发软，温度计顶在 31℃。苗床尽头一道铁门虚掩着，机房的水泵声隐隐传过来。"
+    },
+    "fern": {
+      "n": "蕨类阴棚",
+      "d": "加湿帘淌着水，值班员小林的工具袋挂在门后钉子上。角落的加湿器断了电，叶子上的水珠凝着不动。"
+    },
+    "boiler": {
+      "n": "机房",
+      "d": "热水管路爬满墙，喷雾主管的冻裂断口就在阀座旁。地上摊着一只零件箱，旁边贴着中压蒸汽的警示带。"
+    },
+    "workshop": {
+      "n": "工具棚",
+      "d": "管钳按尺寸挂了一排，备用阀芯躺在抽屉格上。棚里堆着空营养桶，油灯味混着橡胶圈的气味。"
+    },
+    "mister": {
+      "n": "喷雾控制间",
+      "d": "控制柜蒙着防尘罩，吸药座空着。柜门挂着小锁，面板底下贴着一张卷了边的启动口诀。"
+    }
+  },
+  "items": {
+    "powder": "母液粉罐",
+    "weights": "砝码盒",
+    "can": "配好的营养液壶",
+    "valve_core": "备用阀芯",
+    "pliers": "管钳",
+    "joint": "黄铜接头",
+    "gasket": "硅胶垫圈",
+    "emergency_valve": "拼好的应急阀",
+    "cab_key": "控制柜钥匙"
+  },
+  "puzzles": [
+    { "id": "上一班的小黑板", "solved": "board_read", "clue": "c_note" },
+    { "id": "称配营养液", "solved": "mixed", "clue": "c_scale" },
+    { "id": "小林的工具袋", "solved": "bag_taken", "clue": "c_peg" },
+    { "id": "拼装应急阀", "solved": "assembled", "clue": "c_log" },
+    { "id": "换装应急阀", "solved": "valve_on", "clue": "c_mouth" },
+    { "id": "营养液上罐", "solved": "dosed", "clue": "c_suction" },
+    { "id": "应急喷雾启动", "solved": "spray_on", "clue": "panel_open" }
+  ],
+  "acts": [
+    {
+      "id": "pot2head",
+      "room": "potting",
+      "label": "去门厅值班室",
+      "go": "headhouse"
+    },
+    {
+      "id": "head2pot",
+      "room": "headhouse",
+      "label": "回上盆间",
+      "go": "potting"
+    },
+    {
+      "id": "pot2store",
+      "room": "potting",
+      "label": "进药剂贮藏间",
+      "go": "store"
+    },
+    {
+      "id": "store2pot",
+      "room": "store",
+      "label": "回上盆间",
+      "go": "potting"
+    },
+    {
+      "id": "pot2orchid",
+      "room": "potting",
+      "label": "去兰花苗床",
+      "go": "orchid"
+    },
+    {
+      "id": "orchid2pot",
+      "room": "orchid",
+      "label": "回上盆间",
+      "go": "potting"
+    },
+    {
+      "id": "orchid2fern",
+      "room": "orchid",
+      "label": "去蕨类阴棚",
+      "go": "fern"
+    },
+    {
+      "id": "fern2orchid",
+      "room": "fern",
+      "label": "回兰花苗床",
+      "go": "orchid"
+    },
+    {
+      "id": "orchid2boiler",
+      "room": "orchid",
+      "label": "穿铁门进机房",
+      "go": "boiler"
+    },
+    {
+      "id": "boiler2orchid",
+      "room": "boiler",
+      "label": "回兰花苗床",
+      "go": "orchid"
+    },
+    {
+      "id": "boiler2workshop",
+      "room": "boiler",
+      "label": "出棚门去工具棚",
+      "go": "workshop"
+    },
+    {
+      "id": "workshop2boiler",
+      "room": "workshop",
+      "label": "回机房",
+      "go": "boiler"
+    },
+    {
+      "id": "boiler2mister",
+      "room": "boiler",
+      "label": "进喷雾控制间",
+      "go": "mister"
+    },
+    {
+      "id": "mister2boiler",
+      "room": "mister",
+      "label": "回机房",
+      "go": "boiler"
+    },
+    {
+      "id": "read_log",
+      "room": "potting",
+      "label": "读夜班登记本",
+      "n": ["c_log"],
+      "eff": { "f": ["c_log", "c_note"] },
+      "text": "登记本停在零点一刻：恒温器失灵，应急喷雾主管在机房冻裂，断口阀芯碎了。零件清单写得齐整——阀芯、接头、垫圈、管钳；其余细节抄在门口小黑板上。"
+    },
+    {
+      "id": "read_board",
+      "room": "potting",
+      "label": "看门口的小黑板",
+      "n": ["board_read"],
+      "eff": { "f": ["board_read", "c_scale", "c_peg", "c_suction"] },
+      "text": "黑板粉笔字三层：苗床桶整十升，母液粉一点二克对一升；控制柜钥匙在小林工具袋里，阴棚门后；喷雾罐上有吸药座，营养液要卡进座里才吸得动。"
+    },
+    {
+      "id": "take_powder",
+      "room": "store",
+      "label": "取母液粉罐和砝码盒",
+      "n": ["got_powder"],
+      "eff": { "f": ["got_powder"], "i": ["powder", "weights"] },
+      "text": "母液粉罐和砝码盒并排躺在格架里，罐身标签写着：净剩约四十克。"
+    },
+    {
+      "id": "weigh_mix",
+      "room": "store",
+      "label": "按配方刻度称母液粉",
+      "req": { "i": ["powder", "weights"] },
+      "n": ["mixed"],
+      "eff": { "f": ["mixed"], "i": ["can"] },
+      "text": "5 克、5 克、2 克三枚砝码压稳秤盘——12 克母液粉倒进量桶冲开，液色淡黄透亮，整桶十升刚刚好。"
+    },
+    {
+      "id": "weigh_all",
+      "room": "store",
+      "label": "把整罐粉全倒上秤盘",
+      "req": { "i": ["powder", "weights"] },
+      "n": ["mixed"],
+      "text": "整罐四十克全压上秤盘——这浓度够把半床老桩烧成焦炭，赶紧原样倒了回去。"
+    },
+    {
+      "id": "weigh_20",
+      "room": "store",
+      "label": "称二十克母液粉",
+      "req": { "i": ["powder", "weights"] },
+      "n": ["mixed"],
+      "text": "秤上二十克，倒进桶里才想起配方是一点二克对一升——浓了一倍，趁叶尖还没卷边，赶紧兑水稀释重称。"
+    },
+    {
+      "id": "take_bag",
+      "room": "fern",
+      "label": "翻门后的工具袋",
+      "n": ["bag_taken"],
+      "eff": { "f": ["bag_taken"], "i": ["cab_key"] },
+      "text": "工具袋里除了一副旧手套，还有一枚拴红签的控制柜钥匙——小林留的。"
+    },
+    {
+      "id": "look_mouth",
+      "room": "boiler",
+      "label": "端详主管断口",
+      "n": ["c_mouth"],
+      "eff": { "f": ["c_mouth"] },
+      "text": "断口是 G1/2 管牙，旧阀芯碎成三瓣还卡在阀座里，阀座丝扣上还挂着半片碎垫的残角。"
+    },
+    {
+      "id": "take_core",
+      "room": "workshop",
+      "label": "取备用阀芯和管钳",
+      "n": ["got_core"],
+      "eff": { "f": ["got_core"], "i": ["valve_core", "pliers"] },
+      "text": "备用阀芯躺在抽屉格上，管钳按尺寸挂了一排，取了把中号的。"
+    },
+    {
+      "id": "open_kit",
+      "room": "boiler",
+      "label": "拆开地上的零件箱",
+      "n": ["got_kit"],
+      "eff": { "f": ["got_kit"], "i": ["joint", "gasket"] },
+      "text": "零件箱里躺着黄铜接头和一只硅胶垫圈，防锈脂封口，是上一班备下的。"
+    },
+    {
+      "id": "assemble",
+      "room": "boiler",
+      "label": "把阀芯接头垫圈拼成阀",
+      "req": { "i": ["valve_core", "joint", "gasket"] },
+      "n": ["assembled"],
+      "eff": { "f": ["assembled"], "i": ["emergency_valve"] },
+      "text": "阀芯嵌进黄铜接头，硅胶垫圈按进卡槽——一只拼出来的应急阀躺在掌心，丝扣还带着防锈脂的滑腻。"
+    },
+    {
+      "id": "assemble_wrong",
+      "room": "boiler",
+      "label": "不用垫圈直接拧阀芯",
+      "req": { "i": ["valve_core", "joint"] },
+      "n": ["assembled"],
+      "text": "阀芯直接拧上接头，丝扣咬了两圈就打滑——没有垫圈封压，白汽从接缝里咝咝往外冒。"
+    },
+    {
+      "id": "fit_valve",
+      "room": "boiler",
+      "label": "用管钳把应急阀拧上断口",
+      "req": { "i": ["emergency_valve", "pliers"], "f": ["assembled"] },
+      "n": ["valve_on"],
+      "eff": { "f": ["valve_on"] },
+      "text": "管钳咬住阀帽拧了五圈，断口的水汽断了，压力表指针慢慢站直。"
+    },
+    {
+      "id": "unlock_panel",
+      "room": "mister",
+      "label": "用红签钥匙开控制柜",
+      "req": { "i": ["cab_key"] },
+      "n": ["panel_open"],
+      "eff": { "f": ["panel_open"] },
+      "text": "柜门弹开，启动口诀贴纸卷着边，中段被撕走一截：只剩头两步的先装阀、再上液，和末尾的后合闸；撕口边沿还认得出半个看字，往后的字全没了。"
+    },
+    {
+      "id": "dose_tank",
+      "room": "mister",
+      "label": "把营养液壶卡进吸药座",
+      "req": { "i": ["can"] },
+      "n": ["dosed"],
+      "eff": { "f": ["dosed"] },
+      "text": "营养液壶咔进吸药座，虹吸管里没进气泡。"
+    },
+    {
+      "id": "spray_on",
+      "room": "mister",
+      "label": "合上喷雾柜总闸",
+      "req": { "f": ["valve_on", "dosed", "panel_open"] },
+      "n": ["spray_on"],
+      "eff": { "f": ["spray_on"] },
+      "text": "总闸合上，泵声从苗床方向滚过来，雾化头的咝咝声起来了。"
+    },
+    {
+      "id": "spray_wrong",
+      "room": "mister",
+      "label": "阀没装就合总闸",
+      "req": { "f": ["panel_open"] },
+      "n": ["spray_on"],
+      "text": "泵一启动，断口的水柱直接顶上天花板——你拍下急停，半身都湿透了。"
+    },
+    {
+      "id": "watch_fall",
+      "room": "orchid",
+      "label": "守着苗床看温度回落",
+      "req": { "f": ["spray_on"] },
+      "end": "win",
+      "text": "雾铺开三层，温控屏从 31.4 一格一格退到 24.8，最娇的那盆魔鬼文心兰叶尖重新挺了回来。你在登记本上补完这一夜，天边刚泛出蟹壳青。"
+    },
+    {
+      "id": "climb_frame",
+      "room": "orchid",
+      "label": "踩上湿滑的苗床沿去够风口手轮",
+      "end": "lose",
+      "text": "桁架横梁积着冷凝水汽，脚下一滑——你摔进兰花的花架，几盆老桩当场碎了。"
+    },
+    {
+      "id": "amb_clip",
+      "room": "headhouse",
+      "label": "翻衣帽钩上的巡检夹",
+      "text": "巡检夹里夹着半页排班表，今晚的夜班一栏只有你自己的名字。"
+    },
+    {
+      "id": "amb_cyl",
+      "room": "store",
+      "label": "翻量具抽屉",
+      "text": "量筒量杯排成一排，最小的那支刻度被指甲掐出个记号——一点二克对一升的老习惯。"
+    },
+    {
+      "id": "amb_moss",
+      "room": "orchid",
+      "label": "摸苗床的基质",
+      "text": "水苔干得发脆，指节探下去两寸都见不着潮气——再晚一夜就救不回来了。"
+    },
+    {
+      "id": "amb_pad",
+      "room": "fern",
+      "label": "听加湿帘滴水",
+      "text": "加湿帘还淌着水，滴答声数得清——全温室就剩这一点凉意。"
+    },
+    {
+      "id": "amb_bucket",
+      "room": "workshop",
+      "label": "翻看空营养桶",
+      "text": "空营养桶摞到棚顶，桶底的日期贴纸从春天一路贴到秋末。"
+    },
+    {
+      "id": "amb_dust",
+      "room": "mister",
+      "label": "擦控制柜面板",
+      "text": "防尘罩内侧有一行马克笔交接字：上液后先看压力表，指针站直再合闸——上一班交班时特意描粗过两遍；罩外的灰还蹭着半只手掌印。"
+    }
+  ],
+  "difficulty": { "minSteps": 10, "maxSteps": 28, "maxBranch": 6 }
+}

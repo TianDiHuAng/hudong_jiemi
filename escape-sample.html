@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>文字密室样板：废弃天文台</title>
+<style>
+:root{--bg:#EEF1F6;--card:#FFFFFF;--ink:#1B2233;--mute:#5B667D;--line:#D2D9E6;--acc:#3A56A8;--ok:#1E7A4F;--bad:#B3362B;--code:#E6EAF3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1320;--card:#161D30;--ink:#E3E8F4;--mute:#9AA6C2;--line:#2A3452;--acc:#8FA8F0;--ok:#5FCB92;--bad:#F07A6E;--code:#1B2440;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1320;--card:#161D30;--ink:#E3E8F4;--mute:#9AA6C2;--line:#2A3452;--acc:#8FA8F0;--ok:#5FCB92;--bad:#F07A6E;--code:#1B2440;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Noto Sans SC","PingFang SC",system-ui,sans-serif}
+main{max-width:900px;margin:0 auto;padding:32px 16px 80px}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.25;margin:0 0 8px}
+h2{font-size:20px;margin:40px 0 10px}
+.lead{color:var(--mute)}
+.grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:820px){.grid{grid-template-columns:1.1fr 1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
+#room{font-weight:700;font-size:18px}
+#log{min-height:120px;max-height:240px;overflow-y:auto;margin:10px 0;color:var(--mute);font-size:15px}
+#log p{margin:4px 0}#log p:last-child{color:var(--ink)}
+button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;cursor:pointer;text-align:left}
+button:hover{border-color:var(--acc)}button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+#acts{display:flex;flex-direction:column;gap:8px}
+.pri{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+.row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.6}
+.row b{min-width:9em}.row.ok b{color:var(--ok)}.row.bad b{color:var(--bad)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+pre{background:var(--code);padding:12px;border-radius:8px;overflow:auto;font:13px/1.6 ui-monospace,Menlo,Consolas,monospace;max-height:320px}
+#path{font-size:14px;color:var(--mute)}
+</style>
+</head>
+<body>
+<main>
+<h1>废弃天文台</h1>
+<p class="lead">一个手写的样板关卡。左边可以直接玩，右边是验证器在页面里实时遍历全部状态后给出的报告。正式流水线里，AI生成的每个关卡都要通过同样的检查。</p>
+<div class="grid">
+<section class="card" aria-live="polite">
+<div id="room"></div><div id="inv" class="lead"></div>
+<div id="log"></div><div id="acts"></div>
+<div class="tools"><button id="restart">重新开始</button></div>
+</section>
+<section class="card">
+<div style="font-weight:700">验证报告</div>
+<div id="report"></div>
+<div id="path"></div>
+<div class="tools"><button id="bug" class="pri">注入一个软锁缺陷并重新验证</button></div>
+</section>
+</div>
+<h2>关卡数据（game.json）</h2>
+<p class="lead">AI只需要产出这份数据和文字，引擎与验证器是固定的。</p>
+<details><summary>展开查看</summary><pre id="json"></pre></details>
+</main>
+<script>
+var G={start:"hall",
+rooms:{hall:{n:"大厅",d:"满是灰尘的大厅。墙上挂着一只停摆的钟，一扇铁门通向地下室，一架梯子通向穹顶。"},
+lib:{n:"图书室",d:"书架倒了一半。书桌上有一个三位数字的密码抽屉。"},
+base:{n:"地下室",d:"潮湿，角落里有一个红色拉杆和一个木箱。"},
+dome:{n:"穹顶",d:"巨大的望远镜对着一块裂开的天窗。墙上是一幅星图，旁边有三个按钮：3、7、9。"}},
+items:{key:"铜钥匙",lens:"透镜"},
+puzzles:[{id:"抽屉密码",solved:"drawer_open",clue:"clue_clock"},{id:"星图按钮",solved:"won",clue:"clue_polaris"}],
+acts:[
+{id:"clock",room:"hall",label:"查看墙上的挂钟",eff:{f:["clue_clock"]},text:"挂钟停在 3 点 07 分，秒针卡死了。"},
+{id:"h2l",room:"hall",label:"去图书室",go:"lib"},
+{id:"h2d",room:"hall",label:"爬梯子去穹顶",go:"dome"},
+{id:"unlock",room:"hall",label:"用铜钥匙打开地下室的门",req:{i:["key"]},n:["base_open"],eff:{f:["base_open"]},text:"锁咔哒一声开了。"},
+{id:"h2b",room:"hall",label:"进地下室",req:{f:["base_open"]},go:"base"},
+{id:"l2h",room:"lib",label:"回大厅",go:"hall"},
+{id:"book",room:"lib",label:"翻阅《天文年鉴》",eff:{f:["clue_polaris"]},text:"书中写道：北极星在星图上的编号是 7。"},
+{id:"d111",room:"lib",label:"给抽屉输入密码 111",n:["drawer_open"],text:"锁纹丝不动。"},
+{id:"d307",room:"lib",label:"给抽屉输入密码 307",n:["drawer_open"],eff:{f:["drawer_open"],i:["key"]},text:"抽屉弹开，里面躺着一把铜钥匙。"},
+{id:"d703",room:"lib",label:"给抽屉输入密码 703",n:["drawer_open"],text:"锁纹丝不动。"},
+{id:"b2h",room:"base",label:"回大厅",go:"hall"},
+{id:"lens",room:"base",label:"打开木箱",n:["has_lens"],eff:{f:["has_lens"],i:["lens"]},text:"箱子里是一枚擦得发亮的透镜。"},
+{id:"lever",room:"base",label:"拉动红色拉杆",end:"lose",text:"水管爆裂，地下室迅速被淹没。"},
+{id:"m2h",room:"dome",label:"爬梯子回大厅",go:"hall"},
+{id:"scope",room:"dome",label:"把透镜装进望远镜",req:{i:["lens"]},n:["scope_ready"],eff:{f:["scope_ready"]},text:"望远镜对准了天窗，星图上的一个编号被照亮了。"},
+{id:"p3",room:"dome",label:"按下按钮 3",req:{f:["scope_ready"]},text:"没有反应。"},
+{id:"p7",room:"dome",label:"按下按钮 7",req:{f:["scope_ready"]},eff:{f:["won"]},end:"win",text:"天窗缓缓打开，星光倾泻进来。你逃出来了。"},
+{id:"p9",room:"dome",label:"按下按钮 9",req:{f:["scope_ready"]},text:"没有反应。"}]};
+var BUG={id:"bug",room:"hall",label:"把铜钥匙扔进枯井",req:{i:["key"]},eff:{rm:["key"]},text:"钥匙落入井底，再也够不着了。"};
+var bugOn=false;
+function acts(){return bugOn?G.acts.concat([BUG]):G.acts}
+function has(s,a){var r=a.req||{};return a.room===s.room&&(r.i||[]).every(function(x){return s.i.indexOf(x)>-1})&&(r.f||[]).every(function(x){return s.f.indexOf(x)>-1})&&(a.n||[]).every(function(x){return s.f.indexOf(x)<0})}
+function avail(s){return s.end?[]:acts().filter(function(a){return has(s,a)})}
+function ap(s,a){var e=a.eff||{},i=new Set(s.i),f=new Set(s.f);(e.i||[]).forEach(function(x){i.add(x)});(e.rm||[]).forEach(function(x){i.delete(x)});(e.f||[]).forEach(function(x){f.add(x)});
+return{room:a.go||s.room,i:Array.from(i).sort(),f:Array.from(f).sort(),end:a.end||null}}
+function key(s){return s.room+"|"+s.i+"|"+s.f+"|"+(s.end||"")}
+function validate(){
+var s0={room:G.start,i:[],f:[],end:null},M={},Q=[s0],rev={},used={},k0=key(s0);
+M[k0]={s:s0,p:null,via:null,d:0};
+for(var q=0;q<Q.length;q++){var s=Q[q],ks=key(s);
+avail(s).forEach(function(a){used[a.id]=1;var t=ap(s,a),kt=key(t);(rev[kt]=rev[kt]||[]).push(ks);
+if(!M[kt]){M[kt]={s:t,p:ks,via:a,d:M[ks].d+1};Q.push(t)}})}
+var keys=Object.keys(M),win=keys.filter(function(k){return M[k].s.end==="win"}),can={},st=win.slice();
+win.forEach(function(k){can[k]=1});
+while(st.length){var k=st.pop();(rev[k]||[]).forEach(function(p){if(!can[p]){can[p]=1;st.push(p)}})}
+var lock=keys.filter(function(k){return !M[k].s.end&&!can[k]});
+var path=[];if(win.length){var c=win[0];while(M[c].via){path.unshift(M[c].via.label);c=M[c].p}}
+var unused=acts().filter(function(a){return !used[a.id]}).map(function(a){return a.label});
+var gotI={},seenR={};keys.forEach(function(k){M[k].s.i.forEach(function(x){gotI[x]=1});seenR[M[k].s.room]=1});
+var missI=Object.keys(G.items).filter(function(x){return !gotI[x]}),missR=Object.keys(G.rooms).filter(function(x){return !seenR[x]});
+var bad=[];G.puzzles.forEach(function(p){var ok=keys.some(function(k){var s=M[k].s;return s.f.indexOf(p.clue)>-1&&s.f.indexOf(p.solved)<0&&!s.end});if(!ok)bad.push(p.id)});
+var ends={};keys.forEach(function(k){if(M[k].s.end)ends[M[k].s.end]=1});
+var br=0,n=0;keys.forEach(function(k){if(!M[k].s.end){br+=avail(M[k].s).length;n++}});
+return{path:path,checks:[
+{n:"可通关",ok:win.length>0,t:win.length?"最短 "+path.length+" 步":"没有任何路径到达胜利结局"},
+{n:"无死局与软锁",ok:lock.length===0,t:lock.length?"发现 "+lock.length+" 个无法再通关的状态（共 "+keys.length+" 个）":"全部 "+keys.length+" 个可达状态都还能通关或已结束"},
+{n:"无孤儿内容",ok:!unused.length&&!missI.length&&!missR.length,t:unused.length?"从未用到的动作："+unused.join("、"):"所有动作、物品、房间都会被用到"},
+{n:"线索先于谜题",ok:!bad.length,t:bad.length?"缺少可先获得的线索："+bad.join("、"):"每个谜题都能在解开之前拿到线索"},
+{n:"结局",ok:!!ends.win,t:"可达结局："+Object.keys(ends).map(function(x){return x==="win"?"胜利":"失败（设计内）"}).join("、")},
+{n:"难度指标",ok:true,t:"平均每个状态 "+(br/n).toFixed(1)+" 个可选动作，最短通关 "+path.length+" 步"}]}}
+var S,logEl=document.getElementById("log");
+function reset(){S={room:G.start,i:[],f:[],end:null};logEl.innerHTML="";say(G.rooms[S.room].d);draw()}
+function say(t){var p=document.createElement("p");p.textContent=t;logEl.appendChild(p);logEl.scrollTop=1e5}
+function draw(){document.getElementById("room").textContent=G.rooms[S.room].n;
+document.getElementById("inv").textContent="物品："+(S.i.length?S.i.map(function(x){return G.items[x]}).join("、"):"空");
+var box=document.getElementById("acts");box.innerHTML="";
+if(S.end){var b=document.createElement("button");b.className="pri";b.textContent=S.end==="win"?"通关！再玩一次":"失败了，重新开始";b.onclick=reset;box.appendChild(b);return}
+avail(S).forEach(function(a){var b=document.createElement("button");b.textContent=a.label;b.onclick=function(){
+var t=ap(S,a);S=t;if(a.text)say(a.text);if(a.go)say(G.rooms[S.room].d);draw()};box.appendChild(b)})}
+function report(){var r=validate(),h="";r.checks.forEach(function(c){h+='<div class="row '+(c.ok?"ok":"bad")+'"><b>'+(c.ok?"✓ ":"✗ ")+c.n+"</b><span>"+c.t+"</span></div>"});
+document.getElementById("report").innerHTML=h;
+document.getElementById("path").textContent=r.path.length?"最短通关路径："+r.path.join(" → "):"";}
+document.getElementById("restart").onclick=reset;
+document.getElementById("bug").onclick=function(){bugOn=!bugOn;this.textContent=bugOn?"移除缺陷并重新验证":"注入一个软锁缺陷并重新验证";report();reset()};
+document.getElementById("json").textContent=JSON.stringify(G,null,1);
+report();reset();
+</script>
+</body>
+</html>

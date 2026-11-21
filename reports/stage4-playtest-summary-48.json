@@ -1,0 +1,31 @@
+{
+ "total": 96,
+ "cautious": {
+  "win": 48,
+  "stuck": 0,
+  "avgSteps": 31.9
+ },
+ "chaotic": {
+  "win": 14,
+  "lose": 34,
+  "stuck": 0,
+  "avgSteps": 16.9,
+  "avgInvalid": 1.8,
+  "chaoticWins": [
+   "g03",
+   "g04",
+   "g05",
+   "g07",
+   "g08",
+   "g09",
+   "g11",
+   "g13",
+   "g18",
+   "g30",
+   "g31",
+   "g32",
+   "g47",
+   "g48"
+  ]
+ }
+}

@@ -1,0 +1,5 @@
+reports/_g06served.html
+play-*.json
+playtest-*.tmp
+Thumbs.db
+.DS_Store

@@ -1,0 +1,203 @@
+{
+ "threshold": 0.3,
+ "games": [
+  {
+   "id": "g01",
+   "sentences": 75
+  },
+  {
+   "id": "g02",
+   "sentences": 86
+  },
+  {
+   "id": "g03",
+   "sentences": 57
+  },
+  {
+   "id": "g04",
+   "sentences": 74
+  },
+  {
+   "id": "g05",
+   "sentences": 54
+  },
+  {
+   "id": "g06",
+   "sentences": 75
+  },
+  {
+   "id": "g07",
+   "sentences": 68
+  },
+  {
+   "id": "g08",
+   "sentences": 62
+  },
+  {
+   "id": "g09",
+   "sentences": 45
+  },
+  {
+   "id": "g10",
+   "sentences": 92
+  },
+  {
+   "id": "g11",
+   "sentences": 76
+  },
+  {
+   "id": "g12",
+   "sentences": 74
+  },
+  {
+   "id": "g13",
+   "sentences": 70
+  },
+  {
+   "id": "g14",
+   "sentences": 64
+  },
+  {
+   "id": "g15",
+   "sentences": 88
+  },
+  {
+   "id": "g16",
+   "sentences": 77
+  },
+  {
+   "id": "g17",
+   "sentences": 72
+  },
+  {
+   "id": "g18",
+   "sentences": 93
+  },
+  {
+   "id": "g19",
+   "sentences": 70
+  },
+  {
+   "id": "g20",
+   "sentences": 71
+  },
+  {
+   "id": "g21",
+   "sentences": 67
+  },
+  {
+   "id": "g22",
+   "sentences": 61
+  },
+  {
+   "id": "g23",
+   "sentences": 84
+  },
+  {
+   "id": "g24",
+   "sentences": 81
+  },
+  {
+   "id": "g25",
+   "sentences": 76
+  },
+  {
+   "id": "g26",
+   "sentences": 62
+  },
+  {
+   "id": "g27",
+   "sentences": 59
+  },
+  {
+   "id": "g28",
+   "sentences": 58
+  },
+  {
+   "id": "g29",
+   "sentences": 66
+  },
+  {
+   "id": "g30",
+   "sentences": 66
+  },
+  {
+   "id": "g31",
+   "sentences": 69
+  },
+  {
+   "id": "g32",
+   "sentences": 70
+  },
+  {
+   "id": "g33",
+   "sentences": 86
+  },
+  {
+   "id": "g34",
+   "sentences": 76
+  },
+  {
+   "id": "g35",
+   "sentences": 51
+  },
+  {
+   "id": "g36",
+   "sentences": 62
+  },
+  {
+   "id": "g37",
+   "sentences": 93
+  },
+  {
+   "id": "g38",
+   "sentences": 67
+  },
+  {
+   "id": "g39",
+   "sentences": 89
+  },
+  {
+   "id": "g40",
+   "sentences": 59
+  },
+  {
+   "id": "g41",
+   "sentences": 74
+  },
+  {
+   "id": "g42",
+   "sentences": 61
+  },
+  {
+   "id": "g43",
+   "sentences": 65
+  },
+  {
+   "id": "g44",
+   "sentences": 60
+  },
+  {
+   "id": "g45",
+   "sentences": 66
+  },
+  {
+   "id": "g46",
+   "sentences": 69
+  },
+  {
+   "id": "g47",
+   "sentences": 52
+  },
+  {
+   "id": "g48",
+   "sentences": 76
+  },
+  {
+   "id": "reference",
+   "sentences": 25
+  }
+ ],
+ "offenders": [],
+ "verdict": "CLEAN"
+}

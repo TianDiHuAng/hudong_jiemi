@@ -1,0 +1,231 @@
+{
+  "title": "五枚蝶纹牌",
+  "intro": "师公赶歌会去了，明早邻寨迎亲要用的银饰独缺三蝶头帕。樟木箱的转牌锁认婚嫁次序，蝶纹母模又拆成了三件——天亮前得把头片压出来。",
+  "start": "hall",
+  "rooms": {
+    "hall": {
+      "n": "火塘堂屋",
+      "d": "火塘里的柴火塌成红炭，三脚架上吊着黑鼎罐。五条门分别通向绣房、作坊、灶房、阁楼和晒坝，板壁上挂着一排芦笙。"
+    },
+    "embroid": {
+      "n": "绣房",
+      "d": "绣绷绷着未完的百蝶帕，线轴篮搁在绷架旁。窗棂上系着一束花带，五段纹样首尾相衔，绣线还新。"
+    },
+    "shop": {
+      "n": "银匠作坊",
+      "d": "砧案与压模架相对而立，樟木箱蹲在架侧，箱面一排五枚银转牌。梁下悬着样品架，墙上小锤錾子各归各位。"
+    },
+    "kitchen": {
+      "n": "灶房",
+      "d": "灶房里烟灰厚积，梁钩上吊着鼎罐，罐底垫着块木头。案板上扣着碗盏，酸汤的酸味还没散尽。"
+    },
+    "attic": {
+      "n": "阁楼",
+      "d": "阁楼低矮，旧嫁衣箱摞在角落，樟脑味混着陈灰味。楼板走一步响一声，光从瓦缝里漏下来。"
+    },
+    "yard": {
+      "n": "晒坝",
+      "d": "晒坝上晾着靛染的土布，竹竿被风吹得吱呀转。坝边石阶下泉水汩汩，洗银子的水槽还湿着。"
+    }
+  },
+  "items": {
+    "pin": "黄铜卡销",
+    "core": "蝶纹模芯版",
+    "strip": "硬木压条"
+  },
+  "puzzles": [
+    { "id": "花带婚嫁次序", "solved": "p_order", "clue": "c_loom" },
+    { "id": "线轴篮卡销", "solved": "p_basket", "clue": "c_loom" },
+    { "id": "樟木箱转牌锁", "solved": "p_box", "clue": "c_map" },
+    { "id": "鼎罐压条", "solved": "p_pan", "clue": "c_pot" },
+    { "id": "蝶纹母模拼装", "solved": "p_mold", "clue": "c_core" }
+  ],
+  "acts": [
+    {
+      "id": "hall2emb",
+      "room": "hall",
+      "label": "进绣房",
+      "go": "embroid"
+    },
+    {
+      "id": "emb2hall",
+      "room": "embroid",
+      "label": "回堂屋",
+      "go": "hall"
+    },
+    {
+      "id": "hall2shop",
+      "room": "hall",
+      "label": "进作坊",
+      "go": "shop"
+    },
+    {
+      "id": "shop2hall",
+      "room": "shop",
+      "label": "回堂屋",
+      "go": "hall"
+    },
+    {
+      "id": "hall2kit",
+      "room": "hall",
+      "label": "进灶房",
+      "go": "kitchen"
+    },
+    {
+      "id": "kit2hall",
+      "room": "kitchen",
+      "label": "回堂屋",
+      "go": "hall"
+    },
+    {
+      "id": "hall2attic",
+      "room": "hall",
+      "label": "上阁楼",
+      "go": "attic"
+    },
+    {
+      "id": "attic2hall",
+      "room": "attic",
+      "label": "下堂屋",
+      "go": "hall"
+    },
+    {
+      "id": "hall2yard",
+      "room": "hall",
+      "label": "去晒坝",
+      "go": "yard"
+    },
+    {
+      "id": "yard2hall",
+      "room": "yard",
+      "label": "回堂屋",
+      "go": "hall"
+    },
+    {
+      "id": "look_loom",
+      "room": "embroid",
+      "label": "端详绣绷",
+      "n": ["c_loom"],
+      "eff": { "f": ["c_loom"] },
+      "text": "百蝶帕上蝶群将密未密，绷架旁的线轴篮里银线蓝线各归各卷。窗上那束花带的五段纹样绣得极规整。"
+    },
+    {
+      "id": "read_braid",
+      "room": "embroid",
+      "label": "解读花带的五段纹样",
+      "req": { "f": ["c_loom"] },
+      "n": ["p_order"],
+      "eff": { "f": ["p_order", "c_order"] },
+      "text": "五段花带从蓝头到红尾依次是：说亲、定亲、过礼、迎娶、回门——每段之间用一道菱纹隔开，次序错不得。"
+    },
+    {
+      "id": "search_basket",
+      "room": "embroid",
+      "label": "翻线轴篮",
+      "n": ["p_basket"],
+      "eff": { "f": ["p_basket"], "i": ["pin"] },
+      "text": "线轴底下压着枚黄铜卡销，是上回借来绷绣绷用的，尾端还缠着半截蓝线。"
+    },
+    {
+      "id": "look_rack",
+      "room": "shop",
+      "label": "端详样品架",
+      "n": ["c_map"],
+      "eff": { "f": ["c_map"] },
+      "text": "架上从左到右按蝶数挂着：单蝶耳柱、双蝶项圈、三蝶头帕、四蝶手镯、五蝶背牌；每件签牌注着名目——说亲配双蝶，定亲配单蝶，过礼配四蝶，迎娶配三蝶，回门配五蝶。"
+    },
+    {
+      "id": "dial_box",
+      "room": "shop",
+      "label": "按婚嫁次序拨五枚转牌",
+      "req": { "f": ["c_order", "c_map"] },
+      "n": ["p_box"],
+      "eff": { "f": ["p_box"] },
+      "text": "双、单、四、三、五——你按说亲到回门的次序把转牌逐枚拨到位，箱盖里的簧片次第松开，樟木箱吱呀掀了盖。"
+    },
+    {
+      "id": "wrong_descend",
+      "room": "shop",
+      "label": "照蝶数从多到少拨",
+      "req": { "f": ["c_map"] },
+      "n": ["p_box"],
+      "text": "五、四、三、二、一拨完，箱里的簧片一根都没松——锁认婚嫁次序，不认蝶数大小。"
+    },
+    {
+      "id": "wrong_rack",
+      "room": "shop",
+      "label": "照样品架挂序拨牌",
+      "req": { "f": ["c_order"] },
+      "n": ["p_box"],
+      "text": "你照架上从左到右的挂序拨了一遍，转牌在指下空转——那是蝶数的次序，不是婚嫁的次序。"
+    },
+    {
+      "id": "take_core",
+      "room": "shop",
+      "label": "取出箱里的模芯版",
+      "req": { "f": ["p_box"] },
+      "n": ["c_core"],
+      "eff": { "f": ["c_core"], "i": ["core"] },
+      "text": "箱里黄杨木模只剩中间的模芯版，版边刻着一行小字：配压条卡销，缺一不可，勿散置。"
+    },
+    {
+      "id": "assemble",
+      "room": "shop",
+      "label": "把母模版装回压模架",
+      "req": { "i": ["core", "strip", "pin"] },
+      "n": ["p_mold"],
+      "eff": { "f": ["p_mold"] },
+      "text": "模芯版嵌进架槽，压条沿槽扣死，卡销插进销孔一转到位——蝶纹母模合了体，三蝶纹路在版心严丝合缝。"
+    },
+    {
+      "id": "press_win",
+      "room": "shop",
+      "label": "压出迎娶的三蝶头片",
+      "req": { "f": ["p_mold"] },
+      "end": "win",
+      "text": "银坯落进模腔，小锤三起三落。起出来时三蝶头片錾纹齐整，蝶翅上的银泡一颗不缺——天亮前，赶得上花轿。"
+    },
+    {
+      "id": "amb_shop",
+      "room": "shop",
+      "label": "翻看砧案上的錾子",
+      "text": "錾子按粗细插在木架上，柄油擦得发亮，最细那支錾尖还裹着纸。"
+    },
+    {
+      "id": "look_pot",
+      "room": "kitchen",
+      "label": "端详鼎罐",
+      "n": ["c_pot"],
+      "eff": { "f": ["c_pot"] },
+      "text": "梁钩上的鼎罐底下垫着块木头，挪开一看，压着一条硬木压条，长短正合模槽。"
+    },
+    {
+      "id": "take_strip",
+      "room": "kitchen",
+      "label": "取出罐底的压条",
+      "req": { "f": ["c_pot"] },
+      "n": ["p_pan"],
+      "eff": { "f": ["p_pan"], "i": ["strip"] },
+      "text": "压条上还留着鼎罐的烟色，边缘的卡口却完好无损。"
+    },
+    {
+      "id": "amb_kitchen",
+      "room": "kitchen",
+      "label": "拨拨灶膛余灰",
+      "text": "灰是隔夜的，拨开底下还有一点暗红，吹口气又暗了下去。"
+    },
+    {
+      "id": "amb_attic",
+      "room": "attic",
+      "label": "掀开旧嫁衣箱一角",
+      "text": "箱里叠着二十年前的百蝶嫁衣，银泡绣片氧化得发乌。"
+    },
+    {
+      "id": "amb_yard",
+      "room": "yard",
+      "label": "在泉水槽边洗把手",
+      "text": "泉水冰凉，槽底沉着几粒银屑，闪着细光。"
+    }
+  ],
+  "difficulty": { "minSteps": 6, "maxSteps": 20, "maxBranch": 6 }
+}

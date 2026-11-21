@@ -1,0 +1,24 @@
+{
+ "game": "g24",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 9,
+ "invalid": 1,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "进药剂贮藏间",
+  "取母液粉罐和砝码盒",
+  "把整罐粉全倒上秤盘",
+  "称二十克母液粉",
+  "按配方刻度称母液粉",
+  "翻量具抽屉",
+  "回上盆间",
+  "去兰花苗床",
+  "踩上湿滑的苗床沿去够风口手轮"
+ ]
+}

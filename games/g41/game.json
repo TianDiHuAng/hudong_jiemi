@@ -1,0 +1,231 @@
+{
+  "title": "合琴前夜",
+  "intro": "明早合琴，低音梁还差最后一件料、一刨、一胶。工具墙空了三个挂钩，师父和徒弟的字条各说各的理——赶在天亮前把料认对、把梁刨到线、把胶熬到起丝。",
+  "start": "shop",
+  "rooms": {
+    "shop": {
+      "n": "木工场",
+      "d": "长案上摊着琴面板，低音梁的槽口已经开好。工具墙上三个挂钩空着，挂痕旁贴着物归原主的字条。黑板留着徒弟的粉笔字，案头压着师父的字条。"
+    },
+    "loft": {
+      "n": "料架阁",
+      "d": "料架分四格立在阁楼口，格上的毛料各拴登记签。天窗漏进一线雪光，正好照在料架上，楼梯口垂着防尘帘。"
+    },
+    "hall": {
+      "n": "门厅",
+      "d": "门厅挂着两把成品琴，音孔里隐约看得见低音梁的走向。条案下摞着琴匣，墙上挂着开料的老锯。"
+    },
+    "shelf": {
+      "n": "器物房",
+      "d": "磨刀匣敞着盖，绒布衬里躺着几口刃器。药柜分格贴签，鱼膘胶那格的瓶只剩小半，白坯柜虚掩着门。"
+    },
+    "inner": {
+      "n": "里间",
+      "d": "图柜顶上压着玻璃板，板下是音梁样板和墨线图。抽屉半拉着，砚台盒摆在案上，窗外是后院的雪。"
+    },
+    "stove": {
+      "n": "灶间",
+      "d": "泥炉坐在墙根，水锅架在炉眼上，胶锅坐在水锅里。墙上贴着火候规程，纸角卷边，旁边歪着一把火钳。"
+    },
+    "yard": {
+      "n": "后院晾棚",
+      "d": "晾棚下挂着上月合的琴坯，蒙布垂到雪地。棚柱上钉着挂钩，雪面上留着两行来去的脚印。"
+    }
+  },
+  "items": {
+    "billet": "云杉毛料",
+    "saw": "细齿锯",
+    "knife": "划线刀",
+    "blade": "平刨刃",
+    "glue": "鳔胶锭"
+  },
+  "puzzles": [
+    { "id": "核对留言", "solved": "p_verify", "clue": "c_master" },
+    { "id": "取音梁毛料", "solved": "p_billet", "clue": "p_verify" },
+    { "id": "装刨", "solved": "p_plane", "clue": "c_master" },
+    { "id": "刨削音梁", "solved": "p_shaped", "clue": "p_plane" },
+    { "id": "化鳔胶", "solved": "p_glue", "clue": "c_fire" },
+    { "id": "粘合音梁", "solved": "p_glued", "clue": "p_glue" }
+  ],
+  "acts": [
+    { "id": "s2l", "room": "shop", "label": "上楼梯进料架阁", "go": "loft" },
+    { "id": "l2s", "room": "loft", "label": "下楼梯回工场", "go": "shop" },
+    { "id": "s2v", "room": "shop", "label": "进灶间", "go": "stove" },
+    { "id": "v2s", "room": "stove", "label": "回木工场", "go": "shop" },
+    { "id": "s2h", "room": "shop", "label": "出门厅", "go": "hall" },
+    { "id": "h2s", "room": "hall", "label": "回木工场", "go": "shop" },
+    { "id": "h2f", "room": "hall", "label": "进器物房", "go": "shelf" },
+    { "id": "f2h", "room": "shelf", "label": "回门厅", "go": "hall" },
+    { "id": "h2i", "room": "hall", "label": "进里间", "go": "inner" },
+    { "id": "i2h", "room": "inner", "label": "回门厅", "go": "hall" },
+    { "id": "v2y", "room": "stove", "label": "开后门到晾棚", "go": "yard" },
+    { "id": "y2v", "room": "yard", "label": "回灶间", "go": "stove" },
+    {
+      "id": "read_chalk",
+      "room": "shop",
+      "label": "读黑板上的粉笔字",
+      "n": ["c_apprentice"],
+      "eff": { "f": ["c_apprentice"] },
+      "text": "徒弟的字：师父记岔了——刨刃我磨完搁磨刀匣了；左三格那块料有暗裂，好料我挪到了最右隔开；胶要快，直火煮开就行，赶天亮来得及。"
+    },
+    {
+      "id": "read_master",
+      "room": "shop",
+      "label": "读案头师父的字条",
+      "n": ["c_master"],
+      "eff": { "f": ["c_master"] },
+      "text": "师父的字：刨刃拿去磨了，在里间砚台盒旁；料架左数第三格的云杉最正，照它取。鳔胶记住隔水慢熬，火一急胶就脆。"
+    },
+    {
+      "id": "verify_notes",
+      "room": "shop",
+      "label": "把师徒的字条对着实物核一遍",
+      "req": { "f": ["c_master", "c_apprentice"] },
+      "n": ["p_verify"],
+      "eff": { "f": ["p_verify"] },
+      "text": "磨刀匣里确实躺着刨刃，左三格的料签下压着一句小字：待验。两处留言各对了一半，得一句一句对着实物信。"
+    },
+    {
+      "id": "take_saw",
+      "room": "loft",
+      "label": "取料架侧柱上的细齿锯",
+      "n": ["saw_taken"],
+      "eff": { "f": ["saw_taken"], "i": ["saw"] },
+      "text": "细齿锯挂在料架侧柱上，锯条上了油，齿口发亮，签条写着低音梁专用。"
+    },
+    {
+      "id": "take_billet",
+      "room": "loft",
+      "label": "按核对结果取音梁毛料",
+      "req": { "f": ["p_verify"] },
+      "n": ["p_billet"],
+      "eff": { "f": ["p_billet"], "i": ["billet"] },
+      "text": "左三格那块对天光一照，料心一圈暗裂看得清楚；最右格的云杉纹理顺直紧密。毛料抱下来，登记签翻过来记上一笔。"
+    },
+    {
+      "id": "billet_wrong",
+      "room": "loft",
+      "label": "取左数第三格的毛料",
+      "req": { "f": ["p_verify"] },
+      "n": ["p_billet"],
+      "text": "对着天窗的光一照，料心一圈暗纹若隐若现——这料刨到一半准开缝，白费一晚上的刨花。"
+    },
+    {
+      "id": "open_drawer",
+      "room": "inner",
+      "label": "开图柜抽屉取划线刀",
+      "n": ["knife_taken"],
+      "eff": { "f": ["knife_taken", "c_template"], "i": ["knife"] },
+      "text": "抽屉里躺着划线刀。玻璃板下的音梁样板轮廓周正，墨线图边上注着尺寸——师父说样板在图柜，这桩没记岔。"
+    },
+    {
+      "id": "see_inkstone",
+      "room": "inner",
+      "label": "看砚台盒",
+      "text": "砚台盒里只有砚和墨，盒边没有刨刃的影子——师父这回真记岔了地方。"
+    },
+    {
+      "id": "dig_blade",
+      "room": "shelf",
+      "label": "开磨刀匣拣刨刃",
+      "n": ["blade_dug"],
+      "eff": { "f": ["blade_dug"], "i": ["blade"] },
+      "text": "绒布里躺着几口刃器，最宽那口签条写着平刨用，刃口斜面上的磨痕还是新的。"
+    },
+    {
+      "id": "take_glue",
+      "room": "shelf",
+      "label": "开药柜取鳔胶",
+      "n": ["glue_taken"],
+      "eff": { "f": ["glue_taken"], "i": ["glue"] },
+      "text": "鱼膘胶的瓶里倒出两块胶锭，断口透亮，没有受潮的白翳。"
+    },
+    {
+      "id": "fit_blade",
+      "room": "shop",
+      "label": "把刨刃装进刨膛校平",
+      "req": { "i": ["blade"] },
+      "n": ["p_plane"],
+      "eff": { "f": ["p_plane"] },
+      "text": "刃口嵌进墙上的刨膛，压条拧紧，斜着光看刃锋，平得没有一丝豁口。"
+    },
+    {
+      "id": "mark_line",
+      "room": "shop",
+      "label": "照样板把毛料截长划线",
+      "req": { "i": ["saw", "knife", "billet"], "f": ["c_template"] },
+      "n": ["p_marked"],
+      "eff": { "f": ["p_marked"] },
+      "text": "锯路贴着样板走到头，废料段还带着香杉味；划线刀沿样板走，梁线笔直落在坯面正中。"
+    },
+    {
+      "id": "read_fire",
+      "room": "stove",
+      "label": "读墙上的火候规程",
+      "n": ["c_fire"],
+      "eff": { "f": ["c_fire"] },
+      "text": "规程贴纸写着：鳔胶隔水慢熬，文火搅化，起丝不焦为度；直火急煮，胶性发脆，粘不牢。"
+    },
+    {
+      "id": "melt_glue",
+      "room": "stove",
+      "label": "坐锅化胶",
+      "req": { "i": ["glue"], "f": ["c_fire"] },
+      "n": ["p_glue"],
+      "eff": { "f": ["p_glue"] },
+      "text": "胶锭滑进水锅里的胶碗，文火慢慢搅，胶液起了细丝——稠度正合适。"
+    },
+    {
+      "id": "boil_hard",
+      "room": "stove",
+      "label": "开大火直煮胶锅赶进度",
+      "end": "lose",
+      "text": "大火舔上锅底，胶液噗地沸起泡。棚顶的干刨花燎着了一角，烟压得很低——救火的水桶声，比合琴的动静先响起来。"
+    },
+    {
+      "id": "plane_beam",
+      "room": "shop",
+      "label": "照墨线把梁坯刨到线",
+      "req": { "f": ["p_plane", "p_marked"] },
+      "n": ["p_shaped"],
+      "eff": { "f": ["p_shaped"] },
+      "text": "刨花卷着落下来，梁面顺到能照出人影。卡着墨线一比，分毫不差。"
+    },
+    {
+      "id": "glue_bass",
+      "room": "shop",
+      "label": "化胶把音梁粘进槽口",
+      "req": { "f": ["p_glue", "p_shaped"] },
+      "n": ["p_glued"],
+      "eff": { "f": ["p_glued"] },
+      "text": "胶液匀匀刷上槽口，梁坯对线按实，麻绳十字绞紧。挤出来的胶线细珠，拿湿布随时抹净。"
+    },
+    {
+      "id": "cover_panel",
+      "room": "shop",
+      "label": "面板合上蒙布守到天亮",
+      "req": { "f": ["p_glued"] },
+      "end": "win",
+      "text": "棉布蒙上面板，压上配重条。后半夜的雪把作坊盖得严严实实——天一亮，这方低音梁就要在合琴台上听响儿了。"
+    },
+    {
+      "id": "see_violins",
+      "room": "hall",
+      "label": "看成品琴的音孔",
+      "text": "成品琴的低音梁装在面板左侧，胶线走向跟墨线图一个样，年头最久那把的胶线已经看不出来。"
+    },
+    {
+      "id": "see_blank",
+      "room": "yard",
+      "label": "看上月合的琴坯",
+      "text": "上月那方琴坯的胶线细得像发丝，蒙布掀开一角又轻轻盖了回去。"
+    },
+    {
+      "id": "see_foot",
+      "room": "yard",
+      "label": "看雪地上的脚印",
+      "text": "雪面上两行脚印，一行朝灶间去，一行朝工场回——昨夜有人两头跑。"
+    }
+  ],
+  "difficulty": { "minSteps": 10, "maxSteps": 28, "maxBranch": 6 }
+}

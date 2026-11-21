@@ -1,0 +1,16 @@
+{
+ "game": "g26",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 1,
+ "invalid": 1,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "用美工刀刮开光油层"
+ ]
+}

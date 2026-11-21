@@ -1,0 +1,27 @@
+{
+ "game": "g28",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 12,
+ "invalid": 2,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "去值班房",
+  "读停业改造通告",
+  "看玻璃板下的字条",
+  "摘下门后挂钩的钥匙",
+  "回门厅",
+  "进锅炉房",
+  "翻看压铁堆",
+  "看水箱水位管",
+  "挂拾斤和捌斤压铁",
+  "四块压铁全挂上",
+  "下水泵房",
+  "顺湿铁梯下积水处"
+ ]
+}

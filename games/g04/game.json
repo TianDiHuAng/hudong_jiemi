@@ -1,0 +1,230 @@
+{
+  "title": "雾锁字母闸",
+  "intro": "浓雾把海榕号钉在江口外锚地，一等舱沈太太的金怀表在雾笛两响之间失窃。事务长把字母闸保险柜的处置权交给你：天亮前结案。",
+  "start": "corridor",
+  "rooms": {
+    "corridor": {
+      "n": "一等舱走廊",
+      "d": "地毯吞掉所有脚步声，壁灯只亮一半。12号舱的门在走廊中段虚掩着，事务长室和茶水间分列两头，餐厅的门帘掀开一角。"
+    },
+    "cabin12": {
+      "n": "沈太太的舱房",
+      "d": "梳妆台的粉盒倒在台上，舱内小柜敞着口，丝绒衬里空出一个表形的凹印。床铺整齐，主人显然刚被请去了餐厅。"
+    },
+    "purser": {
+      "n": "事务长室",
+      "d": "台面的玻璃板下压着规程卡，墙角的字母闸柜是沪昌锁厂的旧货，四扇字母小窗一字排开，柜身铭牌绿锈斑驳。"
+    },
+    "pantry": {
+      "n": "茶水间",
+      "d": "锡罐和饼干盒在架上排到顶，储物铁盒扣着搭扣。服务梯通着行李房，两侧边门分别进事务长室和餐厅。"
+    },
+    "chartroom": {
+      "n": "海图室",
+      "d": "海图桌上摊着本航次的雾航图，雾志卷在桌角，值班排班表用图钉摁在软木板上。舷窗外的雾浓得像棉絮。"
+    },
+    "dining": {
+      "n": "餐厅",
+      "d": "头等餐桌收去了大半餐具，银壶里的茶还冒着热气。沈太太坐在窗边，手指绕着空腕上的表带环。侧门上甲板，边门通茶水间。"
+    },
+    "deck": {
+      "n": "舱面甲板",
+      "d": "甲板木条吃着雾水，缆桩上盘着湿绳。行李员小铎靠着舷墙，帆布手套在手里绞成了麻花。"
+    },
+    "stokerway": {
+      "n": "锅炉通道",
+      "d": "煤灰在舱底积了薄薄一层，货梯的门开着，梯内灯泡忽明忽暗。货梯工老崔坐在道板上，肩上搭着擦煤的布。"
+    },
+    "baggage": {
+      "n": "行李房",
+      "d": "行李按舱号挂上铜牌，架子大半空着——浓雾一抛锚，行李早各归各位。角落里小铎那口装玻璃器皿的条箱贴着墙，箱口打着铅封。"
+    }
+  },
+  "items": {
+    "card": "锁厂字母对照卡",
+    "depot_key": "行李房备钥匙",
+    "watch": "金怀表"
+  },
+  "puzzles": [
+    { "id": "12号舱勘查", "solved": "p_cabin", "clue": "c_cabin" },
+    { "id": "雾志时段", "solved": "p_window", "clue": "c_fog" },
+    { "id": "三人对质", "solved": "p_accuse", "clue": "c_w1" },
+    { "id": "规程卡", "solved": "p_rule", "clue": "c_roster" },
+    { "id": "锁厂对照卡", "solved": "p_card", "clue": "p_rule" },
+    { "id": "字母闸开柜", "solved": "p_safe", "clue": "p_card" },
+    { "id": "条箱夹层", "solved": "p_crate", "clue": "c_confess" }
+  ],
+  "acts": [
+    { "id": "cor2cabin", "room": "corridor", "label": "推开12号舱的门", "go": "cabin12" },
+    { "id": "cabin2cor", "room": "cabin12", "label": "回走廊", "go": "corridor" },
+    { "id": "cor2purser", "room": "corridor", "label": "进事务长室", "go": "purser" },
+    { "id": "purser2cor", "room": "purser", "label": "回走廊", "go": "corridor" },
+    { "id": "cor2pantry", "room": "corridor", "label": "去茶水间", "go": "pantry" },
+    { "id": "pantry2cor", "room": "pantry", "label": "回走廊", "go": "corridor" },
+    { "id": "cor2chart", "room": "corridor", "label": "上海图室", "go": "chartroom" },
+    { "id": "chart2cor", "room": "chartroom", "label": "回走廊", "go": "corridor" },
+    { "id": "cor2dining", "room": "corridor", "label": "掀帘进餐厅", "go": "dining" },
+    { "id": "dining2cor", "room": "dining", "label": "回走廊", "go": "corridor" },
+    { "id": "cor2stoker", "room": "corridor", "label": "下锅炉通道", "go": "stokerway" },
+    { "id": "stoker2cor", "room": "stokerway", "label": "回走廊", "go": "corridor" },
+    { "id": "dining2deck", "room": "dining", "label": "出侧门上甲板", "go": "deck" },
+    { "id": "deck2dining", "room": "deck", "label": "回餐厅", "go": "dining" },
+    { "id": "deck2stoker", "room": "deck", "label": "下梯进锅炉通道", "go": "stokerway" },
+    { "id": "stoker2deck", "room": "stokerway", "label": "爬梯回甲板", "go": "deck" },
+    { "id": "pantry2bag", "room": "pantry", "label": "乘服务梯下行李房", "go": "baggage" },
+    { "id": "bag2pantry", "room": "baggage", "label": "乘服务梯回茶水间", "go": "pantry" },
+    { "id": "pantry2purser", "room": "pantry", "label": "穿边门进事务长室", "go": "purser" },
+    { "id": "purser2pantry", "room": "purser", "label": "穿边门回茶水间", "go": "pantry" },
+    { "id": "dining2pantry", "room": "dining", "label": "从边门进茶水间", "go": "pantry" },
+    { "id": "pantry2dining", "room": "pantry", "label": "从边门回餐厅", "go": "dining" },
+    {
+      "id": "survey_cabin",
+      "room": "cabin12",
+      "label": "勘查舱内小柜与梳妆台",
+      "n": ["c_cabin"],
+      "eff": { "f": ["c_cabin"] },
+      "text": "小柜的丝绒凹印里空空如也，梳妆台的粉盒被翻动过——贼翻得急，只拿走了怀表。"
+    },
+    {
+      "id": "check_keyhole",
+      "room": "cabin12",
+      "label": "蹲下比对舱门锁孔",
+      "req": { "f": ["c_cabin"] },
+      "n": ["p_cabin"],
+      "eff": { "f": ["p_cabin"] },
+      "text": "锁孔周围有几道新鲜划痕，又细又浅——门不是撬开的，是被备用钥匙捅开的。"
+    },
+    {
+      "id": "look_foglog",
+      "room": "chartroom",
+      "label": "看桌角的雾志",
+      "n": ["c_fog"],
+      "eff": { "f": ["c_fog"] },
+      "text": "雾志记着：21:20 第二响雾笛，21:33 全船电灯连闪两次。轮机员在页边注了句：断电半分钟，原因待查。"
+    },
+    {
+      "id": "mark_window",
+      "room": "chartroom",
+      "label": "把失窃时段圈进雾志",
+      "req": { "f": ["c_fog"] },
+      "n": ["p_window"],
+      "eff": { "f": ["p_window"] },
+      "text": "你用铅笔把两个时刻圈在一处：21:20 到 21:33，怀表就是在这十三分钟里换的手。"
+    },
+    {
+      "id": "read_roster",
+      "room": "chartroom",
+      "label": "读软木板上的排班表",
+      "n": ["c_roster"],
+      "eff": { "f": ["c_roster"] },
+      "text": "21 到 24 点两岗在列：巡更岗工号 130，电报岗工号 092。表脚注着一行小字——字母闸组合须按规程卡折算，不得口头传告。"
+    },
+    {
+      "id": "look_fog",
+      "room": "chartroom",
+      "label": "望一眼舷窗外的雾",
+      "text": "雾浓得看不见船首，锚链绷直的声音从水线底下传上来。"
+    },
+    {
+      "id": "ask_yu",
+      "room": "dining",
+      "label": "向侍者阿聿问那个时段",
+      "req": { "f": ["p_window"] },
+      "n": ["c_w1"],
+      "eff": { "f": ["c_w1"] },
+      "text": "阿聿擦着银壶想了一阵：21:20 雾笛第二响，我正收盘子，亲眼看见行李员小铎提着沈太太的帆布箱往走廊那头去。"
+    },
+    {
+      "id": "ask_duo",
+      "room": "deck",
+      "label": "把阿聿的话递给小铎",
+      "req": { "f": ["c_w1"] },
+      "n": ["c_w2"],
+      "eff": { "f": ["c_w2"] },
+      "text": "小铎把手套都绞变形了：我去 12 号舱？那会儿我在锅炉通道等货梯，老崔就在底下，他能对证。"
+    },
+    {
+      "id": "ask_cui",
+      "room": "stokerway",
+      "label": "找货梯口的老崔对证",
+      "req": { "f": ["c_w2"] },
+      "n": ["c_w3"],
+      "eff": { "f": ["c_w3"] },
+      "text": "老崔往手心啐了口唾沫：那半小时货梯压根没下到底层，我锁了梯门去搬煤——等梯的人？我在煤堆后头没瞧见半个。"
+    },
+    {
+      "id": "accuse",
+      "room": "deck",
+      "label": "当面对质指认小铎",
+      "req": { "f": ["c_w1", "c_w2", "c_w3", "p_cabin"] },
+      "n": ["p_accuse"],
+      "eff": { "f": ["p_accuse", "c_confess"] },
+      "text": "划痕、时段、对不上的货梯，三样摆齐。小铎瘫坐在缆桩上：表在行李房我那口条箱的夹层里，钥匙在事务长闸柜里挂着牌——我本想今晚就送回去的。"
+    },
+    {
+      "id": "read_rule",
+      "room": "purser",
+      "label": "读玻璃板下的规程卡",
+      "n": ["p_rule"],
+      "eff": { "f": ["p_rule"] },
+      "text": "规程卡：字母闸组合四位，取 21 至 24 时巡更、电报两岗工号的末两位数字，逐位按锁厂字母对照折成字母，依次拨入。对照卡随柜遗失，补卡存于茶水间储物铁盒。"
+    },
+    {
+      "id": "open_tin",
+      "room": "pantry",
+      "label": "撬开储物铁盒",
+      "n": ["p_card"],
+      "eff": { "f": ["p_card"], "i": ["card"] },
+      "text": "铁盒里躺着锁厂的字母对照卡，边角让水汽洇得发卷：0-K，1-A，2-D，3-F，4-H，5-J，6-L，7-B，8-C，9-E。"
+    },
+    {
+      "id": "dial_win",
+      "room": "purser",
+      "label": "拨 F K E D",
+      "req": { "f": ["p_rule", "p_card", "c_roster"] },
+      "n": ["p_safe"],
+      "eff": { "f": ["p_safe"], "i": ["depot_key"] },
+      "text": "巡更 130 取 30，电报 092 取 92，折成 F、K、E、D——四扇小窗依次跳到位，闸柜里哐当一声松了栓。备钥匙牌上拴着行李房的黄铜钥匙；旁边 12 号舱的备钥匙牌也在，领用栏签着一个铎字。"
+    },
+    {
+      "id": "dial_rev",
+      "room": "purser",
+      "label": "拨 D E K F",
+      "req": { "f": ["p_rule"] },
+      "n": ["p_safe"],
+      "text": "闸柜里咔的一声空响，四扇小窗齐齐弹回原位——次序倒了，栓舌不放。"
+    },
+    {
+      "id": "dial_abcd",
+      "room": "purser",
+      "label": "拨 A B C D",
+      "req": { "f": ["p_rule"] },
+      "n": ["p_safe"],
+      "text": "小窗推到 A、B、C、D，柜身一点动静也没有——这四个字母在对照表里根本凑不出当班工号。"
+    },
+    {
+      "id": "open_crate",
+      "room": "baggage",
+      "label": "用备钥匙拆开条箱铅封",
+      "req": { "i": ["depot_key"], "f": ["c_confess"] },
+      "n": ["p_crate"],
+      "eff": { "f": ["p_crate"], "i": ["watch"] },
+      "text": "铅封剪断，夹层板一撬就起：金怀表用软布裹着，表链上的船徽蹭掉了漆。"
+    },
+    {
+      "id": "scan_shelf",
+      "room": "baggage",
+      "label": "扫一眼挂铜牌的行李架",
+      "text": "铜牌按舱号排开，12 号那格空着——帆布箱此刻正在餐厅窗边陪着主人。"
+    },
+    {
+      "id": "return_watch",
+      "room": "dining",
+      "label": "把金怀表还给沈太太",
+      "req": { "i": ["watch"] },
+      "end": "win",
+      "text": "表链扣回腕上，沈太太把船徽那处磨痕摩挲了半天，起身向事务长室方向郑重道了谢。雾里响起一声长笛，拖轮的灯正从船尾慢慢逼近。"
+    }
+  ],
+  "difficulty": { "minSteps": 14, "maxSteps": 36, "maxBranch": 6 }
+}

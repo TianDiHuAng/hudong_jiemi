@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>文字密室逃脱</title>
+<style>
+:root{--bg:#EEF1F6;--card:#FFFFFF;--ink:#1B2233;--mute:#5B667D;--line:#D2D9E6;--acc:#3A56A8;--acc2:#3A56A822;--ok:#1E7A4F;--bad:#B3362B;--tint:transparent;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1320;--card:#161D30;--ink:#E3E8F4;--mute:#9AA6C2;--line:#2A3452;--acc:#8FA8F0;--acc2:#8FA8F022;--ok:#5FCB92;--bad:#F07A6E;--tint:transparent;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1320;--card:#161D30;--ink:#E3E8F4;--mute:#9AA6C2;--line:#2A3452;--acc:#8FA8F0;--acc2:#8FA8F022;--ok:#5FCB92;--bad:#F07A6E;--tint:transparent;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Noto Sans SC","PingFang SC",system-ui,sans-serif}
+main{max-width:1060px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:clamp(24px,4.5vw,34px);line-height:1.25;margin:0 0 4px}
+.lead{color:var(--mute)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:13px;color:var(--mute)}
+.chip b{color:var(--ink)}
+.layout{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:900px){.layout{grid-template-columns:1.6fr 1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.stage{position:relative;overflow:hidden}
+.stage::before{content:"";position:absolute;inset:0;background:radial-gradient(420px 200px at 88% -8%,var(--tint),transparent 70%);pointer-events:none}
+.stage>*{position:relative}
+#room{font-size:24px;font-weight:800;letter-spacing:.02em}
+#strip{font-size:26px;letter-spacing:.12em;margin:2px 0 8px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+#desc{border-left:3px solid var(--acc);padding:6px 12px;background:var(--acc2);border-radius:0 8px 8px 0;margin:8px 0 12px}
+#log{max-height:220px;overflow-y:auto;margin:0 0 12px;display:flex;flex-direction:column;gap:6px}
+#log p{margin:0;font-size:14.5px;color:var(--mute);background:var(--bg);border-radius:8px;padding:5px 10px}
+#log p:last-child{color:var(--ink);font-weight:600}
+#acts{display:flex;flex-direction:column;gap:6px}
+.grp{font-size:13px;color:var(--mute);margin:8px 0 2px;font-weight:700;letter-spacing:.06em}
+button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;cursor:pointer;text-align:left;transition:border-color .15s,transform .05s}
+button:hover{border-color:var(--acc);transform:translateX(2px)}button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+#acts button::before{content:"› ";color:var(--acc);font-weight:700}
+.pri{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.side .card{padding:12px 14px}
+.side h2{font-size:14px;margin:0 0 8px;color:var(--mute);letter-spacing:.08em;display:flex;align-items:center;justify-content:space-between}
+.mapreset{font-size:11px;padding:1px 8px;border-radius:6px;color:var(--mute);background:transparent}
+.mapreset:hover{color:var(--acc);transform:none}
+#inv{display:flex;flex-wrap:wrap;gap:6px}
+.tag{border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:13.5px;background:var(--bg)}
+.tag .em{margin-right:4px}
+#map{width:100%;height:auto;touch-action:none}
+#map text{font-size:10px;fill:var(--ink);pointer-events:none}
+#map .edge{stroke:var(--line);stroke-width:2;pointer-events:none}
+#map .edge.cur{stroke:var(--acc);stroke-dasharray:4 3}
+#map .node{cursor:grab}
+#map .node rect{fill:var(--bg);stroke:var(--line);stroke-width:1.5}
+#map .node.vis rect{stroke:var(--acc)}
+#map .node.cur rect{fill:var(--acc);stroke:var(--acc)}
+#map .node.cur text{fill:#fff;font-weight:700}
+#map .node.new rect{stroke-dasharray:4 3}
+#map .node.drag rect{stroke-width:2.5}
+#veil{position:fixed;inset:0;background:rgba(10,14,24,.78);display:none;align-items:center;justify-content:center;z-index:9}
+#veil.show{display:flex}
+#veil .panel{background:var(--card);border-radius:16px;padding:36px 44px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#veil .big{font-size:52px;margin-bottom:8px}
+#veil .t{font-size:22px;font-weight:800;margin-bottom:6px}
+#veil .sub{color:var(--mute);font-size:14px;margin-bottom:16px;line-height:1.9}
+#veil button{font-size:16px}
+#loader .card{margin-top:16px}
+</style>
+</head>
+<body>
+<main>
+<h1 id="title">文字密室逃脱</h1>
+<p id="intro" class="lead"></p>
+<script>window.__GAME__={"title":"压轴出场之前","intro":"环球巡演第七十三站散场后的午夜。四只道具箱必须按出场顺序挂上中央吊架、配重筐配平，暗门下的地下库房里锁着明早要提的巡演总账和空中飞人的备用保险绳。","start":"ring","rooms":{"gate":{"n":"检票口","d":"票亭卷帘落了一半，霓虹灯牌只剩个环字在闪。海报栏里环球巡演的招贴被夜风掀起一角。"},"ring":{"n":"圆场","d":"场灯熄了大半，格构吊架横在头顶，滑轮组的钢索垂进黑暗。暗门四边包着黄铜，锁链穿过滑轮吊向配重筐。"},"wardrobe":{"n":"服装间","d":"针线筐里堆着亮片头饰，缝纫台上摊着没锁完边的飞人披风。墙角是道具箱轨道的入口，散页就落在筐边。"},"office":{"n":"团长办公篷","d":"折叠桌占去半间篷，日程板钉在篷布上，电话线卷成一团。办公桌带锁，抽屉钥匙孔磨得发亮。"},"stable":{"n":"马厩篷","d":"美洲豹笼占了半边，垫草里有沙沙的动静，豹爪能从栏杆缝里甩出来。门后钉板上挂着钥匙和手电，喂食表压在钉板一角。"},"props":{"n":"道具库","d":"四只道具箱靠墙码放，墙上到货清单写得明白：铃鼓 12、彩球 15、礼帽 9、扣件 6 公斤。台秤蹲在门边。"},"rigging":{"n":"绞盘棚","d":"排程板挂满磁贴，绞盘手轮缠着防尘布。配重筐轨道从棚顶穿出去，平衡盘的指针停在红区边上。"},"hoist":{"n":"吊架平台","d":"爬上格构桁架的平台，四只吊钩排成一列，最里档已经挂着铃鼓箱。风把篷布吹得鼓起来又塌下去。"},"cellar":{"n":"地下库房","d":"铁架码得整整齐齐，玻璃柜里锁着巡演总账。应急荧光漆沿着梯口一路刷下来，照见货位牌上一串城市名。"}},"items":{"scraps":"散页节目单","spare_key":"备用钥匙","torch":"值班手电","weight_std":"一公斤标准砝码"},"puzzles":[{"id":"出场单理序","solved":"bill_ok","clue":"c_bill"},{"id":"马厩备品","solved":"has_torch","clue":"c_feed"},{"id":"团长抽屉","solved":"drawer_open","clue":"c_drawer"},{"id":"出场排程","solved":"order_ok","clue":"c_board"},{"id":"吊秤校验","solved":"scale_checked","clue":"c_check"},{"id":"道具箱加载","solved":"load3","clue":"c_load"},{"id":"配重筐配平","solved":"balance_ok","clue":"c_weight"}],"acts":[{"id":"gate2ring","room":"gate","label":"掀帘进圆场","go":"ring"},{"id":"ring2gate","room":"ring","label":"回检票口","go":"gate"},{"id":"ring2ward","room":"ring","label":"去服装间","go":"wardrobe"},{"id":"ward2ring","room":"wardrobe","label":"回圆场","go":"ring"},{"id":"ward2office","room":"wardrobe","label":"去团长办公篷","go":"office"},{"id":"office2ward","room":"office","label":"回服装间","go":"wardrobe"},{"id":"office2stable","room":"office","label":"去马厩篷","go":"stable"},{"id":"stable2office","room":"stable","label":"回办公篷","go":"office"},{"id":"ward2props","room":"wardrobe","label":"去道具库","go":"props"},{"id":"props2ward","room":"props","label":"回服装间","go":"wardrobe"},{"id":"props2rig","room":"props","label":"进绞盘棚","go":"rigging"},{"id":"rig2props","room":"rigging","label":"回道具库","go":"props"},{"id":"rig2ring","room":"rigging","label":"去圆场","go":"ring"},{"id":"ring2rig","room":"ring","label":"进绞盘棚","go":"rigging"},{"id":"ring2hoist","room":"ring","label":"爬梯上吊架平台","go":"hoist"},{"id":"hoist2ring","room":"hoist","label":"顺梯回圆场","go":"ring"},{"id":"ring2cellar","room":"ring","label":"提灯下到地下库房","req":{"f":["trap_open"],"i":["torch"]},"go":"cellar"},{"id":"cellar2ring","room":"cellar","label":"爬梯回圆场","go":"ring"},{"id":"pick_scraps","room":"wardrobe","label":"捡起针线筐边的散页","n":["c_bill"],"eff":{"f":["c_bill"],"i":["scraps"]},"text":"节目单散了四页，页角的别针孔还完整——是被夜风从后台撕走的演出节目单。"},{"id":"sort_bill","room":"wardrobe","label":"把散页按页角编号理顺","req":{"i":["scraps"]},"n":["bill_ok"],"eff":{"f":["bill_ok"]},"text":"四页理齐，压轴那页印着空中飞人——秋千扣件箱，永远是最后一个上吊架。"},{"id":"read_board","room":"office","label":"读团长日程板","n":["c_board"],"eff":{"f":["c_board","c_drawer"]},"text":"日程板红字：驯象的彩球箱与魔术师的礼帽箱必须一前一后上吊架，中间不许插箱。页脚另有一行——校秤的标准砝码锁在抽屉里，谁用谁取。"},{"id":"read_feed","room":"stable","label":"看马厩门后的喂食表","n":["c_feed"],"eff":{"f":["c_feed"]},"text":"表背有马夫的铅笔字：铃鼓箱头一个上吊架，彩球箱跟在它后面——错一天，象就躁。钉板上的钥匙手电，收工归位。"},{"id":"take_gear","room":"stable","label":"从钉板取钥匙和手电","n":["has_torch"],"eff":{"f":["has_torch"],"i":["spare_key","torch"]},"text":"团长抽屉的备用钥匙和值班手电并排挂着，马夫倒是守规矩。"},{"id":"open_drawer","room":"office","label":"用备用钥匙开团长抽屉","req":{"i":["spare_key"]},"n":["drawer_open"],"eff":{"f":["drawer_open","c_check"],"i":["weight_std"]},"text":"抽屉里躺着校秤专用的一公斤砝码，标签写得清楚：用毕归还，虚高自校。"},{"id":"calibrate","room":"props","label":"把一公斤砝码放上台秤","req":{"i":["weight_std"]},"n":["scale_checked"],"eff":{"f":["scale_checked"]},"text":"秤面跳出 3.0——这台台秤一律虚高两公斤，上一位学徒走前没校秤。"},{"id":"weigh_blocks","room":"props","label":"吊配重铁块上台秤","req":{"f":["scale_checked"]},"n":["c_weight"],"eff":{"f":["c_weight"]},"text":"漆字磨平的四块铁：两块读 22，两块读 3——扣掉虚高，二十公斤和一公斤的各是两块。"},{"id":"schedule","room":"rigging","label":"按出场顺序排定载单","req":{"f":["bill_ok","c_board","c_feed"]},"n":["order_ok"],"eff":{"f":["order_ok","c_load"]},"text":"磁贴从左到右按死：铃鼓、彩球、礼帽、扣件。载单绿灯亮起，吊架轨道解锁。"},{"id":"sched_wrong","room":"rigging","label":"照箱号顺序排载单","req":{"f":["bill_ok"]},"n":["order_ok"],"text":"磁贴被排程板弹了回去——绞盘师傅留过话：箱号是到货顺序，不是出场顺序。"},{"id":"hang1","room":"hoist","label":"把彩球箱挂上吊钩","req":{"f":["order_ok"]},"n":["load1"],"eff":{"f":["load1"]},"text":"轨道滑车把彩球箱送到钩下，卡扣咬合，吊架往左沉了一指。"},{"id":"hang2","room":"hoist","label":"把礼帽箱挂上吊钩","req":{"f":["load1"]},"n":["load2"],"eff":{"f":["load2"]},"text":"礼帽箱挂稳，配重轨那头的空钩晃了晃，钢丝绳吃上劲了。"},{"id":"hang3","room":"hoist","label":"把扣件箱挂上吊钩","req":{"f":["load2"]},"n":["load3"],"eff":{"f":["load3"]},"text":"扣件箱挂上最外档，吊架整体下沉半寸，绞盘棘轮咔咔吃力。"},{"id":"hang_wrong","room":"hoist","label":"不按载单先挂礼帽箱","req":{"f":["order_ok"]},"n":["load3"],"text":"卡扣悬在横梁外咬不上——载单红灯闪着，轮不到它。"},{"id":"balance","room":"rigging","label":"按实重把四块铁挂进筐","req":{"f":["c_weight"]},"n":["balance_ok"],"eff":{"f":["balance_ok"]},"text":"二十、二十、一、一，四块铁各归其位。平衡盘的指针晃了两下，稳稳停进绿区，差动锁咔咔退开两齿。"},{"id":"bal_wrong","room":"rigging","label":"只挑两块大铁挂进筐","req":{"f":["c_weight"]},"n":["balance_ok"],"text":"指针一头甩进红区，差动锁咬死不放——还差两公斤的零头。"},{"id":"bal_wrong2","room":"rigging","label":"只挑两块小铁挂进筐","req":{"f":["c_weight"]},"n":["balance_ok"],"text":"指针瘫在红区另一头，配重轨那头的锁链松松垮垮——两公斤压不住四十公斤的窟窿。"},{"id":"look_trap","room":"ring","label":"端详圆场暗门","text":"吊架横梁的载重标牌写着满载四十八公斤；暗门锁链穿过两只滑轮吊向配重筐，链条松紧全看筐里的分量。"},{"id":"open_trap","room":"ring","label":"解开暗门的铜锁链","req":{"f":["balance_ok","load3"]},"n":["trap_open"],"eff":{"f":["trap_open"]},"text":"锁链顺着滑轮滑脱，暗门沉下半指，露出一道向下的梯口。"},{"id":"take_goods","room":"cellar","label":"把总账和保险绳提上圆场","req":{"f":["trap_open"]},"end":"win","text":"库房铁架码得整整齐齐，玻璃柜里锁着巡演总账。你把总账和飞人备用保险绳提上圆场——明早开演前，团长的交代一件不差。"},{"id":"tease_leopard","room":"stable","label":"隔着栏杆逗弄美洲豹","end":"lose","text":"豹爪从栏杆缝里拍出来，爪尖擦过手背——血珠子滴在垫草上，值夜的帐篷里再没有第二个人。"},{"id":"amb_poster","room":"gate","label":"翻看海报栏","text":"环球巡演的招贴从东京贴到里斯本，明日场次那栏被红笔圈了两圈：全员到场，暗门库房清点。"},{"id":"amb_office","room":"office","label":"翻看桌上的电话留言单","text":"留言单只剩空白页，撕纸的人连垫板都一并带走了。"},{"id":"amb_cage","room":"stable","label":"查看豹笼挂锁","text":"笼门挂锁完好，饲喂口的插销却被磨得油亮——它夜里没少自己够食。"},{"id":"amb_rail","room":"props","label":"拉推轨道口","text":"轨道口挂着急停拉环，绳套上还留着掌印——昨晚有人最后推过一次箱。"},{"id":"amb_gauge","room":"rigging","label":"拨平衡盘指针","text":"指针空晃几下又弹回红区边上——差动锁没退齿，谁也拽不动暗门。"},{"id":"amb_hook","room":"hoist","label":"检查吊钩卡扣","text":"四只吊钩的保险舌都完好，只有最外档缠着一段红绸——压轴专用。"},{"id":"amb_shelf","room":"cellar","label":"清点铁架货位","text":"货位牌按城市排：东京、悉尼、里斯本，空着的下一格写着明早要去的城市名。"}],"difficulty":{"minSteps":14,"maxSteps":36,"maxBranch":6}};</script>
+<div class="chips">
+<span class="chip">谜题 <b id="cPuzzle">–</b></span>
+<span class="chip">步数 <b id="cSteps">0</b></span>
+<span class="chip">物品 <b id="cItems">0</b></span>
+</div>
+<div class="layout">
+<section class="stage card" aria-live="polite">
+<div id="room"></div><div id="strip"></div><div id="desc"></div>
+<div id="log"></div><div id="acts"></div>
+<div class="tools"><button id="restart">重新开始</button></div>
+</section>
+<aside class="side">
+<div class="card"><h2>地 图 <button class="mapreset" id="mapreset">重置布局</button></h2><svg id="map" viewBox="0 0 200 120" aria-label="房间地图"></svg></div>
+<div class="card"><h2>物 品</h2><div id="inv"></div></div>
+</aside>
+</div>
+<div id="veil"><div class="panel"><div class="big" id="veilEm"></div><div class="t" id="veilT"></div><div class="sub" id="veilSub"></div><button class="pri" id="veilBtn">再玩一次</button></div></div>
+<div id="loader" style="display:none">
+<div class="card">
+<p>浏览器安全策略阻止了直接读取同目录的 game.json（用 file:// 直接打开时会出现这种情况）。</p>
+<p>两种解决方法：</p>
+<ol>
+<li>用 <code>node build.js game.json</code> 打包成单文件 HTML 后再打开（推荐）；</li>
+<li>或点击下方按钮，手动选择本目录中的 game.json 文件。</li>
+</ol>
+<p><input type="file" accept=".json,application/json" id="pickjson"></p>
+</div>
+</div>
+</main>
+<script>
+(function(){
+var booted=false;
+/* —— emoji 关键词典：按房间名+描述 / 物品名自动配场景条与物品图标 —— */
+var EMO=[["灯笼","🏮"],["蜡烛","🕯️"],["蜡封","🔏"],["封蜡","🔏"],["火漆","🔏"],["台历","📅"],["罗盘","🧭"],["指南针","🧭"],["平面图","🗺️"],["地图","🗺️"],["收音","📻"],["电台","📡"],["天线","📡"],["电报","📨"],["电话","☎️"],["磁带","📼"],["录音","🎙️"],["胶片","🎞️"],["放映","🎬"],["幻灯","🎞️"],["望远","🔭"],["透镜","🔍"],["放大","🔬"],["相纸","🖼️"],["照片","🖼️"],["显影","🧪"],["定影","🧪"],["药","💊"],["化验","🧪"],["试剂","🧪"],["气球","🎈"],["气囊","🎈"],["保险柜","🔐"],["保险","🔐"],["暗码","🔢"],["密码","🔢"],["口令","🔢"],["铃","🔔"],["哨","📯"],["锣","🥁"],["鼓","🥁"],["琴","🎻"],["弦","🎼"],["乐谱","🎼"],["戏","🎭"],["木偶","🎭"],["面具","🎭"],["提词","📋"],["导播","🎛️"],["推子","🎛️"],["旋钮","🎛️"],["控制台","🎛️"],["播控","🎛️"],["话筒","🎙️"],["监视","🖥️"],["屏幕","🖥️"],["电视","📺"],["影片","🎬"],["电影","🎬"],["字模","🔠"],["活字","🔠"],["铅字","🔠"],["印刷","🖨️"],["报纸","📰"],["书脊","📖"],["装订","📖"],["散页","📄"],["纸捻","🧵"],["浆糊","🥣"],["函套","📚"],["书","📚"],["账","📒"],["簿","📒"],["册","📒"],["记录","📝"],["日志","📝"],["笔记","📝"],["手账","📓"],["留言","✉️"],["信","✉️"],["便条","📄"],["单据","🧾"],["票据","🧾"],["存根","🧾"],["票","🎫"],["地磅","⚖️"],["吊秤","⚖️"],["戥","⚖️"],["秤","⚖️"],["砝码","⚖️"],["配重","🗿"],["石锁","🗿"],["沙袋","🗿"],["砂袋","🗿"],["压铁","🗿"],["阀门","🚰"],["阀","🚰"],["水管","🚿"],["蒸汽","♨️"],["锅炉","🔥"],["炉","🔥"],["烟","💨"],["蒸","♨️"],["火","🔥"],["冰芯","❄️"],["冰","❄️"],["雪","❄️"],["霜","❄️"],["雾","🌫️"],["雨","🌧️"],["风","🌬️"],["沙暴","🏜️"],["沙","🏜️"],["水","💧"],["卤","🧂"],["盐","🧂"],["糖浆","🍬"],["糖","🍬"],["粮","🌾"],["麦","🌾"],["染","🎨"],["颜料","🎨"],["画","🖼️"],["修复","🛠️"],["工具","🧰"],["扳手","🔧"],["钳","🔧"],["锤","🔨"],["剪","✂️"],["刀","🔪"],["锯","🛠️"],["撬","🛠️"],["钥匙","🔑"],["铜锁","🔒"],["挂锁","🔒"],["锁","🔒"],["链","⛓️"],["绳","🪢"],["索","🪢"],["网","🕸️"],["梯","🧗"],["墙","🧱"],["瓦","🧱"],["集装箱","📦"],["箱","📦"],["盒","📦"],["桶","🛢️"],["罐","🏺"],["缸","🏺"],["坛","🏺"],["瓶","🍾"],["杯","☕"],["碗","🥣"],["锅","🍳"],["茶","🍵"],["酒","🍷"],["草","🌿"],["兰","🌺"],["花","🌸"],["苗","🌱"],["树","🌳"],["叶","🍃"],["骨","🦴"],["化石","🦴"],["龙骨","🦴"],["石","🗿"],["碑","🗿"],["墓","🗿"],["拓片","📜"],["香","🕯️"],["供桌","⛩️"],["匾","📋"],["牌","📋"],["签","📋"],["印章","🔏"],["印","🔏"],["花押","🔏"],["机器人","🤖"],["机械","⚙️"],["齿轮","⚙️"],["发电","⚙️"],["电池","🔋"],["保险丝","🔌"],["电源","🔌"],["电闸","⚡"],["闸","⚡"],["电钮","🔘"],["按钮","🔘"],["电","⚡"],["船","⛵"],["锚","⚓"],["坞","⚓"],["舱","🚢"],["甲板","⚓"],["泊位","⚓"],["码头","⚓"],["货柜","📦"],["车厢","🚃"],["火车","🚂"],["地铁","🚇"],["站台","🚉"],["候车","🚉"],["轨道","🛤️"],["道岔","🛤️"],["信号","🚥"],["桥","🌉"],["塔","🗼"],["灯塔","🗼"],["棚","⛺"],["帐篷","⛺"],["马","🐎"],["貂","🐾"],["兽","🐾"],["豹","🐆"],["鸟","🐦"],["鱼","🐟"],["池","🐟"],["蒸馏","⚗️"],["试管","⚗️"],["煤油","🛢️"],["油","🛢️"],["钟","🕰️"],["表","⌚"],["沙漏","⏳"],["门","🚪"],["灯","💡"],["烛","🕯️"]];
+function emojiFor(text,limit){
+limit=limit||6;var got=[],seen={};text=String(text||"");
+for(var i=0;i<EMO.length&&got.length<limit;i++){var k=EMO[i][0];
+if(text.indexOf(k)>-1&&!seen[EMO[i][1]]){seen[EMO[i][1]]=1;got.push(EMO[i][1])}}
+if(!got.length)got=["🚪"];return got.join("")}
+var PALETTE=["#3A56A8","#7A3AA8","#A83A56","#3AA87A","#A8703A","#2B7A9E","#8A5A2B","#5A6B2B"];
+function hash(s){var h=0;s=String(s||"");for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0}return h}
+function boot(G){
+if(booted)return;booted=true;
+var title=G.title||"文字密室逃脱";
+document.title=title;
+document.getElementById("title").textContent=title;
+document.documentElement.style.setProperty("--acc",PALETTE[hash(title)%PALETTE.length]);
+document.documentElement.style.setProperty("--acc2",PALETTE[hash(title)%PALETTE.length]+"22");
+var intro=G.intro||"",ip=document.getElementById("intro");
+if(intro){ip.textContent=intro}else{ip.style.display="none"}
+var S,logEl=document.getElementById("log"),steps=0;
+var visited={},edges={};
+/* —— 地图布局存档：节点可拖拽，按关卡标题持久化 —— */
+var layoutKey="maplayout:"+title,layout={};
+try{layout=JSON.parse(localStorage.getItem(layoutKey)||"{}")||{}}catch(e){layout={}}
+function saveLayout(){try{localStorage.setItem(layoutKey,JSON.stringify(layout))}catch(e){}}
+function has(s,a){var r=a.req||{};return a.room===s.room&&(r.i||[]).every(function(x){return s.i.indexOf(x)>-1})&&(r.f||[]).every(function(x){return s.f.indexOf(x)>-1})&&(a.n||[]).every(function(x){return s.f.indexOf(x)<0})}
+function avail(s){return s.end?[]:G.acts.filter(function(a){return has(s,a)})}
+function ap(s,a){var e=a.eff||{},i=new Set(s.i),f=new Set(s.f);(e.i||[]).forEach(function(x){i.add(x)});(e.rm||[]).forEach(function(x){i.delete(x)});(e.f||[]).forEach(function(x){f.add(x)});
+return{room:a.go||s.room,i:Array.from(i).sort(),f:Array.from(f).sort(),end:a.end||null}}
+function key(s){return s.room+"|"+s.i+"|"+s.f+"|"+(s.end||"")}
+/* —— 通关时一次性 BFS 求理论最短步数（仅结算展示，不剧透路径） —— */
+function shortestSteps(){
+try{var s0={room:G.start,i:[],f:[],end:null},K={},Q=[{s:s0,d:0}];
+K[key(s0)]=1;
+while(Q.length){
+if(Q.length>150000)return -1;
+var it=Q.shift(),s=it.s;
+if(s.end==="win")return it.d;
+var as=avail(s);
+for(var i=0;i<as.length;i++){var t=ap(s,as[i]),k=key(t);
+if(!K[k]){K[k]=1;Q.push({s:t,d:it.d+1})}}}
+return -2}catch(e){return -1}}
+function say(t){var p=document.createElement("p");p.textContent=t;logEl.appendChild(p);logEl.scrollTop=1e5}
+function solvedCount(){return (G.puzzles||[]).filter(function(p){return S.f.indexOf(p.solved)>-1}).length}
+function catOf(a){if(a.go)return["🚪 移动"];
+if(/^(看|读|翻|查|端详|听|问|搜|找|观察|检查|细看|打量|数|对照|比较|核|掀|望|摸|试|探|拨|闻|敲|点)/.test(a.label||""))return["🔍 查看"];
+return["🛠️ 行动"]}
+function drawMap(){
+var D={},cur=S.room;
+Object.keys(visited).forEach(function(r){D[r]=1});
+D[cur]=1;
+var adj={};
+avail(S).forEach(function(a){if(a.go){D[a.go]=1;adj[a.go]=1}});
+var edges={};
+G.acts.forEach(function(a){if(a.go&&(visited[a.room]&&visited[a.go]))edges[[a.room,a.go].sort().join("|")]=1;
+if(a.go&&a.room===cur)edges[[cur,a.go].sort().join("|")]=2});
+var ids=Object.keys(D),depth={};
+ids.forEach(function(r){depth[r]=-1});
+depth[G.start]=0;var q=[G.start];
+while(q.length){var r=q.shift();G.acts.forEach(function(a){if(a.go&&a.room===r&&D[a.go]&&depth[a.go]<0){depth[a.go]=depth[r]+1;q.push(a.go)}})}
+var byLevel={},maxKnown=-1;
+ids.forEach(function(r){if(depth[r]>=0){(byLevel[depth[r]]=byLevel[depth[r]]||[]).push(r);if(depth[r]>maxKnown)maxKnown=depth[r]}});
+var unk=ids.filter(function(r){return depth[r]<0});
+if(unk.length){Array.prototype.push.apply(byLevel[maxKnown+1]=byLevel[maxKnown+1]||[],unk)}
+var levels=Object.keys(byLevel).map(Number).sort(function(a,b){return a-b});
+var pos={};levels.forEach(function(d){byLevel[d].sort();byLevel[d].forEach(function(r,i){
+pos[r]=layout[r]?{x:layout[r].x,y:layout[r].y}:{x:36+d*78,y:22+i*34}})});
+var xs=ids.map(function(r){return pos[r].x}),ys=ids.map(function(r){return pos[r].y});
+var W=Math.max(36+(maxKnown+2)*78+6,Math.max.apply(null,xs.concat([200]))+46);
+var H=Math.max(22+((levels.length?Math.max.apply(null,levels.map(function(d){return byLevel[d].length})):1)+1)*34,Math.max.apply(null,ys.concat([120]))+34);
+var svg=['<svg viewBox="0 0 '+W+" "+H+'" xmlns="http://www.w3.org/2000/svg">'];
+Object.keys(edges).forEach(function(k){var p=k.split("|");
+if(!pos[p[0]]||!pos[p[1]])return;
+svg.push('<line class="edge'+(edges[k]===2?" cur":"")+'" x1="'+pos[p[0]].x+'" y1="'+pos[p[0]].y+'" x2="'+pos[p[1]].x+'" y2="'+pos[p[1]].y+'"/>')});
+ids.forEach(function(r){var p=pos[r],cls="node"+(visited[r]?" vis":"")+(r===cur?" cur":"")+(adj[r]&&!visited[r]?" new":"");
+var name=(r===cur||visited[r]||adj[r])?(G.rooms[r]?G.rooms[r].n:r):"?";
+svg.push('<g class="'+cls+'" data-room="'+r+'"><rect x="'+(p.x-31)+'" y="'+(p.y-12)+'" width="62" height="24" rx="9"/><text x="'+p.x+'" y="'+(p.y+4)+'" text-anchor="middle">'+name.slice(0,6)+"</text></g>")});
+svg.push("</svg>");
+var m=document.getElementById("map");m.setAttribute("viewBox","0 0 "+W+" "+H);m.innerHTML=svg.join("")}
+/* —— 地图节点拖拽（指针事件，布局实时存档） —— */
+(function(){
+var m=document.getElementById("map"),drag=null;
+function svgXY(evt){var pt=m.createSVGPoint();pt.x=evt.clientX;pt.y=evt.clientY;return pt.matrixTransform(m.getScreenCTM().inverse())}
+m.addEventListener("pointerdown",function(e){
+var t=e.target,g=t&&t.closest?t.closest(".node"):null;if(!g)return;
+var id=g.getAttribute("data-room");if(!id)return;
+drag={id:id,off:{x:svgXY(e).x-(layout[id]?layout[id].x:0),y:svgXY(e).y-(layout[id]?layout[id].y:0)}};
+g.classList.add("drag");try{m.setPointerCapture(e.pointerId)}catch(err){}});
+m.addEventListener("pointermove",function(e){
+if(!drag)return;
+var p=svgXY(e);
+layout[drag.id]={x:Math.max(31,Math.round(p.x-drag.off.x)),y:Math.max(12,Math.round(p.y-drag.off.y))};
+drawMap()});
+function up(){if(!drag)return;drag=null;saveLayout();
+document.getElementById("map").querySelectorAll(".node").forEach(function(g){g.classList.remove("drag")})}
+m.addEventListener("pointerup",up);m.addEventListener("pointercancel",up)})();
+document.getElementById("mapreset").onclick=function(){layout={};saveLayout();drawMap()};
+function chips(){document.getElementById("cPuzzle").textContent=(G.puzzles||[]).length?solvedCount()+"/"+G.puzzles.length:"–";
+document.getElementById("cSteps").textContent=steps;document.getElementById("cItems").textContent=S.i.length}
+function draw(){
+document.getElementById("room").textContent=G.rooms[S.room].n;
+document.getElementById("strip").textContent=emojiFor(G.rooms[S.room].n+" "+G.rooms[S.room].d);
+document.getElementById("desc").textContent=G.rooms[S.room].d;
+document.documentElement.style.setProperty("--tint",PALETTE[hash(title+G.rooms[S.room].n)%PALETTE.length]+"1f");
+document.getElementById("inv").innerHTML=S.i.length?S.i.map(function(x){var n=G.items[x]||x;return '<span class="tag"><span class="em">'+emojiFor(n,1)+"</span>"+n+"</span>"}).join(""):'<span class="tag">（空手）</span>';
+if(S.end){document.getElementById("acts").innerHTML="";
+var b=document.createElement("button");b.className="pri";b.textContent=S.end==="win"?"通关！再玩一次":"失败了，重新开始";b.onclick=reset;document.getElementById("acts").appendChild(b);
+var sp=S.end==="win"?shortestSteps():null;
+document.getElementById("veilEm").textContent=S.end==="win"?"🎉":"🕯️";
+document.getElementById("veilT").textContent=S.end==="win"?"通关！":"失败了……";
+var sub=S.end==="win"?("本局 "+steps+" 步 · 解开谜题 "+solvedCount()+"/"+(G.puzzles||[]).length+(sp>0?(" · 理论最短 "+sp+" 步"+(steps===sp?" · 完美路线 🏆":steps<=sp+3?" · 干净利落 ⭐":" · 曲径通幽 🧭")):(sp===-1?" · （状态太多，未计算最短步数）":""))):"";
+document.getElementById("veilSub").textContent=sub;
+document.getElementById("veil").classList.add("show");
+chips();drawMap();return}
+document.getElementById("veil").classList.remove("show");
+var groups={},order=[];
+avail(S).forEach(function(a){var c=catOf(a);if(!groups[c[0]]){groups[c[0]]=[];order.push(c[0])}groups[c[0]].push(a)});
+var box=document.getElementById("acts");box.innerHTML="";
+order.forEach(function(gn){var h=document.createElement("div");h.className="grp";h.textContent=gn;box.appendChild(h);
+groups[gn].forEach(function(a){var b=document.createElement("button");b.textContent=a.label;b.onclick=function(){act(a)};box.appendChild(b)})});
+chips();drawMap()}
+function act(a){var pre=S.room;var t=ap(S,a);S=t;steps++;visited[S.room]=1;
+if(pre!==S.room)edges[[pre,S.room].sort().join("|")]=1;
+if(a.text)say(a.text);if(a.go)say("—— "+G.rooms[S.room].n+" ——");draw()}
+function reset(){S={room:G.start,i:[],f:[],end:null};steps=0;visited={};visited[G.start]=1;edges={};logEl.innerHTML="";
+if(intro)say(intro);say(G.rooms[S.room].d);document.getElementById("veil").classList.remove("show");draw()}
+document.getElementById("restart").onclick=reset;
+document.getElementById("veilBtn").onclick=reset;
+reset();
+}
+if(window.__GAME__){boot(window.__GAME__);return}
+fetch("game.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}).then(boot).catch(function(){
+var ld=document.getElementById("loader");ld.style.display="block";
+document.getElementById("pickjson").addEventListener("change",function(e){
+var f=e.target.files[0];if(!f)return;var rd=new FileReader();
+rd.onload=function(){try{boot(JSON.parse(rd.result))}catch(err){alert("game.json 解析失败："+err.message)}};
+rd.readAsText(f,"utf-8")});
+});
+})();
+</script>
+</body>
+</html>

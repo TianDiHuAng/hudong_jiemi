@@ -1,0 +1,246 @@
+{
+  "title": "尾沉三十斤",
+  "intro": "云鲸号在云层上出了岔子：前配重被人整箱挪走，艇尾一路下坠，油门被限动销卡死。查明动配重的人，把三十斤缺口配平，赶在副气囊超压前飞回山口备降场。",
+  "start": "cabin",
+  "rooms": {
+    "cabin": {
+      "n": "客舱",
+      "d": "三名乘客用安全带扣在沙发上，茶几斜得能溜杯子。舱壁挂着手摇气压计，前甲板踏板通吊货舱，两侧门分别去驾驶舱和配餐间。"
+    },
+    "cockpit": {
+      "n": "驾驶舱",
+      "d": "油门被一根黄铜限动销卡在半程，操纵盘上的配平轮锁着。副仪表板嵌着气泡水准仪，台角夹着一张载重平衡表。"
+    },
+    "prom": {
+      "n": "望景廊",
+      "d": "弧形舷窗外云海翻到艇腹，廊凳上摊着一副没人认领的老花镜。头顶就是气囊检查窗，搭扣结着冰，窗外横风无遮拦。"
+    },
+    "galley": {
+      "n": "配餐间",
+      "d": "热水炉咝咝冒着汽，储物格里码着帆布捆带和备用绳扣。边门一头通尾压载舱，一头直进驾驶舱。"
+    },
+    "cargo": {
+      "n": "吊货舱",
+      "d": "货梁上挂着弹簧吊秤，秤钩空荡荡的。三件行李贴舱壁排开：样品箱、镜头箱，还有神父那口铜包角木箱。"
+    },
+    "aftbay": {
+      "n": "尾压载舱",
+      "d": "砂袋垛到膝高，袋身用黑漆标着斤两，十八斤的一列压在垛顶。蒙皮布上积着细砂，踩上去咯吱作响。"
+    },
+    "fwd": {
+      "n": "前配重舱",
+      "d": "两个配重槽空着，槽沿黑漆标着前架总重三十斤。捆带的断口发白卷在挂钩上，舱角的副气囊调压阀挂着水珠。"
+    }
+  },
+  "items": {
+    "iron_pair": "一对生铁配重",
+    "sandbag": "十八斤砂袋",
+    "strap": "帆布捆带"
+  },
+  "puzzles": [
+    { "id": "乘客证词", "solved": "p_witness", "clue": "c_t1" },
+    { "id": "吊秤称箱", "solved": "p_weigh", "clue": "c_scale" },
+    { "id": "前架配平", "solved": "p_trim", "clue": "c_sheet" },
+    { "id": "砂袋下架", "solved": "p_sand", "clue": "c_aftbay" },
+    { "id": "帆布捆带", "solved": "p_strap", "clue": "c_strapcut" },
+    { "id": "副气囊泄压", "solved": "p_vent", "clue": "c_gauge" }
+  ],
+  "acts": [
+    { "id": "c2cockpit", "room": "cabin", "label": "进驾驶舱", "go": "cockpit" },
+    { "id": "cockpit2cabin", "room": "cockpit", "label": "回客舱", "go": "cabin" },
+    { "id": "c2galley", "room": "cabin", "label": "去配餐间", "go": "galley" },
+    { "id": "galley2cabin", "room": "galley", "label": "回客舱", "go": "cabin" },
+    { "id": "c2cargo", "room": "cabin", "label": "掀踏板下吊货舱", "go": "cargo" },
+    { "id": "cargo2cabin", "room": "cargo", "label": "爬梯回客舱", "go": "cabin" },
+    { "id": "galley2aft", "room": "galley", "label": "开边门进尾压载舱", "go": "aftbay" },
+    { "id": "aft2galley", "room": "aftbay", "label": "回配餐间", "go": "galley" },
+    { "id": "aft2fwd", "room": "aftbay", "label": "踩龙骨步道去前舱", "go": "fwd" },
+    { "id": "fwd2aft", "room": "fwd", "label": "沿步道回尾舱", "go": "aftbay" },
+    { "id": "galley2cockpit", "room": "galley", "label": "穿边门进驾驶舱", "go": "cockpit" },
+    { "id": "cockpit2galley", "room": "cockpit", "label": "穿边门回配餐间", "go": "galley" },
+    { "id": "cockpit2prom", "room": "cockpit", "label": "出弧门上望景廊", "go": "prom" },
+    { "id": "prom2cockpit", "room": "prom", "label": "回驾驶舱", "go": "cockpit" },
+    {
+      "id": "talk_qian",
+      "room": "cabin",
+      "label": "听钱掌柜讲夜里的动静",
+      "n": ["c_t1"],
+      "eff": { "f": ["c_t1"] },
+      "text": "钱掌柜的指节在安全带上攥得发白：后半夜我起来看气压计，撞见摄影师蹲在前配舱门口，他那口镜头箱就搁在配重架边上。"
+    },
+    {
+      "id": "talk_gu",
+      "room": "cabin",
+      "label": "听顾小姐说木箱的事",
+      "n": ["c_t2"],
+      "eff": { "f": ["c_t2"] },
+      "text": "顾小姐把声音压得很低：我睡得沉。动配重的是抱木箱那位——他天不亮就把箱子往后舱搬，口口声声说经书怕潮。"
+    },
+    {
+      "id": "talk_shen",
+      "room": "cabin",
+      "label": "听老神父帮腔",
+      "n": ["c_t3"],
+      "eff": { "f": ["c_t3"] },
+      "text": "老神父捻着念珠替钱掌柜作证：他讲的是实情，我亲眼看见摄影师开过前配舱的扣带。"
+    },
+    {
+      "id": "open_crate",
+      "room": "cargo",
+      "label": "凭三份证词开验木箱",
+      "req": { "f": ["c_t1", "c_t2", "c_t3"] },
+      "n": ["p_witness"],
+      "eff": { "f": ["p_witness"], "i": ["iron_pair"] },
+      "text": "三份证词摆在一处：钱掌柜和老神父咬定同一个人，两句内容一样，真假也就一样——与只有一句真话相抵，双双作废。剩下的那句应了验。老神父的手停了停，摸出铜钥匙：经书底下垫着一对生铁配重，各铸六斤，铸字还新。至于整箱挪走的原配重，他低声招认：另十八斤天没亮就抛进了云海，寻得回的只有这十二斤。"
+    },
+    {
+      "id": "wrong_accuse_photo",
+      "room": "cargo",
+      "label": "凭三份证词指认摄影师",
+      "req": { "f": ["c_t1", "c_t2", "c_t3"] },
+      "n": ["p_witness"],
+      "text": "你把话头指向摄影师。钱掌柜和老神父抢着附和，可这两句证词一字不差、同真同假，偏偏规程里只有一句真话——附和得越齐，越做不得准。摄影师索性把镜头箱摊开任你翻检，除了一匣底片一副遮光镜，翻不出一斤铁。"
+    },
+    {
+      "id": "wrong_accuse_gu",
+      "room": "cargo",
+      "label": "凭三份证词指认顾小姐",
+      "req": { "f": ["c_t1", "c_t2", "c_t3"] },
+      "n": ["p_witness"],
+      "text": "顾小姐怔了怔，摊开随身的小梳妆匣：粉盒、发夹、一方帕子，塞不下三十斤铁。倒是你这一指，恰恰压住了那句唯一没被附和的孤证——她口中的那个人，此刻就在你眼前站着。"
+    },
+    {
+      "id": "look_scale",
+      "room": "cargo",
+      "label": "端详弹簧吊秤",
+      "n": ["c_scale"],
+      "eff": { "f": ["c_scale"] },
+      "text": "秤面刻着六十斤量程，挂钩磨得发亮。秤杆侧面用粉笔写着乘务守则：行李装载，先过秤再入位。"
+    },
+    {
+      "id": "weigh_crate",
+      "room": "cargo",
+      "label": "把木箱挂上吊秤",
+      "req": { "f": ["c_scale"] },
+      "n": ["p_weigh"],
+      "eff": { "f": ["p_weigh"] },
+      "text": "秤针荡了两荡，停在三十四斤——箱牌上写得清楚：经卷六斤，皮重十六斤。多出来的十二斤，绝不是纸墨。"
+    },
+    {
+      "id": "read_sheet",
+      "room": "cockpit",
+      "label": "读载重平衡表",
+      "n": ["c_sheet"],
+      "eff": { "f": ["c_sheet"] },
+      "text": "平衡表写得明白：前架标准配重三十斤，缺载即尾沉，禁开全推力。背页另有一行小字：配重入槽后，须用帆布捆带收紧方可起飞。"
+    },
+    {
+      "id": "look_bubble",
+      "room": "cockpit",
+      "label": "看气泡水准仪",
+      "text": "气泡缩在刻度右端，玻璃管里晃着一星油花——艇尾还在往下沉。"
+    },
+    {
+      "id": "read_gauge",
+      "room": "cockpit",
+      "label": "看副气囊压力表",
+      "n": ["c_gauge"],
+      "eff": { "f": ["c_gauge"] },
+      "text": "压力针顶进红区：艇尾下坠把气囊压得过了压。表盘边一行小字：先泄压，再补载，两件做完才许推油门。泄压的调压阀就在前配重舱舱角。"
+    },
+    {
+      "id": "take_strap",
+      "room": "galley",
+      "label": "取储物格里的帆布捆带",
+      "req": { "f": ["c_strapcut"] },
+      "n": ["p_strap"],
+      "eff": { "f": ["p_strap"], "i": ["strap"] },
+      "text": "捆带全新，钢钎扣上还打着蜡纸——乘务长备着它，原就是防这一手。"
+    },
+    {
+      "id": "press_kettle",
+      "room": "galley",
+      "label": "把热水炉的火拧小",
+      "text": "炉火压到蓝焰发矮。艇身再晃，也不至于把热水泼出来。"
+    },
+    {
+      "id": "look_stack",
+      "room": "aftbay",
+      "label": "看砂袋垛",
+      "n": ["c_aftbay"],
+      "eff": { "f": ["c_aftbay"] },
+      "text": "砂袋按斤两码开：十八斤那列齐整地压在垛顶，麻绳干透，是压了些日子的老货。"
+    },
+    {
+      "id": "take_sandbag",
+      "room": "aftbay",
+      "label": "解下垛顶的十八斤砂袋",
+      "n": ["p_sand"],
+      "eff": { "f": ["p_sand"], "i": ["sandbag"] },
+      "text": "砂袋拖下来往肩上一搭，分量沉实，和袋身的漆字对得上。"
+    },
+    {
+      "id": "look_strapcut",
+      "room": "fwd",
+      "label": "摸一摸割断的捆带",
+      "n": ["c_strapcut"],
+      "eff": { "f": ["c_strapcut"] },
+      "text": "断口发白，是利器一次割断的。没有捆带，配重在艇上一个转弯就要出槽。"
+    },
+    {
+      "id": "trim_done",
+      "room": "fwd",
+      "label": "按三十斤配齐并扣紧捆带",
+      "req": { "i": ["sandbag", "iron_pair", "strap"] },
+      "n": ["p_trim"],
+      "eff": { "f": ["p_trim"] },
+      "text": "十八斤砂袋卧进左槽，一对生铁落进右槽，捆带绕过槽钎咬死。吊舱那股往尾上坠的劲头，顺着龙骨一点点松开了。"
+    },
+    {
+      "id": "wrong_lensbox",
+      "room": "fwd",
+      "label": "把镜头箱压进前架",
+      "n": ["p_trim"],
+      "text": "箱壳刚挨着槽沿你就缩了手——里头的玻璃经不起这一压，顾小姐也绝不会答应。"
+    },
+    {
+      "id": "wrong_sandonly",
+      "room": "fwd",
+      "label": "只把砂袋压进前架",
+      "req": { "i": ["sandbag"] },
+      "n": ["p_trim"],
+      "text": "砂袋落槽，配平轮上的刻度半格没走——离三十斤还差一截，艇尾照旧往下坠。"
+    },
+    {
+      "id": "open_vent",
+      "room": "fwd",
+      "label": "拧开副气囊调压阀",
+      "req": { "f": ["c_gauge"] },
+      "n": ["p_vent"],
+      "eff": { "f": ["p_vent"] },
+      "text": "阀轮转过三圈，气管里嘶地泄出一股白汽——压力表的针从红区稳稳退回绿区。"
+    },
+    {
+      "id": "look_board",
+      "room": "fwd",
+      "label": "踩了踩龙骨步道",
+      "text": "步道板缝里渗着高空的寒气，板下云层洗过一样平整。"
+    },
+    {
+      "id": "climb_risk",
+      "room": "prom",
+      "label": "攀出检查窗上气囊顶",
+      "end": "lose",
+      "text": "倾斜的艇体上，检查窗搭扣结着冰。你刚翻出去，横风把保险索抽得笔直——云层底下，没有人听得见。"
+    },
+    {
+      "id": "depart",
+      "room": "cockpit",
+      "label": "拔销推油门转向备降场",
+      "req": { "f": ["p_trim", "p_vent"] },
+      "end": "win",
+      "text": "限动销啪地弹落，油门推到底，螺旋桨的轰鸣顺着龙骨传遍吊舱。云鲸号压平机头，山口备降场的白色标识，已经从云缝里露出来了。"
+    }
+  ],
+  "difficulty": { "minSteps": 10, "maxSteps": 28, "maxBranch": 6 }
+}

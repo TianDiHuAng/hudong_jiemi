@@ -1,0 +1,305 @@
+{
+  "title": "散戏之后",
+  "intro": "散场的木偶剧院落了锁，你被忘在后台。收线要照走位倒行，太平门只认那把拼得齐三齿的戏钥——赶在天亮前，把这一夜的戏真正收完，从台仓走出去。",
+  "start": "hall",
+  "rooms": {
+    "hall": {
+      "n": "观众厅",
+      "d": "座椅一排排翻扣在座板上，台口的大幕落到底，一盏场灯还亮着昏黄的光，头顶吊灯的铁链歪着，链节锈得发黑。最近一张椅背上搭着卷了角的旧节目单。"
+    },
+    "pit": {
+      "n": "乐池",
+      "d": "比观众席低一级的乐池里，谱架摊着翻烂的总谱。角落堆着卸下来的道具箱，箱缝里露出半张硬纸板。"
+    },
+    "stage": {
+      "n": "舞台",
+      "d": "台板撒着滑石粉，生偶执马鞭、旦偶执团扇、丑偶摇破蒲扇，三只提线木偶悬在半空收着架势。侧幕叠了几层，道具间的门挨着上场门。"
+    },
+    "dressing": {
+      "n": "化妆间",
+      "d": "镜灯全灭了，镜台上排着卸妆的膏盒。墙上挂着戏服，镜柜的柜门上着一把小锁。"
+    },
+    "props": {
+      "n": "道具间",
+      "d": "架板上码着刀枪把子，墙钉挂着一副黄铜钥匙坯。门边的挂板黑底白字，写着戏钥的规矩。"
+    },
+    "booth": {
+      "n": "操纵台室",
+      "d": "悬在台口上方的操纵台室里，三根收线绳垂在台沿，绳牌上各拴着一件缩微道具：马鞭、团扇、蒲扇。窄窗望得见观众厅的场灯。"
+    },
+    "under": {
+      "n": "台仓",
+      "d": "台仓堆着旧布景和卷起的毯子，太平门斜嵌在墙根，门上横着一根带销的铁闩。"
+    }
+  },
+  "items": {
+    "board_key": "场记小钥匙",
+    "fan": "泥金折扇",
+    "blank": "黄铜钥匙坯",
+    "spear": "小铜枪",
+    "seal": "乌木小印",
+    "play_key": "戏钥"
+  },
+  "puzzles": [
+    { "id": "场记板", "solved": "p_board", "clue": "c_program" },
+    { "id": "乐池总谱", "solved": "p_score", "clue": "c_program" },
+    { "id": "化妆间镜柜", "solved": "p_vanity", "clue": "c_mirror" },
+    { "id": "拼装戏钥", "solved": "p_key", "clue": "c_teeth" },
+    { "id": "收线次序", "solved": "p_cue", "clue": "p_score" },
+    { "id": "太平门", "solved": "p_door", "clue": "c_door" }
+  ],
+  "acts": [
+    {
+      "id": "hall2pit",
+      "room": "hall",
+      "label": "下台阶进乐池",
+      "go": "pit"
+    },
+    {
+      "id": "pit2hall",
+      "room": "pit",
+      "label": "回观众厅",
+      "go": "hall"
+    },
+    {
+      "id": "read_program",
+      "room": "hall",
+      "label": "拿起椅背的节目单",
+      "n": ["c_program"],
+      "eff": { "f": ["c_program"] },
+      "text": "最后一出是白蛇三折：游湖、盗草、水漫。散戏时刻印着昨夜十点半，栏角盖着场记的蓝戳。"
+    },
+    {
+      "id": "hall_light",
+      "room": "hall",
+      "label": "拨两下场灯开关",
+      "text": "开关拨了两下，灯丝红了一红又暗回去，线路里只剩嗡嗡的余音。"
+    },
+    {
+      "id": "hall_lose",
+      "room": "hall",
+      "label": "攀着锈链爬上吊灯",
+      "end": "lose",
+      "text": "铁链第二节的焊口早裂了，人一挂上去，连人带灯罩砸回座椅堆里，四下再没有声响。"
+    },
+    {
+      "id": "find_board",
+      "room": "pit",
+      "label": "翻找道具箱堆",
+      "n": ["p_board"],
+      "eff": { "f": ["p_board"], "i": ["board_key"] },
+      "text": "箱堆最底下压着场记板，板夹背层滑出一把小铜钥匙。板上粉笔字没擦净：末场走位，旦出、生接、丑收。"
+    },
+    {
+      "id": "read_score",
+      "room": "pit",
+      "label": "翻开谱架上的总谱",
+      "n": ["p_score"],
+      "eff": { "f": ["p_score"] },
+      "text": "总谱翻到水漫那折，页边铅笔字写着：收线倒行，勿乱；先收压场的，后收打头的。"
+    },
+    {
+      "id": "pit_look",
+      "room": "pit",
+      "label": "看看谱架上的铅笔痕",
+      "text": "谱页折角处密密标着弓法，铅笔痕深浅不一，看得出翻过许多个晚上。"
+    },
+    {
+      "id": "pit2stage",
+      "room": "pit",
+      "label": "穿演员小门上台",
+      "go": "stage"
+    },
+    {
+      "id": "stage2pit",
+      "room": "stage",
+      "label": "回乐池",
+      "go": "pit"
+    },
+    {
+      "id": "take_fan",
+      "room": "stage",
+      "label": "卸下旦偶手里的折扇",
+      "n": ["f_fan"],
+      "eff": { "f": ["f_fan"], "i": ["fan"] },
+      "text": "泥金折扇攥在旦偶指间，线一松就取了下来，偶手还保持着出场的姿势。"
+    },
+    {
+      "id": "stage2dressing",
+      "room": "stage",
+      "label": "进化妆间",
+      "go": "dressing"
+    },
+    {
+      "id": "dressing2stage",
+      "room": "dressing",
+      "label": "回舞台",
+      "go": "stage"
+    },
+    {
+      "id": "look_mirror",
+      "room": "dressing",
+      "label": "端详镜柜",
+      "n": ["c_mirror"],
+      "eff": { "f": ["c_mirror"] },
+      "text": "镜柜上着小锁，锁牌上刻着两个字：场记。"
+    },
+    {
+      "id": "mirror_wrong",
+      "room": "dressing",
+      "label": "硬掰镜柜的门",
+      "n": ["p_vanity"],
+      "text": "柜门被掰得咯吱响，锁舌咬得死紧，再使劲就要连镜子一起拽下来。"
+    },
+    {
+      "id": "open_mirror",
+      "room": "dressing",
+      "label": "用场记小钥匙开镜柜",
+      "req": { "i": ["board_key"] },
+      "n": ["p_vanity"],
+      "eff": { "f": ["p_vanity"], "i": ["seal"] },
+      "text": "小钥匙一拧就开。柜格里搁着一方乌木小印，印纽上嵌着一粒铜齿。"
+    },
+    {
+      "id": "stage2props",
+      "room": "stage",
+      "label": "进道具间",
+      "go": "props"
+    },
+    {
+      "id": "props2stage",
+      "room": "props",
+      "label": "回舞台",
+      "go": "stage"
+    },
+    {
+      "id": "take_blank",
+      "room": "props",
+      "label": "摘下墙钉上的钥匙坯",
+      "n": ["f_blank"],
+      "eff": { "f": ["f_blank"], "i": ["blank"] },
+      "text": "黄铜钥匙坯从墙钉上摘下来，齿槽还是平的，等着开齿。"
+    },
+    {
+      "id": "take_spear",
+      "room": "props",
+      "label": "从架板抽出小铜枪",
+      "n": ["f_spear"],
+      "eff": { "f": ["f_spear"], "i": ["spear"] },
+      "text": "一尺来长的小铜枪，枪缨褪成了白色，枪杆侧面嵌着一粒铜齿。"
+    },
+    {
+      "id": "read_hangboard",
+      "room": "props",
+      "label": "看门边的挂板",
+      "n": ["c_teeth"],
+      "eff": { "f": ["c_teeth"] },
+      "text": "挂板上写着：戏钥三齿，枪、扇、印各嵌一粒；齿口对太平门，缺一不开。"
+    },
+    {
+      "id": "make_key",
+      "room": "props",
+      "label": "把三粒铜齿镶进钥匙坯",
+      "req": { "i": ["blank", "spear", "fan", "seal"] },
+      "n": ["p_key"],
+      "eff": { "f": ["p_key"], "i": ["play_key"] },
+      "text": "枪、扇、印三粒铜齿依次压进坯槽，严丝合缝。一把沉甸甸的戏钥拼成了，齿口在灯下泛着新亮。"
+    },
+    {
+      "id": "props_look",
+      "room": "props",
+      "label": "翻看架上的刀枪把子",
+      "text": "把子按戏码挂成一排，最沉的一件贴着封条：水漫金山专用，勿动。"
+    },
+    {
+      "id": "stage2booth",
+      "room": "stage",
+      "label": "爬窄梯进操纵台室",
+      "go": "booth"
+    },
+    {
+      "id": "booth2stage",
+      "room": "booth",
+      "label": "顺窄梯下舞台",
+      "go": "stage"
+    },
+    {
+      "id": "pull_chou",
+      "room": "booth",
+      "label": "收下一根提线",
+      "req": { "f": ["p_score"] },
+      "n": ["seq1"],
+      "eff": { "f": ["seq1"] },
+      "text": "蒲扇绳一坠，线轴嗡地转过半圈，台上的丑偶躬身谢了幕。"
+    },
+    {
+      "id": "pull_sheng",
+      "room": "booth",
+      "label": "再收一根提线",
+      "req": { "f": ["seq1"] },
+      "n": ["seq2"],
+      "eff": { "f": ["seq2"] },
+      "text": "马鞭绳紧了紧，生偶收势立定，线轴咬进下一格。"
+    },
+    {
+      "id": "pull_dan",
+      "room": "booth",
+      "label": "收最后一根提线",
+      "req": { "f": ["seq2"] },
+      "n": ["p_cue"],
+      "eff": { "f": ["p_cue"] },
+      "text": "团扇绳归位，旦偶垂手立定。三只线轴次第锁死，台仓方向传来铁销落槽的轻响——太平门的顶闩缩回去了。"
+    },
+    {
+      "id": "wrong_dan",
+      "room": "booth",
+      "label": "先拽团扇绳",
+      "n": ["p_cue"],
+      "text": "团扇绳刚拽紧就倒卷回来，线轴咔啦打滑，收线的次序乱了。"
+    },
+    {
+      "id": "wrong_sheng",
+      "room": "booth",
+      "label": "先拽马鞭绳",
+      "n": ["p_cue"],
+      "text": "马鞭绳死沉，线轴咬死不吐半寸，台上的生偶连丝线都绷直了。"
+    },
+    {
+      "id": "stage2under",
+      "room": "stage",
+      "label": "拉开活板门下台仓",
+      "go": "under"
+    },
+    {
+      "id": "under2stage",
+      "room": "under",
+      "label": "攀梯回舞台",
+      "go": "stage"
+    },
+    {
+      "id": "look_exit",
+      "room": "under",
+      "label": "端详太平门",
+      "n": ["c_door"],
+      "eff": { "f": ["c_door"] },
+      "text": "太平门横着带销的铁闩，闩尾是三齿异形锁孔——认的就是那把戏钥。"
+    },
+    {
+      "id": "under_wrong",
+      "room": "under",
+      "label": "空手去别横闩",
+      "n": ["p_door"],
+      "text": "销子卡在槽里，闩身死沉，掌心磨红了也别不动分毫。"
+    },
+    {
+      "id": "win",
+      "room": "under",
+      "label": "用戏钥开太平门出去",
+      "req": { "i": ["play_key"], "f": ["p_cue"] },
+      "eff": { "f": ["p_door"] },
+      "end": "win",
+      "text": "戏钥咬进三齿锁孔，横闩咔地弹开。太平门外是后台夹道，晨凉顺着楼梯漫上来——散了戏的剧院，终于放人出场了。"
+    }
+  ],
+  "difficulty": { "minSteps": 10, "maxSteps": 28, "maxBranch": 6 }
+}

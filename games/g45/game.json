@@ -1,0 +1,93 @@
+{
+  "title": "函套合拢之前",
+  "intro": "师傅交待天亮前把《溪山旧志》头一函合套交货：玄字册散了页要理序，纸捻要现捻，函套四册要各归各位。",
+  "start": "bench",
+  "rooms": {
+    "bench": {
+      "n": "订书案",
+      "d": "三沓散页摊在案面，旧捻孔一排排空着。案头压着几张整皮纸，浆糊罐蹲在案角，线绳绕在木轴上。"
+    },
+    "desk": {
+      "n": "师傅帐桌",
+      "d": "案头摞着记事簿和厘升簿，罩灯芯剪得整齐。窗台上一盏凉透的茶，椅垫还留着师傅坐出来的窝。"
+    },
+    "tools": {
+      "n": "工具间",
+      "d": "挂具板上锥板刨子各归各位，独独空着锥子的位置。针线匾挂在墙钉上，匾底压着点什么，微微鼓起。"
+    },
+    "paste_stove": {
+      "n": "灶间",
+      "d": "浆糊灶膛余火未熄，灶边堆着晾晒的皮纸。大陶罐坐在灶口，罐面结了一层硬皮。"
+    },
+    "dry_rack": {
+      "n": "晾纸架",
+      "d": "一架晾竿搭满裁好的皮纸条，风一穿就颤。架脚的瓦罐里插着竹起子和裁刀，木柄磨得发亮。"
+    },
+    "shelf": {
+      "n": "书架廊",
+      "d": "溪山旧志的天、地、黄三册立在架上，函套空着口。函套内衬浆得挺括，左上一个别子槽还敞着。"
+    },
+    "front": {
+      "n": "前柜",
+      "d": "柜面铺着蓝布，交货单压在戥子旁边。门外天色黑透，早班的骡车已经在巷口候着了。"
+    }
+  },
+  "items": {
+    "awl": "锥子",
+    "twist": "纸捻",
+    "pin": "骨别子"
+  },
+  "puzzles": [
+    { "id": "散页理序", "solved": "p_sorted", "clue": "c_master" },
+    { "id": "浆糊开罐", "solved": "c_paste", "clue": "c_master" },
+    { "id": "纸捻钉页", "solved": "p_stitched", "clue": "c_paste" },
+    { "id": "函套插册", "solved": "p_case", "clue": "c_rule2" },
+    { "id": "别子入槽", "solved": "c_pin", "clue": "p_case" },
+    { "id": "合函交货", "solved": "won", "clue": "c_pin" }
+  ],
+  "acts": [
+    { "id": "bench2desk", "room": "bench", "label": "掀帘去帐桌", "go": "desk" },
+    { "id": "desk2bench", "room": "desk", "label": "回订书案", "go": "bench" },
+    { "id": "bench2tools", "room": "bench", "label": "去工具间", "go": "tools" },
+    { "id": "tools2bench", "room": "tools", "label": "回订书案", "go": "bench" },
+    { "id": "bench2paste", "room": "bench", "label": "去灶间", "go": "paste_stove" },
+    { "id": "paste2bench", "room": "paste_stove", "label": "回订书案", "go": "bench" },
+    { "id": "paste2dry", "room": "paste_stove", "label": "出后门去晾纸架", "go": "dry_rack" },
+    { "id": "dry2paste", "room": "dry_rack", "label": "回灶间", "go": "paste_stove" },
+    { "id": "bench2shelf", "room": "bench", "label": "去书架廊", "go": "shelf" },
+    { "id": "shelf2bench", "room": "shelf", "label": "回订书案", "go": "bench" },
+    { "id": "bench2front", "room": "bench", "label": "往前柜去", "go": "front" },
+    { "id": "front2bench", "room": "front", "label": "回订书案", "go": "bench" },
+
+    { "id": "read_notes", "room": "desk", "label": "翻案头的两本册子", "n": ["c_master"], "eff": { "f": ["c_master", "c_rule2"] }, "text": "记事簿写着：玄字册散页理序，先认鱼尾，黑鱼尾在上者居册前半；纸捻要现捻，锥子又在针线匾底下压着。厘升簿一行：溪山旧志四册，脊签照千字文取字。" },
+    { "id": "look_fish", "room": "bench", "label": "看三沓页的鱼尾", "n": ["c_fish"], "eff": { "f": ["c_fish"] }, "text": "甲沓页码从一排到十，鱼尾黑的在上；乙沓页码让裁口去了，鱼尾黑的也在上；丙沓整沓鱼尾白的在上。" },
+    { "id": "sort_pages", "room": "bench", "label": "按鱼尾和页码把三沓理成序", "req": { "f": ["c_master", "c_fish"] }, "n": ["p_sorted"], "eff": { "f": ["p_sorted"] }, "text": "页码齐全的甲沓打头，黑鱼尾的乙沓接在后，白鱼尾的丙沓垫底——三沓叠齐，旧捻孔正好对成一线。" },
+    { "id": "wrong_grub", "room": "bench", "label": "把蛀得最重的一沓排在头里", "req": { "f": ["c_fish"] }, "n": ["p_sorted"], "text": "蛀重不等于在前——叠到一半鱼尾对不上，只好又拆开重来。" },
+
+    { "id": "take_strip", "room": "bench", "label": "裁两条皮纸条", "n": ["c_strip"], "eff": { "f": ["c_strip"] }, "text": "裁刀顺案头皮纸走，两条窄条裁得匀，纸性韧，撕口起毛。" },
+    { "id": "stir_paste", "room": "paste_stove", "label": "搅开浆糊罐的结皮", "n": ["c_paste"], "eff": { "f": ["c_paste"] }, "text": "竹片探到罐底搅了几圈，结皮化开，浆糊重新稠得挂片。" },
+    { "id": "twist_twine", "room": "paste_stove", "label": "蘸浆糊搓纸捻", "req": { "f": ["c_strip", "c_paste"] }, "n": ["p_stitched"], "eff": { "i": ["twist"] }, "text": "纸条蘸浆，顺丝一搓，两根纸捻搓得紧实，搁在灶台边上阴着。" },
+    { "id": "w_drytwist", "room": "paste_stove", "label": "不蘸浆糊干搓纸捻", "req": { "f": ["c_strip"] }, "n": ["p_stitched"], "text": "干搓的纸捻又硬又滑，捏起来一锥就散了芯。" },
+    { "id": "w_oldpaste", "room": "paste_stove", "label": "罐面没搅开就蘸浆", "req": { "f": ["c_strip"] }, "n": ["p_stitched"], "text": "蘸了一层硬皮疙瘩，捻子搓出来疙疙瘩瘩，穿不了眼。" },
+    { "id": "bake_pages", "room": "paste_stove", "label": "拨开灶膛余火烤受潮的散页", "end": "lose", "text": "火钳一拨，余火腾起半尺高，燎着了灶边晾晒的皮纸——火顺着纸堆蹿上了房梁。" },
+
+    { "id": "take_awl", "room": "tools", "label": "掀开针线匾找锥子", "n": ["awl_found"], "eff": { "f": ["awl_found"], "i": ["awl"] }, "text": "匾底果然压着锥子，锥尖还带着蜡——上回用完抹了蜡没归位。" },
+    { "id": "take_pin", "room": "tools", "label": "从挂具板取骨别子", "n": ["pin_found"], "eff": { "f": ["pin_found"], "i": ["pin"] }, "text": "磨得温润的骨别子从板钩上取下来，弯头正合别子槽的弧度。" },
+
+    { "id": "pierce", "room": "bench", "label": "照旧捻孔锥新眼", "req": { "i": ["awl"], "f": ["p_sorted"] }, "n": ["c_pierced"], "eff": { "f": ["c_pierced"] }, "text": "锥尖顺着旧孔走，三处眼位锥得笔直，毛头用砂石蹭了蹭。" },
+    { "id": "stitch", "room": "bench", "label": "把纸捻穿进新眼订实", "req": { "i": ["twist"], "f": ["c_pierced"] }, "n": ["p_stitched"], "eff": { "f": ["p_stitched"] }, "text": "两根纸捻一穿一紧，捻头抹平压进孔里，玄字册重新成了册。" },
+
+    { "id": "look_signs", "room": "shelf", "label": "看函套里的残签", "n": ["c_signs"], "eff": { "f": ["c_signs"] }, "text": "四枚书脊签蛀剩两枚：一枚存地字，一枚存黄字，蛀洞大小一样，是同一年的蠹虫蛀的。" },
+    { "id": "insert_vols", "room": "shelf", "label": "照签字次序把四册插进函套", "req": { "f": ["p_stitched", "c_rule2", "c_signs"] }, "n": ["p_case"], "eff": { "f": ["p_case"] }, "text": "天字册居首，地字册次之，订好的玄字册第三，黄字册压轴——千字文次序一排看下去，分毫不差。" },
+    { "id": "wrong_thick", "room": "shelf", "label": "按书脊厚薄把四册插进函套", "req": { "f": ["c_rule2"] }, "n": ["p_case"], "text": "厚薄是纸数与浆层闹的，插完一比签条，次序整个错着。" },
+    { "id": "wrong_oldest", "room": "shelf", "label": "把纸最旧的一册插到头位", "req": { "f": ["c_rule2"] }, "n": ["p_case"], "text": "旧纸不等于居首——黄字册的纸也旧，头位插了它，签条全乱了。" },
+    { "id": "insert_pin", "room": "shelf", "label": "把骨别子别进左上槽", "req": { "i": ["pin"], "f": ["p_case"] }, "n": ["c_pin"], "eff": { "f": ["c_pin"] }, "text": "别子弯头卡进槽口，轻轻一按，函套口咬合严实。" },
+
+    { "id": "look_cloth", "room": "front", "label": "看柜面的交货单", "text": "交货单抬头写着溪山旧志头一函，天亮前验讫，落款是书坊的戳。" },
+    { "id": "look_pole", "room": "dry_rack", "label": "看晾竿上的皮纸条", "text": "纸条宽窄一致，都按师傅的规矩裁，只是今晚用不上它们了。" },
+    { "id": "feel_wind", "room": "dry_rack", "label": "试架前的风", "text": "后门缝里灌进来的风一阵紧一阵，台风要过境的天气。" },
+
+    { "id": "deliver", "room": "front", "label": "把函套捆绳结好交货", "req": { "f": ["p_stitched", "p_case", "c_pin"] }, "eff": { "f": ["won"] }, "end": "win", "text": "捆绳绕函两道打成十字结，交货单上落了笔——鱼尾、页码、千字文签，一样没错。天亮之前，溪山旧志头一函齐整地出了门。" }
+  ],
+  "difficulty": { "minSteps": 10, "maxSteps": 28, "maxBranch": 6 }
+}

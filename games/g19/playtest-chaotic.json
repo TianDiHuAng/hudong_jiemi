@@ -1,0 +1,20 @@
+{
+ "game": "g19",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 5,
+ "invalid": 1,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "摘下座钟的黄铜大砣",
+  "看挂钟墙",
+  "看座钟的机芯匣",
+  "穿过门厅",
+  "攀伞架去够门楣气窗"
+ ]
+}

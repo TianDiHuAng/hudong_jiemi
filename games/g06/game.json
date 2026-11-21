@@ -1,0 +1,235 @@
+{
+  "title": "十四吨之夜",
+  "intro": "暴雨夜，临江大桥封闭，运防汛物资的五辆车堵在桥头。限载告示与配重台账对不上——把真实限载算出来，再决定放谁过江。水不等人。",
+  "start": "gatehouse",
+  "rooms": {
+    "gatehouse": {
+      "n": "桥头堡门厅",
+      "d": "雨点砸在铁皮顶上像擂鼓。门厅里一盏马灯，值班的小潭守在桌边打盹，限载告示牌钉在迎门的墙上，四个门洞分通值班室、资料间、磅房和南锚室。"
+    },
+    "dutyroom": {
+      "n": "守桥人值班室",
+      "d": "行军床上被窝还塌着半边，老纪靠在床头抽烟。墙上挂着月检记录牌，桌上的搪瓷缸子积着茶垢。"
+    },
+    "ledgerroom": {
+      "n": "资料间",
+      "d": "铁皮柜里码着桥梁台账，配重记录那册摊在桌面上。窗台上压着放大镜，玻璃上映着一道雨痕。"
+    },
+    "storeyard": {
+      "n": "材料场",
+      "d": "废铁垛罩着雨布，垛脚空出一截，地面压痕还新。库房门没锁，存根册挂在门后的钉子上。"
+    },
+    "chamber": {
+      "n": "南锚室",
+      "d": "24 方配重块沿墙码成两排，靠江一排的块面让吊秤的钩子蹭得发亮。规程公式用黑漆刷在门楣上方。"
+    },
+    "anchorn": {
+      "n": "北锚室",
+      "d": "北排配重块码得齐整，铸字的毛刺都没磨平。隔门上的合页新上过油，开合没有一点声息。"
+    },
+    "weighhouse": {
+      "n": "桥头磅房",
+      "d": "磅房的读数盘罩在玻璃罩里，今晚的过磅条订成一叠压在镇纸下。拦路杆横在窗外，反光片被雨敲得直颤。"
+    },
+    "catwalk": {
+      "n": "检修猫道口",
+      "d": "猫道梯口挂着安全绳，木板上积着雨水。梯口警示牌：雨泡木板，禁行。桥索在头顶拉出几道黑线，雨雾把江面糊成一整块。"
+    }
+  },
+  "items": {
+    "chamber_key": "长柄锚室钥匙"
+  },
+  "puzzles": [
+    { "id": "台账描改", "solved": "p_ledger", "clue": "c_sign" },
+    { "id": "领料存根", "solved": "p_req", "clue": "c_ledger" },
+    { "id": "交接空档", "solved": "p_gap", "clue": "c_log" },
+    { "id": "对质老纪", "solved": "p_confess", "clue": "c_k2" },
+    { "id": "吊秤抽检", "solved": "p_hollow", "clue": "c_formula" },
+    { "id": "限载折算", "solved": "p_limit", "clue": "p_hollow" },
+    { "id": "车队誊单", "solved": "p_convoy", "clue": "c_weights" }
+  ],
+  "acts": [
+    { "id": "g2duty", "room": "gatehouse", "label": "推门进值班室", "go": "dutyroom" },
+    { "id": "duty2g", "room": "dutyroom", "label": "回门厅", "go": "gatehouse" },
+    { "id": "g2ledger", "room": "gatehouse", "label": "进资料间", "go": "ledgerroom" },
+    { "id": "ledger2g", "room": "ledgerroom", "label": "回门厅", "go": "gatehouse" },
+    { "id": "ledger2yard", "room": "ledgerroom", "label": "推后门进材料场", "go": "storeyard" },
+    { "id": "yard2ledger", "room": "storeyard", "label": "退回资料间", "go": "ledgerroom" },
+    { "id": "g2weigh", "room": "gatehouse", "label": "进桥头磅房", "go": "weighhouse" },
+    { "id": "weigh2g", "room": "weighhouse", "label": "回门厅", "go": "gatehouse" },
+    {
+      "id": "enter_chamber",
+      "room": "gatehouse",
+      "label": "用长柄钥匙开南锚室",
+      "req": { "i": ["chamber_key"] },
+      "go": "chamber"
+    },
+    { "id": "chamber2g", "room": "chamber", "label": "退回门厅", "go": "gatehouse" },
+    { "id": "weigh2cat", "room": "weighhouse", "label": "出后门到猫道梯口", "go": "catwalk" },
+    { "id": "cat2weigh", "room": "catwalk", "label": "回磅房", "go": "weighhouse" },
+    { "id": "chamber2north", "room": "chamber", "label": "推开隔门进北锚室", "go": "anchorn" },
+    { "id": "north2chamber", "room": "anchorn", "label": "回南锚室", "go": "chamber" },
+    {
+      "id": "look_sign",
+      "room": "gatehouse",
+      "label": "看迎门的限载告示牌",
+      "n": ["c_sign"],
+      "eff": { "f": ["c_sign"] },
+      "text": "白漆告示：汽-15 级，限载 15 吨，单桥单车。漆皮下钢板锈得起皮，落款是二十年前的桥务段。"
+    },
+    {
+      "id": "look_log",
+      "room": "gatehouse",
+      "label": "翻值班桌上的交接簿",
+      "n": ["c_log"],
+      "eff": { "f": ["c_log"] },
+      "text": "上月换块那晚的记录只写到 24:00——00:00 到 04:00 一片空白，没人复核，也没人承认值过后半夜。"
+    },
+    {
+      "id": "talk_tan",
+      "room": "gatehouse",
+      "label": "问门厅值班的小潭",
+      "n": ["c_k2"],
+      "eff": { "f": ["c_k2"] },
+      "text": "小潭盯着雨幕：上月临江排换过新块，老纪让我值完前半夜去补觉——可台账当晚就补签齐了，后半夜没人对数。"
+    },
+    {
+      "id": "read_ledger",
+      "room": "ledgerroom",
+      "label": "读钢索配重台账",
+      "n": ["c_ledger"],
+      "eff": { "f": ["c_ledger"] },
+      "text": "台账载明：南锚室配重 24 块，每块铸重 1000 公斤，总重 24000 公斤，月检签章齐全。"
+    },
+    {
+      "id": "scrutinize",
+      "room": "ledgerroom",
+      "label": "细看台账总重栏",
+      "req": { "f": ["c_sign", "c_ledger"] },
+      "n": ["p_ledger"],
+      "eff": { "f": ["p_ledger"] },
+      "text": "总重栏的 2 字底下压着笔迹——24000 是描出来的，原先写的是 22000。描改的人想让账面凑上告示牌的 15 吨。"
+    },
+    {
+      "id": "read_req",
+      "room": "storeyard",
+      "label": "读库房门后的存根册",
+      "n": ["c_req"],
+      "eff": { "f": ["c_req"] },
+      "text": "上月领料页：废铁 2000 公斤，事由补铸造配重，领料人签着老纪。再往后翻，入库回执一栏空着。"
+    },
+    {
+      "id": "compare",
+      "room": "storeyard",
+      "label": "比对出库与入库回执",
+      "req": { "f": ["c_req", "c_ledger"] },
+      "n": ["p_req"],
+      "eff": { "f": ["p_req"] },
+      "text": "出库有单，入库无据——两吨废铁出了库，锚室里却没添过一斤实料。"
+    },
+    {
+      "id": "talk_ji",
+      "room": "dutyroom",
+      "label": "叫醒老纪问月检",
+      "n": ["c_k1"],
+      "eff": { "f": ["c_k1"] },
+      "text": "老纪披衣坐起，嗓门很硬：24 块我一块块敲过，账是我记的，实打实，谁也别想泼脏水。"
+    },
+    {
+      "id": "show_gap",
+      "room": "dutyroom",
+      "label": "把交接空档摊给两人看",
+      "req": { "f": ["c_k1", "c_k2", "c_log"] },
+      "n": ["p_gap"],
+      "eff": { "f": ["p_gap"] },
+      "text": "你把小潭也叫进屋，三本册子在桌上排开。老纪盯着那四小时空白，烟灰抖在了被子上。"
+    },
+    {
+      "id": "confront",
+      "room": "dutyroom",
+      "label": "用领料单和空档对质",
+      "req": { "f": ["p_ledger", "p_req", "p_gap"] },
+      "n": ["p_confess"],
+      "eff": { "f": ["p_confess"], "i": ["chamber_key"] },
+      "text": "描改的台账、无回执的废铁、空白的后半夜——老纪把长柄钥匙拍在桌上：八块旧的回炉铸了灌沙壳，多出的两吨废铁我卖了。钥匙拿去，锚室里你自己称。"
+    },
+    {
+      "id": "look_formula",
+      "room": "chamber",
+      "label": "看门楣上的公式漆字",
+      "n": ["c_formula"],
+      "eff": { "f": ["c_formula"] },
+      "text": "黑漆公式还醒目：桥面活载限值＝锚室配重吨数÷2＋3。底下另一行小字：配重实数以检衡为准，不以台账为准。"
+    },
+    {
+      "id": "test_blocks",
+      "room": "chamber",
+      "label": "用吊秤抽检临江排",
+      "n": ["p_hollow"],
+      "eff": { "f": ["p_hollow"] },
+      "text": "吊秤一钩一个准：临江排八块全是灌沙壳，每块实称 750 公斤——比铸字整整轻了四分之一。"
+    },
+    {
+      "id": "compute",
+      "room": "chamber",
+      "label": "按公式折算实际限载",
+      "req": { "f": ["c_formula", "p_hollow", "c_ledger"] },
+      "n": ["p_limit"],
+      "eff": { "f": ["p_limit"] },
+      "text": "实配 16 块整块加八口壳，22 吨整。代入公式：22÷2＋3——真实限载 14 吨，告示牌上的 15 吨，多算了整整一吨。"
+    },
+    {
+      "id": "knock_north",
+      "room": "anchorn",
+      "label": "敲了敲北排的配重块",
+      "text": "北排敲上去声音沉实，铸字边缘还留着出厂毛刺——南排的毛病，北排没有。"
+    },
+    {
+      "id": "read_weights",
+      "room": "weighhouse",
+      "label": "调今晚的过磅条",
+      "n": ["c_weights"],
+      "eff": { "f": ["c_weights"] },
+      "text": "五张过磅条订成一叠：药品面包车 2.6 吨，救护器材轻卡 3.5 吨，空载平板 6.4 吨，防汛沙石中卡 12.8 吨，柴油发电机重卡 14.5 吨。"
+    },
+    {
+      "id": "transcribe",
+      "room": "weighhouse",
+      "label": "把过磅数誊进放行单",
+      "req": { "f": ["c_weights", "p_limit"] },
+      "n": ["p_convoy"],
+      "eff": { "f": ["p_convoy"] },
+      "text": "放行单誊完：14 吨以下四辆放行，14.5 吨的发电机重卡单独圈出——这一辆，说什么也不能上桥。"
+    },
+    {
+      "id": "write_15",
+      "room": "weighhouse",
+      "label": "照告示牌填15吨放行",
+      "n": ["p_limit"],
+      "text": "笔尖悬在 15 上顿住了——描改的台账、吊秤的读数、门楣的公式，没有一样答应这个数。"
+    },
+    {
+      "id": "lift_early",
+      "room": "weighhouse",
+      "label": "不誊单先升杆",
+      "n": ["p_convoy"],
+      "text": "拦杆抬到一半你按住了：哪辆能放、哪辆该扣，单子上一个字都没有，雨夜里更不能凭眼估。"
+    },
+    {
+      "id": "cat_risk",
+      "room": "catwalk",
+      "label": "冒雨上检修猫道",
+      "end": "lose",
+      "text": "猫道木板让雨泡得发胀，第三块一踩就翻。风把人从栏杆上掀起来的时候，江水正涨到桥腹。"
+    },
+    {
+      "id": "win_act",
+      "room": "weighhouse",
+      "label": "按实际限载升杆放行",
+      "req": { "f": ["p_convoy", "p_limit"] },
+      "end": "win",
+      "text": "拦杆抬起，四辆车按五十米间距鱼贯过桥。发电机重卡掉头绕行下游浮桥——你在放行单备注栏写下：限载 14 吨，以检衡为准。"
+    }
+  ],
+  "difficulty": { "minSteps": 14, "maxSteps": 36, "maxBranch": 6 }
+}

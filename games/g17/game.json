@@ -1,0 +1,93 @@
+{
+  "title": "潮水回来之前",
+  "intro": "你从艏楼破口爬进这条搁浅货轮时潮水正退，破口如今悬在一人开外，徒手够不着了。大舱口是唯一的出路——先让歪船站稳，再把舱口摇开。",
+  "start": "hold",
+  "rooms": {
+    "hold": {
+      "n": "货舱",
+      "d": "货舱的淤泥没过脚踝，断裂的货箱横七竖八。头顶的舱口盖斜卡在滑轨里，舱角锈死一台绞盘底座，后壁一道新鲜刮痕划向机舱门。"
+    },
+    "chain": {
+      "n": "锚链舱",
+      "d": "锚机盘踞半间屋，锚链垛成锈塔。挂钩上吊着一只检修油壶，链堆缝里露出半只棘爪的爪背。"
+    },
+    "crew": {
+      "n": "船员舱",
+      "d": "四个铺位翻倒了一半，衣钩上还挂着救生衣。舱桌上摊着一本泡胀的值更簿，字迹被海水洇成蓝黑。"
+    },
+    "engine": {
+      "n": "机舱",
+      "d": "主机曲轴箱敞着口，工具架斜插进泥里。通往压载舱的水密门半敞着，门轴上还挂着半块压载牌。"
+    },
+    "ballast": {
+      "n": "压载舱",
+      "d": "船身在这间舱歪得最凶——倾角仪的气泡整个偏出框。配重梁卧在贯穿全舱的导轨上，轨边粉笔字洇得只剩一半。"
+    },
+    "deck": {
+      "n": "露天甲板",
+      "d": "甲板覆着退潮留下的海泥，登乘软梯从舷边垂向防波堤。远处潮线正一点点往回爬，水洼连成了片。"
+    },
+    "wheelhouse": {
+      "n": "舵楼",
+      "d": "车钟的铜把锈在微速档，海图桌上压着半卷潮汐表。舷窗糊满盐霜，望出去是白花花的泥滩。"
+    }
+  },
+  "items": {
+    "crowbar": "撬棍",
+    "crank": "绞盘摇臂",
+    "pawl": "棘爪",
+    "oilcan": "油壶"
+  },
+  "puzzles": [
+    { "id": "淤泥里的工具包", "solved": "p_mud", "clue": "c_scrape" },
+    { "id": "楔死的机舱门", "solved": "p_edoor", "clue": "c_scrape" },
+    { "id": "压载配平", "solved": "p_trim", "clue": "c_gauge" },
+    { "id": "绞盘组装", "solved": "p_winch", "clue": "c_pedestal" },
+    { "id": "大舱口盖", "solved": "p_hatch", "clue": "c_memo" }
+  ],
+  "acts": [
+    { "id": "h2chain", "room": "hold", "label": "钻进锚链舱矮门", "go": "chain" },
+    { "id": "ch2h", "room": "chain", "label": "猫腰回货舱", "go": "hold" },
+    { "id": "h2crew", "room": "hold", "label": "推开船员舱门", "go": "crew" },
+    { "id": "c2h", "room": "crew", "label": "回货舱", "go": "hold" },
+    { "id": "h2engine", "room": "hold", "label": "侧身进机舱", "req": { "f": ["p_edoor"] }, "go": "engine" },
+    { "id": "e2h", "room": "engine", "label": "回货舱", "go": "hold" },
+    { "id": "e2b", "room": "engine", "label": "穿水密门进压载舱", "go": "ballast" },
+    { "id": "b2e", "room": "ballast", "label": "回机舱", "go": "engine" },
+    { "id": "h2deck", "room": "hold", "label": "攀舱口上露天甲板", "req": { "f": ["p_hatch"] }, "go": "deck" },
+    { "id": "d2h", "room": "deck", "label": "顺舱口回货舱", "req": { "f": ["p_hatch"] }, "go": "hold" },
+    { "id": "d2wheel", "room": "deck", "label": "推开舵楼门", "go": "wheelhouse" },
+    { "id": "w2d", "room": "wheelhouse", "label": "回甲板", "go": "deck" },
+
+    { "id": "look_marks", "room": "hold", "label": "查看后壁刮痕", "n": ["c_scrape"], "eff": { "f": ["c_scrape"] }, "text": "刮痕从货堆一路划到机舱门，起点的泥面上拱着一块帆布角；门缝里楔着半根崩断的固定销，门扇与门框咬得死紧。" },
+    { "id": "dig_mud", "room": "hold", "label": "挖开帆布包", "req": { "f": ["c_scrape"] }, "n": ["p_mud"], "eff": { "f": ["p_mud"], "i": ["crowbar", "crank"] }, "text": "帆布包是船员弃船前落下的：撬棍裹在油布里，包底还压着一根绞盘摇臂，盐壳一磕就碎。" },
+    { "id": "pry_door", "room": "hold", "label": "用撬棍别机舱门", "req": { "i": ["crowbar"] }, "n": ["p_edoor"], "eff": { "f": ["p_edoor"] }, "text": "撬棍塞进销缝一压，固定销咔地断成两截，水密门让出一道缝，够侧身挤过去。" },
+    { "id": "look_pedestal", "room": "hold", "label": "端详绞盘底座", "n": ["c_pedestal"], "eff": { "f": ["c_pedestal"] }, "text": "卷筒上还挂着三圈链，棘轮位置空着，摇臂插口积满盐壳——这台绞盘缺棘爪、缺摇臂，更缺油。" },
+    { "id": "asm_pawl", "room": "hold", "label": "把棘爪卡进棘轮", "req": { "i": ["pawl"] }, "n": ["asm_pawl"], "eff": { "f": ["asm_pawl"] }, "text": "棘爪咬进棘轮齿根，卷筒往回一挣就被牢牢别住，倒转的链子再也打不到人。" },
+    { "id": "asm_crank", "room": "hold", "label": "装摇臂并给齿圈上油", "req": { "i": ["crank", "oilcan"], "f": ["asm_pawl"] }, "n": ["p_winch"], "eff": { "f": ["p_winch"] }, "text": "摇臂插进插口，油壶沿齿圈浇了半圈。空摇两把，绞盘顺顺当当地转了起来。" },
+    { "id": "crank_hatch", "room": "hold", "label": "摇绞盘掀开舱盖", "req": { "f": ["p_winch", "p_trim"] }, "n": ["p_hatch"], "eff": { "f": ["p_hatch"] }, "text": "船身一平，舱盖板在滑轨上走得毫不吃力。绞盘绞到头，头顶裂开一方灰白的天光。" },
+    { "id": "crank_jam", "room": "hold", "label": "不管滑轨硬摇绞盘", "req": { "f": ["p_winch"] }, "n": ["p_hatch"], "text": "舱盖板在滑轨里越摇越涩，链条绷得咯咯响。船还歪着，硬摇只会把盖板卡死在轨里。" },
+
+    { "id": "take_pawl", "room": "chain", "label": "从链堆抽出棘爪", "n": ["g_pawl"], "eff": { "f": ["g_pawl"], "i": ["pawl"] }, "text": "棘爪卡在链环缝里，抽出来带下一串锈末。爪尖完整，齿口没有崩。" },
+    { "id": "take_oil", "room": "chain", "label": "摘挂钩上的油壶", "n": ["g_oil"], "eff": { "f": ["g_oil"], "i": ["oilcan"] }, "text": "油壶晃了晃还有半壶，凝成琥珀色的老机油味直冲鼻子。" },
+    { "id": "look_anchor", "room": "chain", "label": "看锚链垛", "text": "锚链一环咬着一环，锈色从深褐褪到橘红，最底下几环还陷在凝固的淤泥里。" },
+
+    { "id": "read_logbook", "room": "crew", "label": "翻值更簿", "n": ["c_memo"], "eff": { "f": ["c_memo"] }, "text": "最后一页是大副的字：弃船前压载未清，船体左倾。开大舱前务必配平——斜舱摇绞盘，舱盖必卡滑轨。" },
+    { "id": "look_bunk", "room": "crew", "label": "翻铺位下的杂物", "text": "铺位底下滚着一只豁口的搪瓷碗和半副扑克，红桃七缺了角。" },
+
+    { "id": "look_meter", "room": "engine", "label": "看气压表", "text": "气压表的指针脱了扣，歪在零位下方，玻璃罩里结着一层盐雾。" },
+
+    { "id": "look_gauge", "room": "ballast", "label": "查看倾角仪与配重梁", "n": ["c_gauge"], "eff": { "f": ["c_gauge"] }, "text": "倾角仪的气泡整个偏在左倾一侧，整五度；配重梁锁死在导轨左三档。轨边粉笔字认得出后半句：梁右移一档，船身回正一度。" },
+    { "id": "trim_fix", "room": "ballast", "label": "松锁扣推梁到配平档位", "req": { "f": ["c_gauge"] }, "n": ["p_trim"], "eff": { "f": ["p_trim"] }, "text": "锁扣拔开，梁沿导轨哗啦啦滑过中线。气泡晃了两晃稳稳回到正中——从左三档到右二档，恰好右移五档吃回五度。" },
+    { "id": "trim_over", "room": "ballast", "label": "把梁一直往右推", "req": { "f": ["c_gauge"] }, "n": ["p_trim"], "text": "梁撞上右轨尽头的挡块，气泡甩过中线直奔右倾——矫枉过正，船身朝另一边歪了过去。" },
+    { "id": "trim_back", "room": "ballast", "label": "把梁往左轨里推", "req": { "f": ["c_gauge"] }, "n": ["p_trim"], "text": "梁又咬进左轨一档，气泡跟着往外爬了一格。方向反了，越推越歪。" },
+
+    { "id": "tide_look", "room": "deck", "label": "查看潮线", "text": "潮线爬过第一道船壳焊缝了，泥滩上的水洼正在连成片，留给人登陆的时间不多。" },
+    { "id": "wheel_bell", "room": "wheelhouse", "label": "扳车钟铜把", "text": "车钟推到微速档就锈死了，指针底下一动不动。" },
+    { "id": "wheel_chart", "room": "wheelhouse", "label": "看海图桌", "text": "海图桌上压着半卷潮汐表，当日涨潮的时刻被指甲掐过一道印。" },
+
+    { "id": "climb_out", "room": "deck", "label": "顺登乘软梯爬上防波堤", "req": { "f": ["p_hatch"] }, "end": "win", "text": "软梯冻手，一节一节往上倒。翻上防波堤时，身后货舱口还敞着，潮水刚好漫过船艏——打捞队的桩位石在堤上立得笔直。" },
+    { "id": "down_hull", "room": "deck", "label": "踩着湿滑的船壳下到水线", "end": "lose", "text": "泥壳子看着硬，一脚下去陷到膝盖。回头时浪头已经卷上甲板，潮水不留人。" }
+  ],
+  "difficulty": { "minSteps": 6, "maxSteps": 20, "maxBranch": 6 }
+}

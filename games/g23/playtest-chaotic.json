@@ -1,0 +1,22 @@
+{
+ "game": "g23",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 7,
+ "invalid": 2,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "进绞盘棚",
+  "拨平衡盘指针",
+  "回道具库",
+  "回服装间",
+  "去团长办公篷",
+  "去马厩篷",
+  "隔着栏杆逗弄美洲豹"
+ ]
+}

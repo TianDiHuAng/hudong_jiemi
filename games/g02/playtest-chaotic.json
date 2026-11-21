@@ -1,0 +1,22 @@
+{
+ "game": "g02",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 7,
+ "invalid": 2,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "掀踏板下吊货舱",
+  "端详弹簧吊秤",
+  "把木箱挂上吊秤",
+  "爬梯回客舱",
+  "进驾驶舱",
+  "出弧门上望景廊",
+  "攀出检查窗上气囊顶"
+ ]
+}

@@ -1,0 +1,96 @@
+{
+  "title": "缺角的样张",
+  "intro": "装版定在明早六点，字盘被人重排过，检字口诀只剩半句，样张缺了角。赶在开印之前，把头版拼齐上机。",
+  "start": "picking",
+  "rooms": {
+    "picking": {
+      "n": "拣字房",
+      "d": "一整面字盘墙占了半间屋，排字案上的油灯挑亮了芯。墙上残着半张检字口诀，纸色新旧分明，字盘好几行的标签换过手。"
+    },
+    "corridor": {
+      "n": "车间过道",
+      "d": "头顶晾竿挂着几条刚试印的纸条，风一穿就哗啦啦响。两侧木牌依次是排版间、校对房、铸字间、纸库、帐房，尽头门里透出机器的机油味。"
+    },
+    "layout": {
+      "n": "排版间",
+      "d": "拼版盘嵌在排字案中央，大题的报字已经落位。本期样张钉在墙上，右下角斜斜缺了一块，裁口边还留着水旁的残笔。"
+    },
+    "proof": {
+      "n": "校对房",
+      "d": "校样摊在案头，红笔批注密密麻麻。架上立着一部翻毛边的排字规程，书脊用布条系着，台灯罩着黄绸。"
+    },
+    "cast": {
+      "n": "铸字间",
+      "d": "熔铅炉封着夜火，炉口铁盖虚掩，离炉三步都觉出烤人。字模箱靠墙立着，箱面挂着三位拨盘锁，贴着水言衣的旧签。"
+    },
+    "paper": {
+      "n": "纸库",
+      "d": "纸捆码到房梁，过道只容侧身。角落的字纸篓冒出几条裁剩的纸边，批号账挂在门边的木钩上，钩子磨得发亮。"
+    },
+    "office": {
+      "n": "帐房",
+      "d": "帐桌上一盏罩灯，交接簿摊开着。抽屉半拉，算盘珠撒了一把，窗纸破了一角，灯苗随风直晃。"
+    },
+    "press": {
+      "n": "印刷机房",
+      "d": "平台印机蒙着帆布，印口张着，摇柄挂在机侧。墨辊架收在墙角，地上散着几枚试印的墨点。"
+    }
+  },
+  "items": {
+    "mold": "新铸的水旁汛字模"
+  },
+  "puzzles": [
+    { "id": "半张检字口诀", "solved": "c_rule1", "clue": "c_shift" },
+    { "id": "口诀下半", "solved": "c_rule2", "clue": "c_corner" },
+    { "id": "缺角推断", "solved": "p_corner", "clue": "c_batch" },
+    { "id": "字模箱暗码", "solved": "p_box", "clue": "c_rule1" },
+    { "id": "新铸汛字模", "solved": "c_mold", "clue": "p_corner" },
+    { "id": "拼版装版", "solved": "p_forme", "clue": "c_spec" },
+    { "id": "摇印头版", "solved": "won", "clue": "p_forme" }
+  ],
+  "acts": [
+    { "id": "pick2cor", "room": "picking", "label": "出门走过道", "go": "corridor" },
+    { "id": "cor2pick", "room": "corridor", "label": "进拣字房", "go": "picking" },
+    { "id": "cor2lay", "room": "corridor", "label": "进排版间", "go": "layout" },
+    { "id": "lay2cor", "room": "layout", "label": "回过道", "go": "corridor" },
+    { "id": "cor2proof", "room": "corridor", "label": "进校对房", "go": "proof" },
+    { "id": "proof2cor", "room": "proof", "label": "回过道", "go": "corridor" },
+    { "id": "cor2cast", "room": "corridor", "label": "进铸字间", "go": "cast" },
+    { "id": "cast2cor", "room": "cast", "label": "回过道", "go": "corridor" },
+    { "id": "cor2paper", "room": "corridor", "label": "进纸库", "go": "paper" },
+    { "id": "paper2cor", "room": "paper", "label": "回过道", "go": "corridor" },
+    { "id": "cor2office", "room": "corridor", "label": "进帐房", "go": "office" },
+    { "id": "office2cor", "room": "office", "label": "回过道", "go": "corridor" },
+    { "id": "cor2press", "room": "corridor", "label": "去印刷机房", "go": "press" },
+    { "id": "press2cor", "room": "press", "label": "回过道", "go": "corridor" },
+
+    { "id": "read_shift", "room": "office", "label": "读交接簿", "n": ["c_shift"], "eff": { "f": ["c_shift"] }, "text": "昨夜一行记得直白：学徒小赵动过字盘，钱师傅回来归了一半就被防汛指挥部叫走；检字口诀被撕剩半张，样张缺角，汛字旧模碎在排字案，新模收在铸字间字模箱里。" },
+    { "id": "read_batch", "room": "paper", "label": "翻门边的批号账", "n": ["c_batch"], "eff": { "f": ["c_batch"] }, "text": "本期号外定名《汛报》，大题竖排两字；账脚一行小字：汛字旧模昨儿碎了，大题首字须新铸，务必在装版前备齐。" },
+    { "id": "read_upper", "room": "picking", "label": "看墙上的残口诀", "n": ["c_rule1"], "eff": { "f": ["c_rule1"] }, "text": "上半张纸色发黄：点水居七行，言部居三行——再往下撕口齐茬，后半不知去向。" },
+    { "id": "examine_proof", "room": "layout", "label": "看缺角样张", "n": ["c_corner"], "eff": { "f": ["c_corner"] }, "text": "右下角斜斜裁去一块，大题竖排两字，上头那个字整个没了，裁口崭新，是纸刀的手路；样张背后还夹着半张纸。" },
+    { "id": "read_lower", "room": "layout", "label": "抽出样张后夹的半张纸", "n": ["c_rule2"], "eff": { "f": ["c_rule2"] }, "text": "下半张折得齐整：衣部归五行；箱码取行号，照口诀部序连排，勿倒。" },
+    { "id": "infer_missing", "room": "layout", "label": "把批号账和缺角对到一处", "req": { "f": ["c_batch", "c_corner"] }, "n": ["p_corner"], "eff": { "f": ["p_corner"] }, "text": "号外叫《汛报》，缺的是上头那字；裁口留着三点水，账上又写着首字须新铸——缺角这字，除了汛没有第二种可能。" },
+
+    { "id": "box_735", "room": "cast", "label": "把箱码拨成 735", "req": { "f": ["c_rule1", "c_rule2"] }, "n": ["p_box"], "eff": { "f": ["p_box"] }, "text": "三位拨盘咔咔走齐，锁舌一退——水七、言三、衣五，果然是这三个行号。" },
+    { "id": "box_357", "room": "cast", "label": "把箱码拨成 357", "req": { "f": ["c_rule1", "c_rule2"] }, "n": ["p_box"], "text": "锁舌顶着不动，拨盘退回来弹了一下手。" },
+    { "id": "box_753", "room": "cast", "label": "把箱码拨成 753", "req": { "f": ["c_rule1", "c_rule2"] }, "n": ["p_box"], "text": "箱里闷闷响了一声，锁没开——部序倒着拨，锁不认。" },
+    { "id": "take_mold", "room": "cast", "label": "开箱取新铸的字模", "req": { "f": ["p_box", "p_corner"] }, "n": ["c_mold"], "eff": { "f": ["c_mold"], "i": ["mold"] }, "text": "箱底衬着棉纸，一枚新铸的水旁字模躺在格子里，笔画利落，还带着炉温。" },
+    { "id": "look_pit", "room": "cast", "label": "看字模箱上的旧签", "text": "旧签上只有一行：水、言、衣，三部连排。至于各部行号，签上一个数都没有。" },
+    { "id": "touch_lead", "room": "cast", "label": "掀开炉盖看铅水", "end": "lose", "text": "炉盖一掀，铅水面上爆了个汽泡，滚铅溅上手背——虎口到腕子，再没有知觉。" },
+
+    { "id": "read_spec", "room": "proof", "label": "翻架上的排字规程", "n": ["c_spec"], "eff": { "f": ["c_spec"] }, "text": "版式一页折了角：竖排右起，先上后下；大题字号照样张，一字一位，缺字补齐再拼版。" },
+
+    { "id": "set_forme", "room": "layout", "label": "照样张把活字归进版框", "req": { "i": ["mold"], "f": ["c_spec"] }, "n": ["p_forme"], "eff": { "f": ["p_forme"] }, "text": "汛字模嵌进大题空位，散字照竖排右起一行行归拢，版框压平，四角一齐。" },
+    { "id": "wrong_left", "room": "layout", "label": "把散字从左往右排进版框", "req": { "f": ["c_spec"] }, "n": ["p_forme"], "text": "字进了框，对着样张一比，行序整个反了——竖排右起排成了左起，全版都得返工。" },
+    { "id": "wrong_dump", "room": "layout", "label": "不照样张顺手把散字塞进版框", "req": { "i": ["mold"] }, "n": ["p_forme"], "text": "高矮字号混作一团，版口压不平，四角翘着，拼版盘根本收不拢。" },
+
+    { "id": "look_tray", "room": "picking", "label": "借灯看字盘", "text": "几行标签新旧不一：言部的格挪过家，点水行的格垫着棉纸空着，衣部新贴的标签浆糊未干。" },
+    { "id": "look_frame", "room": "layout", "label": "看拼版盘里已排的报字", "text": "报字落得周正，竖排下位稳稳当当，整版就欠上头那一位没到位。" },
+    { "id": "look_basket", "room": "paper", "label": "看字纸篓", "text": "篓里多半是裁下的纸边，油渍浸了几张，翻一遍没有带字的整纸。" },
+    { "id": "bead_up", "room": "office", "label": "收拢撒了的算盘珠", "text": "珠子归了位，数来数去少一颗，准是滚进了桌缝。" },
+    { "id": "look_roller", "room": "press", "label": "看墨辊架", "text": "胶辊两根挂着，硬的那根得换，软的还能顶一夜。" },
+
+    { "id": "print_run", "room": "press", "label": "摇机印出头版", "req": { "f": ["p_forme"] }, "eff": { "f": ["won"] }, "end": "win", "text": "摇柄转过三圈，第一张《汛报》从印口吐出来，大题的汛字墨色饱满——水七、言三、衣五，行号连排拨开了字模箱，缺角补齐，口诀接上，赶上了明早的头班。" }
+  ],
+  "difficulty": { "minSteps": 14, "maxSteps": 36, "maxBranch": 6 }
+}

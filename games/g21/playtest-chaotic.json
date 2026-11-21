@@ -1,0 +1,19 @@
+{
+ "game": "g21",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 4,
+ "invalid": 2,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "上台口",
+  "掀棉帘进后台",
+  "上木梯进祖师楼",
+  "踩着脆朽的供桌去够龛顶旧匾"
+ ]
+}

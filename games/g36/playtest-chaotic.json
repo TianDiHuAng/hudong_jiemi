@@ -1,0 +1,23 @@
+{
+ "game": "g36",
+ "style": "chaotic",
+ "cleared": false,
+ "end": "lose",
+ "steps": 8,
+ "invalid": 1,
+ "stuck": false,
+ "gaveUp": false,
+ "timedOut": false,
+ "stuckRoom": null,
+ "reason": "ended",
+ "moves": [
+  "进闸房",
+  "把墙根的配重石归拢过磅",
+  "扳了扳闸把，读梁上木牌",
+  "把大块的都挂上北梁",
+  "把刻五十的两块分挂两头",
+  "从抽屉取备用波美计",
+  "回池埂",
+  "踏上结了薄冰的池面"
+ ]
+}

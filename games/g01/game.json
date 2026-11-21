@@ -1,0 +1,331 @@
+{
+  "title": "最后一次供电",
+  "intro": "暴风雪封了山，应急供电窗口只开到凌晨一点。让那台老柴油机转起来，把滞留站房的游客用末班救援缆车送下山。",
+  "start": "platform",
+  "rooms": {
+    "platform": {
+      "n": "上行站台",
+      "d": "露天站台积雪没过脚踝，橙红色的车厢冻在线上，安全门闩得死死的。风卷着雪碴子往领口里钻，站房的窗子透出一点昏黄。栏杆外检修梯结着薄冰。"
+    },
+    "hall": {
+      "n": "站厅",
+      "d": "站厅积着半指厚的灰，取暖炉封了火，炉台上一只搪瓷缸还温着。公告栏钉满通知，三条走廊分别通向值班调度室、机电室和机房。"
+    },
+    "duty": {
+      "n": "值班调度室",
+      "d": "调度台占了半间屋，一排按钮罩着透明防尘罩，台角开着回执口。墙上挂着工具柜，桌上摊着交接班手账，书架上立着卷边的规程手册。"
+    },
+    "power": {
+      "n": "机电室",
+      "d": "柴油发电机蹲在角钢机座上，机身铭牌斑驳，读得出 RW-31 字样。里侧立着配电柜，柜门挂牌锁死；墙根蓄电池架码着 8 块应急电池。"
+    },
+    "machine": {
+      "n": "机房",
+      "d": "驱动轮悬在头顶，拇指粗的钢丝绳从轮槽里穿出去，一头扎进风雪里。墙脚是液压张紧泵和退闸手轮，角落小门通着检修间。"
+    },
+    "cab": {
+      "n": "车厢",
+      "d": "车厢里空荡荡的，座椅上落满雪粉，金属扶手冷得粘手。门边的黄铜铭牌擦得发亮，行车记录板留着半页粉笔字。"
+    },
+    "tools": {
+      "n": "检修间",
+      "d": "检修间窄得只容一张工作台。零件架上码着备用闸瓦和喷灯，墙面挂具齐全，一张清点卡用铅笔写着预检条目。"
+    }
+  },
+  "items": {
+    "stove_key": "拴红绳的钥匙",
+    "panel_key": "配电柜钥匙",
+    "tri_key": "三角钥匙",
+    "wrench": "套筒扳手"
+  },
+  "puzzles": [
+    { "id": "工具柜", "solved": "p_cabinet", "clue": "c_stove" },
+    { "id": "安全门三角锁", "solved": "p_door", "clue": "c_doorlock" },
+    { "id": "调度回执暗号", "solved": "p_code", "clue": "c_words" },
+    { "id": "配电柜挂锁", "solved": "p_panel", "clue": "c_panellock" },
+    { "id": "应急供电冷启动", "solved": "power_on", "clue": "c_seq" },
+    { "id": "张紧泵建压", "solved": "tension_ok", "clue": "c_dep_check" }
+  ],
+  "acts": [
+    {
+      "id": "p2hall",
+      "room": "platform",
+      "label": "推开站房门进去",
+      "go": "hall"
+    },
+    {
+      "id": "hall2p",
+      "room": "hall",
+      "label": "回露天站台",
+      "go": "platform"
+    },
+    {
+      "id": "p2cab",
+      "room": "platform",
+      "label": "进车厢看看",
+      "req": { "f": ["p_door"] },
+      "go": "cab"
+    },
+    {
+      "id": "cab2p",
+      "room": "cab",
+      "label": "回到站台",
+      "go": "platform"
+    },
+    {
+      "id": "hall2duty",
+      "room": "hall",
+      "label": "去值班调度室",
+      "go": "duty"
+    },
+    {
+      "id": "duty2hall",
+      "room": "duty",
+      "label": "回站厅",
+      "go": "hall"
+    },
+    {
+      "id": "hall2power",
+      "room": "hall",
+      "label": "进机电室",
+      "go": "power"
+    },
+    {
+      "id": "power2hall",
+      "room": "power",
+      "label": "回站厅",
+      "go": "hall"
+    },
+    {
+      "id": "power2mach",
+      "room": "power",
+      "label": "穿门进机房",
+      "go": "machine"
+    },
+    {
+      "id": "mach2power",
+      "room": "machine",
+      "label": "回机电室",
+      "go": "power"
+    },
+    {
+      "id": "mach2hall",
+      "room": "machine",
+      "label": "回站厅",
+      "go": "hall"
+    },
+    {
+      "id": "mach2tools",
+      "room": "machine",
+      "label": "去检修间",
+      "go": "tools"
+    },
+    {
+      "id": "tools2mach",
+      "room": "tools",
+      "label": "回机房",
+      "go": "machine"
+    },
+    {
+      "id": "read_notice",
+      "room": "hall",
+      "label": "读公告栏",
+      "n": ["c_stove"],
+      "eff": { "f": ["c_stove"] },
+      "text": "封山通告盖着红章，边角压着张便条：工具柜钥匙又在炉台上，谁用谁找——周。"
+    },
+    {
+      "id": "dig_ash",
+      "room": "hall",
+      "label": "拨炉灰找钥匙",
+      "req": { "f": ["c_stove"] },
+      "n": ["ash_dug"],
+      "eff": { "f": ["ash_dug"], "i": ["stove_key"] },
+      "text": "炉台早就凉了。钥匙果然半埋在灰里，杆上还拴着一截红绳。"
+    },
+    {
+      "id": "look_gate",
+      "room": "platform",
+      "label": "端详安全门锁",
+      "n": ["c_doorlock"],
+      "eff": { "f": ["c_doorlock"] },
+      "text": "门闩上是只三角芯的锁孔，冰壳糊住了锁面。没有配套的三角钥匙，谁也撬不动它。"
+    },
+    {
+      "id": "open_gate",
+      "room": "platform",
+      "label": "用三角钥匙开安全门",
+      "req": { "i": ["tri_key"] },
+      "n": ["p_door"],
+      "eff": { "f": ["p_door"] },
+      "text": "三角钥匙咬进锁孔，冻死的锁芯咔啦一声让开了。车厢门朝风雪敞开。"
+    },
+    {
+      "id": "climb_rail",
+      "room": "platform",
+      "label": "跨过警示带翻出栏杆看线路",
+      "end": "lose",
+      "text": "你踩上结冰的检修梯想去看一号塔，雪壳当场塌了半边。风雪很快盖住了呼救声。"
+    },
+    {
+      "id": "open_cabinet",
+      "room": "duty",
+      "label": "用红绳钥匙开工具柜",
+      "req": { "i": ["stove_key"] },
+      "n": ["p_cabinet"],
+      "eff": { "f": ["p_cabinet"], "i": ["panel_key", "tri_key", "wrench"] },
+      "text": "柜锁弹开。挂牌写得清楚：配电柜钥匙一把、车厢三角钥匙一把，底层压着退闸用的套筒扳手。"
+    },
+    {
+      "id": "read_logbook",
+      "room": "duty",
+      "label": "读交接班手账",
+      "n": ["c_words"],
+      "eff": { "f": ["c_words"] },
+      "text": "最后一页停在今晨：大风红色预警，游客全员撤进站房待援。角落一行小字——应急放行回执，照老规矩拍放、行二字，对照本换数。"
+    },
+    {
+      "id": "read_manual",
+      "room": "duty",
+      "label": "翻规程手册",
+      "n": ["c_map"],
+      "eff": { "f": ["c_map", "c_dep_check"] },
+      "text": "附页站内编号对照写着：放，取主机铭牌末位；行，取应急电池块数。再翻到发车检查页：先启张紧泵建压，后退闸三圈半，不得颠倒。"
+    },
+    {
+      "id": "send_18",
+      "room": "duty",
+      "label": "对回执口拍 18",
+      "req": { "f": ["c_words", "c_map"] },
+      "n": ["p_code"],
+      "eff": { "f": ["p_code"] },
+      "text": "回执口喀哒吐出一格纸条，台面绿灯亮起：回执核对，同意放行。"
+    },
+    {
+      "id": "send_81",
+      "room": "duty",
+      "label": "对回执口拍 81",
+      "req": { "f": ["c_words"] },
+      "n": ["p_code"],
+      "text": "纸条原样退了回来，边角打着一行小孔：顺序反了，重拍。"
+    },
+    {
+      "id": "send_88",
+      "room": "duty",
+      "label": "对回执口拍 88",
+      "req": { "f": ["c_words"] },
+      "n": ["p_code"],
+      "text": "回执口短促地蜂鸣两声，红灯闪了闪——这个数对不上站里的任何一条对照。"
+    },
+    {
+      "id": "press_release",
+      "room": "duty",
+      "label": "按下放行钮",
+      "req": { "f": ["p_door", "p_code", "power_on", "brake_off"] },
+      "end": "win",
+      "text": "防尘罩掀开，放行钮按到底。驱动轮缓缓咬住钢缆，载着游客的车厢晃晃悠悠驶进漫天风雪；调度铃响过两声，山下传来回话：收到，一路顺风。回执口的纸条停在绿灯里——放取铭牌末位的一，行取电池块数的八，十八，老规矩到底没误事。"
+    },
+    {
+      "id": "look_panel",
+      "room": "power",
+      "label": "端详配电柜",
+      "n": ["c_panellock"],
+      "eff": { "f": ["c_panellock"] },
+      "text": "柜门挂着黄铜挂锁，锁鼻上拴着检修牌：冷启动须经值班员复核，无钥匙勿动。"
+    },
+    {
+      "id": "open_panel",
+      "room": "power",
+      "label": "用钥匙开配电柜",
+      "req": { "i": ["panel_key"] },
+      "n": ["p_panel"],
+      "eff": { "f": ["p_panel", "c_seq"] },
+      "text": "挂锁弹开。柜门内侧贴着应急供电操作卡：一开油阀，二按电钮，三合输出总闸，次序错一步，风冷机就点不着。"
+    },
+    {
+      "id": "step_valve",
+      "room": "power",
+      "label": "撕掉铅封，拧开发油阀",
+      "req": { "f": ["c_seq"] },
+      "n": ["seq1"],
+      "eff": { "f": ["seq1"] },
+      "text": "铅封咔的一声断开。油阀拧到头，柴油顺着透明管注满滤杯。"
+    },
+    {
+      "id": "step_starter",
+      "room": "power",
+      "label": "按下启动电钮",
+      "req": { "f": ["seq1"] },
+      "n": ["seq2"],
+      "eff": { "f": ["seq2"] },
+      "text": "预热灯烧了半分钟熄灭。柴油机咳了两声，轰隆隆稳住了怠速。"
+    },
+    {
+      "id": "step_breaker",
+      "room": "power",
+      "label": "合上输出总闸",
+      "req": { "f": ["seq2"] },
+      "n": ["power_on"],
+      "eff": { "f": ["power_on"] },
+      "text": "总闸推到底，柜里一排继电器次第吸合，站内的灯一盏接一盏亮了起来。"
+    },
+    {
+      "id": "skip_prime",
+      "room": "power",
+      "label": "不开发油阀就按电钮",
+      "n": ["power_on"],
+      "text": "启动马达干转了几圈，缸体冻得咯咯作响——油路根本没接上。"
+    },
+    {
+      "id": "close_early",
+      "room": "power",
+      "label": "发电机没转就合输出闸",
+      "req": { "f": ["p_panel"] },
+      "n": ["power_on"],
+      "text": "闸刀刚推到一半就弹了回来，欠压保护压根不放行。"
+    },
+    {
+      "id": "start_pump",
+      "room": "machine",
+      "label": "启动张紧泵",
+      "req": { "f": ["power_on", "c_dep_check"] },
+      "n": ["tension_ok"],
+      "eff": { "f": ["tension_ok"] },
+      "text": "泵电机嗡地转起来，蒙霜的压力表指针爬过 60，稳稳停在 87 bar 上。"
+    },
+    {
+      "id": "release_brake",
+      "room": "machine",
+      "label": "用套筒扳手退闸三圈半",
+      "req": { "i": ["wrench"], "f": ["tension_ok", "c_dep_check"] },
+      "n": ["brake_off"],
+      "eff": { "f": ["brake_off"] },
+      "text": "扳手套上退闸手轮，整整三圈半，闸瓦从驱动轮上均匀让出一圈缝。"
+    },
+    {
+      "id": "read_plate",
+      "room": "cab",
+      "label": "看门边铭牌",
+      "text": "黄铜铭牌：定员四十六人，核载一吨半，上次年检的钢印还很清晰。"
+    },
+    {
+      "id": "read_board",
+      "room": "cab",
+      "label": "看行车记录板",
+      "text": "粉笔字被雪水洇掉了半行，认得出的只有：今日末班 15:30，封线待令。"
+    },
+    {
+      "id": "check_rack",
+      "room": "tools",
+      "label": "翻看零件架",
+      "text": "备用闸瓦两副、喷灯一只、融雪盐半桶，都按规程签了点检日期。"
+    },
+    {
+      "id": "check_wall",
+      "room": "tools",
+      "label": "看墙面挂具",
+      "text": "风镐、钢丝绳卡头、安全绳各归各位，标签按检修规程编着号。"
+    }
+  ],
+  "difficulty": { "minSteps": 10, "maxSteps": 28, "maxBranch": 6 }
+}
