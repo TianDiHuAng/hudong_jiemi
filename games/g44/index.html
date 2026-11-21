@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>文字密室逃脱</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🧩%3C/text%3E%3C/svg%3E">
+<title>镜花水月 · 文字密室逃脱</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23161D30'/%3E%3Ccircle cx='48' cy='40' r='21' fill='%23F5C542'/%3E%3Ccircle cx='58' cy='35' r='19' fill='%23161D30'/%3E%3Cpath d='M18 72 q11 -6 22 0 t22 0 t22 0' stroke='%238FA8F0' stroke-width='3.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M26 81 q9 -5 18 0 t18 0 t18 0' stroke='%233A56A8' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 :root{--bg:#EEF1F6;--card:#FFFFFF;--ink:#1B2233;--mute:#5B667D;--line:#D2D9E6;--acc:#3A56A8;--acc2:#3A56A822;--ok:#1E7A4F;--bad:#B3362B;--tint:transparent;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -14,6 +14,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Noto Sans SC","PingFang SC",system-ui,sans-serif}
 main{max-width:1060px;margin:0 auto;padding:24px 16px 80px}
 h1{font-size:clamp(24px,4.5vw,34px);line-height:1.25;margin:0 0 4px}
+.brand{font-size:12.5px;color:var(--mute);letter-spacing:.16em;margin-bottom:2px}
 .lead{color:var(--mute)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
 .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:13px;color:var(--mute)}
@@ -76,6 +77,7 @@ button:hover{border-color:var(--acc);transform:translateX(2px)}button:focus-visi
 </head>
 <body>
 <main>
+<div class="brand">✦ 镜花水月 · 文字密室关卡库</div>
 <h1 id="title">文字密室逃脱</h1>
 <p id="intro" class="lead"></p>
 <script>window.__GAME__={"title":"整批报废之前","intro":"台风预警的夜里你顶着灌装班，交接班记录和机修留言对不上，三锅糖浆一锅都不能报废。","start":"pack","rooms":{"pack":{"n":"包装车间","d":"链板线停着检修，托盘上的糖模码了半人高。墙上排班表翻到夜班这一页，交接班房的门虚掩着，风从卷帘缝里挤进来。"},"log":{"n":"交接班房","d":"长桌上摊着记录本，茶缸压着一角。白班的字迹还新鲜，机修组的电话分机挂在墙上，座钟走得不紧不慢。"},"fill":{"n":"灌装间","d":"分配板横在管路中央，三只糖浆桶一字排开。泵组护罩缺着一角，传动轴就在里面转，墙上钉着机修的铅笔留言。"},"lab":{"n":"化验小间","d":"留样架上排着小罐，标签卷了边。化验单夹在弹簧夹上，末行字迹被水汽洇过，墙上贴着取样规程。"},"store":{"n":"原料库","d":"桶位牌钉在架头，空桶倒扣着一摞。批号单用铁环串着挂在柱上，库门口的挡鼠板歪在一边。"},"dock":{"n":"出货月台","d":"卷帘门拉了一半，台风预警的喇叭在头顶响个不停。成品箱码在托盘上，只差最后一块合格牌。"}},"items":{"wrench":"灌装间的管钳"},"puzzles":[{"id":"留样化验单","solved":"c_lab","clue":"c_shift"},{"id":"批号单","solved":"c_batch","clue":"c_shift"},{"id":"管序疑云","solved":"c_truth","clue":"c_note"},{"id":"对调接口","solved":"p_fix","clue":"c_truth"},{"id":"灌装开机","solved":"p_fill","clue":"c_manual"},{"id":"头批放行","solved":"won","clue":"p_fill"}],"acts":[{"id":"pack2log","room":"pack","label":"进交接班房","go":"log"},{"id":"log2pack","room":"log","label":"回包装车间","go":"pack"},{"id":"pack2fill","room":"pack","label":"进灌装间","go":"fill"},{"id":"fill2pack","room":"fill","label":"回包装车间","go":"pack"},{"id":"pack2store","room":"pack","label":"去原料库","go":"store"},{"id":"store2pack","room":"store","label":"回包装车间","go":"pack"},{"id":"fill2lab","room":"fill","label":"去化验小间","go":"lab"},{"id":"lab2fill","room":"lab","label":"回灌装间","go":"fill"},{"id":"fill2dock","room":"fill","label":"走后门去出货月台","go":"dock"},{"id":"dock2fill","room":"dock","label":"回灌装间","go":"fill"},{"id":"read_shift","room":"log","label":"读交接班记录","n":["c_shift"],"eff":{"f":["c_shift","c_manual"]},"text":"白班末行写着：管路昨夜大洗过，分配板照新图验收，三号泵有点异响；再往下抄着规程摘录——模盘先预热，泵先空转排气，低批先灌防串味。"},{"id":"read_note","room":"fill","label":"读墙上机修的留言","n":["c_note"],"eff":{"f":["c_note"]},"text":"铅笔字戳得纸都破了：洗管的人把二号、三号接口装反了！我赶不及改，灌前务必对调回来，别信新图——机修老岑。"},{"id":"read_lab","room":"lab","label":"读留样化验单","n":["c_lab"],"eff":{"f":["c_lab"]},"text":"上一批从三号阀接的样：焦盐味。而新图上三号阀那一栏，标注的口味是草莓。"},{"id":"read_batch","room":"store","label":"翻柱上的批号单","n":["c_batch"],"eff":{"f":["c_batch"]},"text":"今晚三锅：批 21 薄荷、批 22 焦盐、批 23 草莓；桶按批号入位，低批先灌。"},{"id":"check_truth","room":"fill","label":"把记录、留言、化验单并核","req":{"f":["c_shift","c_note","c_lab"]},"n":["c_truth"],"eff":{"f":["c_truth"]},"text":"新图说三号阀走草莓，留样偏偏是焦盐；老岑说的对调，对上了——二号、三号接口确实装反，灌前必须换回。"},{"id":"w_trust_log","room":"fill","label":"照白班记录的新图直接核管","req":{"f":["c_shift"]},"n":["c_truth"],"text":"你照新图挨个摸管口，越核越乱——两处说法谁也说服不了谁。"},{"id":"w_trust_note","room":"fill","label":"不核留样就动手对调","req":{"f":["c_note"]},"n":["c_truth"],"text":"手都伸向卡箍了，又停住——万一留样另有说法，这一拆就说不清了。"},{"id":"take_wrench","room":"fill","label":"从挂板取管钳","n":["wrench_taken"],"eff":{"f":["wrench_taken"],"i":["wrench"]},"text":"管钳从挂板上摘下来，钳口还带着上一班的油味。"},{"id":"fix_pipes","room":"fill","label":"用管钳对调二三号接口","req":{"i":["wrench"],"f":["c_truth"]},"n":["p_fix"],"eff":{"f":["p_fix"]},"text":"卡箍松开，两根管对调回位，扳紧最后半圈，管路上的字条终于可以撕了。"},{"id":"warm_up","room":"fill","label":"给模盘通汽预热","req":{"f":["p_fix","c_manual"]},"n":["warm"],"eff":{"f":["warm"]},"text":"汽阀拧开半圈，模盘面渐渐挂上一层水汽，指尖探上去有些烫。"},{"id":"prime_pump","room":"fill","label":"让泵空转排气","req":{"f":["warm"]},"n":["prime"],"eff":{"f":["prime"]},"text":"泵轴空转了几十圈，管口噗噗吐净了存气，糖浆通路顺畅下来。"},{"id":"valve_1","room":"fill","label":"开一号阀灌头批","req":{"f":["prime"]},"n":["seq1"],"eff":{"f":["seq1"]},"text":"薄荷浆顺一号管打进模盘，头批注满，斗车推去下一工位。"},{"id":"valve_2","room":"fill","label":"开二号阀灌二批","req":{"f":["seq1"]},"n":["seq2"],"eff":{"f":["seq2"]},"text":"焦盐浆跟上来，二号管注满二批，泵压稳稳的。"},{"id":"valve_3","room":"fill","label":"开三号阀灌三批","req":{"f":["seq2"]},"n":["p_fill"],"eff":{"f":["p_fill"]},"text":"草莓浆收尾，三批注满，泵声一下子轻了——三锅齐了。"},{"id":"w_noprime","room":"fill","label":"跳过排气直接进糖浆","req":{"f":["p_fix"]},"n":["p_fill"],"text":"泵里存气顶着，浆打得断断续续全是气泡，模子里尽是空眼——这一锅差点废了。"},{"id":"w_thirdfirst","room":"fill","label":"先开三号阀","req":{"f":["p_fix"]},"n":["p_fill"],"text":"三号管走得最远，压差顶不开止回阀，分配板吱吱报了两声警。"},{"id":"reach_gear","room":"fill","label":"把手伸进缺角的泵护罩捞糖渣","end":"lose","text":"指尖刚碰到糖渣，联轴节的螺栓扫了过来——手套、袖口，连人带手都卷了进去。"},{"id":"look_tray","room":"pack","label":"看托盘上的糖模","text":"糖模擦得干净，模眼朝天，就等浆下来。"},{"id":"look_clock","room":"log","label":"看座钟和排班栏","text":"座钟差一刻十点，夜班栏里你的名字压着两个空格。"},{"id":"look_rack","room":"store","label":"看桶位牌","text":"甲、乙、丙三个桶位朝里，牌上批号栏都空着。"},{"id":"release","room":"dock","label":"给头批挂合格牌放行","req":{"f":["p_fill"]},"eff":{"f":["won"]},"end":"win","text":"合格牌挂上头批的箱角，卷帘门拉开一条缝，台风前的最后一批薄荷糖趁夜出了厂——二号三号对调回来，批 21、22、23 一锅没废，低批先灌的老规矩到底没破。"}],"difficulty":{"minSteps":6,"maxSteps":20,"maxBranch":6}};</script>
@@ -126,7 +128,7 @@ function hash(s){var h=0;s=String(s||"");for(var i=0;i<s.length;i++){h=(h*31+s.c
 function boot(G){
 if(booted)return;booted=true;
 var title=G.title||"文字密室逃脱";
-document.title=title;
+document.title="镜花水月 · "+title;
 document.getElementById("title").textContent=title;
 document.documentElement.style.setProperty("--acc",PALETTE[hash(title)%PALETTE.length]);
 document.documentElement.style.setProperty("--acc2",PALETTE[hash(title)%PALETTE.length]+"22");

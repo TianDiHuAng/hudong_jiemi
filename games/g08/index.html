@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>文字密室逃脱</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🧩%3C/text%3E%3C/svg%3E">
+<title>镜花水月 · 文字密室逃脱</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23161D30'/%3E%3Ccircle cx='48' cy='40' r='21' fill='%23F5C542'/%3E%3Ccircle cx='58' cy='35' r='19' fill='%23161D30'/%3E%3Cpath d='M18 72 q11 -6 22 0 t22 0 t22 0' stroke='%238FA8F0' stroke-width='3.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M26 81 q9 -5 18 0 t18 0 t18 0' stroke='%233A56A8' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 :root{--bg:#EEF1F6;--card:#FFFFFF;--ink:#1B2233;--mute:#5B667D;--line:#D2D9E6;--acc:#3A56A8;--acc2:#3A56A822;--ok:#1E7A4F;--bad:#B3362B;--tint:transparent;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -14,6 +14,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Noto Sans SC","PingFang SC",system-ui,sans-serif}
 main{max-width:1060px;margin:0 auto;padding:24px 16px 80px}
 h1{font-size:clamp(24px,4.5vw,34px);line-height:1.25;margin:0 0 4px}
+.brand{font-size:12.5px;color:var(--mute);letter-spacing:.16em;margin-bottom:2px}
 .lead{color:var(--mute)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
 .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:13px;color:var(--mute)}
@@ -76,6 +77,7 @@ button:hover{border-color:var(--acc);transform:translateX(2px)}button:focus-visi
 </head>
 <body>
 <main>
+<div class="brand">✦ 镜花水月 · 文字密室关卡库</div>
 <h1 id="title">文字密室逃脱</h1>
 <p id="intro" class="lead"></p>
 <script>window.__GAME__={"title":"光路暗语","intro":"浓雾封海，灯塔守一夜未归。你是来替班的港务学员：塔门的角位锁认光路不认人，进塔之后还得给油将燃尽的灯器续油、校准，让光照常扫过主航道。","start":"steps","rooms":{"steps":{"n":"塔基石阶","d":"石阶绕着塔基盘上去，包铁塔门上嵌着一具三钮角位锁。头顶的光束每隔几息扫过雾面，野海棠贴着石缝生长。"},"cottage":{"n":"守塔小屋","d":"小屋虚掩着门。桌上值班簿摊开在昨页，枕边搁着没织完的毛线，墙上的雨衣还在滴水。"},"platform":{"n":"眺望平台","d":"平台探在海崖上，木栏挂满露水。港务告示牌立在栏边，漆字画着三枚浮标的位置，雾从牌面缓缓爬过。"},"hall":{"n":"门厅","d":"门厅里码着备用灯芯和工具架，雨衣钩上挂着蓑衣。折叠梯吊在梁上，拉绳只剩个断头。"},"shaft":{"n":"梯井","d":"螺旋铁梯贴壁盘旋，踏板擦得发亮。越往上风声越紧，塔壁上刻着一道道旧潮位线。"},"lamp":{"n":"灯室","d":"巨大灯器蹲在旋转座上，油表的浮标贴着底。转向轨上首照角卡死在正东，镜面在雾夜里泛着幽光。"}},"items":{"rope":"一股浸油麻绳","kerosene":"煤油桶"},"puzzles":[{"id":"浮标方位牌","solved":"p_buoy","clue":"c_sign"},{"id":"角度暗语锁","solved":"p_lock","clue":"c_sweep"},{"id":"折叠梯","solved":"p_ladder","clue":"c_ladder"},{"id":"灯器续油","solved":"p_fuel","clue":"c_oil"},{"id":"灯器校准","solved":"p_align","clue":"c_align"}],"acts":[{"id":"watch_light","room":"steps","label":"观察灯光扫过的次序","n":["c_sweep"],"eff":{"f":["c_sweep"]},"text":"光带每七息扫一圈，顺时针碾过雾面：东北的红浮标、正南的白浮标、西北的绿浮标，挨着亮起的次序圈圈不变。"},{"id":"look_lock","room":"steps","label":"端详角位锁","n":["c_lock"],"eff":{"f":["c_lock"]},"text":"锁面三枚铜钮分别漆成红、白、绿，每枚的档位刻着八向——正四方加四隅都落得进去，钮心簧片咬得死紧。"},{"id":"open_lock","room":"steps","label":"照光路次序拨三枚角钮","req":{"f":["c_sweep","p_buoy"]},"n":["p_lock"],"eff":{"f":["p_lock"]},"text":"红钮拨向东北，白钮拨向正南，绿钮拨向西北——三枚簧片依次弹开，铁门吱呀让出一条缝。"},{"id":"wrong_lock_num","room":"steps","label":"把红钮拨向正南试一试","req":{"f":["c_lock","p_buoy"]},"n":["p_lock"],"text":"红钮落进正南的角位，簧片咬死不放——港务牌上红浮标明明立在东北角，正南是白浮标的家。一枚钮，只认自家浮标。"},{"id":"wrong_lock_color","room":"steps","label":"先拨绿钮再拨红钮","req":{"f":["c_lock"]},"n":["p_lock"],"text":"绿钮刚拨到西北，红钮就弹回了原位——次序颠倒，前钮的簧片不认后钮。"},{"id":"steps2cottage","room":"steps","label":"进守塔小屋","go":"cottage"},{"id":"cottage2steps","room":"cottage","label":"回塔基石阶","go":"steps"},{"id":"steps2platform","room":"steps","label":"上眺望平台","go":"platform"},{"id":"platform2steps","room":"platform","label":"下塔基石阶","go":"steps"},{"id":"open_door","room":"steps","label":"推开塔门进门厅","req":{"f":["p_lock"]},"go":"hall"},{"id":"hall2steps","room":"hall","label":"出塔回石阶","go":"steps"},{"id":"hall2shaft","room":"hall","label":"从折叠梯上梯井","req":{"f":["p_ladder"]},"go":"shaft"},{"id":"shaft2hall","room":"shaft","label":"顺铁梯回门厅","go":"hall"},{"id":"shaft2lamp","room":"shaft","label":"沿螺旋梯上灯室","go":"lamp"},{"id":"lamp2shaft","room":"lamp","label":"顺螺旋梯回梯井","go":"shaft"},{"id":"look_sign","room":"platform","label":"端详港务告示牌","n":["c_sign"],"eff":{"f":["c_sign"]},"text":"牌上漆着三枚浮标：红浮标在塔的东北角，白浮标在正南海面，绿浮标缩在西北的礁盘旁。"},{"id":"copy_bearing","room":"platform","label":"抄下浮标方位","req":{"f":["c_sign"]},"n":["p_buoy"],"eff":{"f":["p_buoy"]},"text":"你把三枚浮标的方位记在手心：红——东北，白——正南，绿——西北。"},{"id":"amb_platform","room":"platform","label":"望一眼雾里的海面","text":"雾层厚得像棉絮，只有光束扫过的地方亮起一小片。"},{"id":"read_book","room":"cottage","label":"翻看值班簿","text":"昨页写着：雾大，下东礁查缆，天明前回。末行小字：旋钮照光路次序拨，每枚对准自家浮标。——人未归，灯还在转。"},{"id":"amb_cottage","room":"cottage","label":"碰碰枕边的毛线","text":"毛线针还插在半截围巾上，炉膛里的余温早散尽了。"},{"id":"look_ladder","room":"hall","label":"端详折叠梯","n":["c_ladder"],"eff":{"f":["c_ladder"]},"text":"折叠梯吊在梁上，拉绳只剩个毛糙的断头，梯脚的卡榫完好。"},{"id":"search_hook","room":"hall","label":"翻雨衣钩后的杂物","n":["rope_found"],"eff":{"f":["rope_found"],"i":["rope"]},"text":"蓑衣后头钉着木钩，挂着半捆浸过油的麻绳——塔上的东西都防潮。"},{"id":"rig_ladder","room":"hall","label":"接麻绳放下折叠梯","req":{"i":["rope"]},"n":["p_ladder"],"eff":{"f":["p_ladder"]},"text":"麻绳接上断头打了双结，折叠梯哗啦放下来，踏板一级级稳住。"},{"id":"take_can","room":"hall","label":"拎走工具架上的煤油桶","n":["can_taken"],"eff":{"f":["can_taken"],"i":["kerosene"]},"text":"铁皮桶沉甸甸的，桶盖封条完好，摇一摇有大半桶。"},{"id":"amb_hall","room":"hall","label":"查看备用灯芯","text":"灯芯按尺寸扎成小捆，标签写着灯器专用，一次只许换一根。"},{"id":"amb_shaft","room":"shaft","label":"探身看塔壁刻字","text":"旧潮位线一道比一道高，最上面那道刻着十年前的日期。"},{"id":"check_lamp","room":"lamp","label":"俯身查看灯器","n":["c_oil"],"eff":{"f":["c_oil","c_align"]},"text":"油表浮标贴底，油壶只剩一层油皮；再看转向轨，首照角卡死在正东——规矩该首照主航道的红浮标。"},{"id":"fill_oil","room":"lamp","label":"给灯器灌煤油","req":{"i":["kerosene"]},"n":["p_fuel"],"eff":{"f":["p_fuel"]},"text":"煤油顺着漏斗灌进油壶，浮标慢慢爬到红线之上，泵管里咕嘟起了泡。"},{"id":"wrong_align","room":"lamp","label":"把首照角拨向正南","req":{"f":["c_align"]},"n":["p_align"],"text":"手轮拨到正南就顶了死挡——转向轨容不下这个角度，白浮标不在规矩里。"},{"id":"align_win","room":"lamp","label":"把首照角拨回东北红浮","req":{"f":["c_align","p_fuel","p_buoy"]},"eff":{"f":["p_align"]},"end":"win","text":"你扳住转向轨的手轮，首照角一格格退回东北。保险销咬合，灯带准时舔上红浮标，一圈一圈往雾海深处推——今夜的班，替上了。"}],"difficulty":{"minSteps":6,"maxSteps":20,"maxBranch":6}};</script>
@@ -126,7 +128,7 @@ function hash(s){var h=0;s=String(s||"");for(var i=0;i<s.length;i++){h=(h*31+s.c
 function boot(G){
 if(booted)return;booted=true;
 var title=G.title||"文字密室逃脱";
-document.title=title;
+document.title="镜花水月 · "+title;
 document.getElementById("title").textContent=title;
 document.documentElement.style.setProperty("--acc",PALETTE[hash(title)%PALETTE.length]);
 document.documentElement.style.setProperty("--acc2",PALETTE[hash(title)%PALETTE.length]+"22");

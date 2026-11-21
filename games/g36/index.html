@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>文字密室逃脱</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🧩%3C/text%3E%3C/svg%3E">
+<title>镜花水月 · 文字密室逃脱</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23161D30'/%3E%3Ccircle cx='48' cy='40' r='21' fill='%23F5C542'/%3E%3Ccircle cx='58' cy='35' r='19' fill='%23161D30'/%3E%3Cpath d='M18 72 q11 -6 22 0 t22 0 t22 0' stroke='%238FA8F0' stroke-width='3.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M26 81 q9 -5 18 0 t18 0 t18 0' stroke='%233A56A8' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 :root{--bg:#EEF1F6;--card:#FFFFFF;--ink:#1B2233;--mute:#5B667D;--line:#D2D9E6;--acc:#3A56A8;--acc2:#3A56A822;--ok:#1E7A4F;--bad:#B3362B;--tint:transparent;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -14,6 +14,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Noto Sans SC","PingFang SC",system-ui,sans-serif}
 main{max-width:1060px;margin:0 auto;padding:24px 16px 80px}
 h1{font-size:clamp(24px,4.5vw,34px);line-height:1.25;margin:0 0 4px}
+.brand{font-size:12.5px;color:var(--mute);letter-spacing:.16em;margin-bottom:2px}
 .lead{color:var(--mute)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
 .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:13px;color:var(--mute)}
@@ -76,6 +77,7 @@ button:hover{border-color:var(--acc);transform:translateX(2px)}button:focus-visi
 </head>
 <body>
 <main>
+<div class="brand">✦ 镜花水月 · 文字密室关卡库</div>
 <h1 id="title">文字密室逃脱</h1>
 <p id="intro" class="lead"></p>
 <script>window.__GAME__={"title":"封冻前收闸","intro":"寒潮半夜过境，结晶池的闸板还敞着。卤度计摔碎了，取样桶散了板——赶在池面封冻前，把闸板配平收起。","start":"dike","rooms":{"dike":{"n":"一号池埂","d":"池面结了层薄冰，埂头风向袋绷成一条直线，告示牌上粉笔字未干。埂沿散着碎玻璃，桩上挂着麻绳。"},"gatehouse":{"n":"闸房","d":"绞盘与吊梁横在房心，梁上木牌字迹发白。墙根挤着五块配重石，磅秤就搁在石堆旁，抽屉半开。"},"beach":{"n":"滩上","d":"盐沙被风刮出细纹，桶板散在滩窝里，铁箍半埋着。滩口的卤沟泛着白沫，风一过就扬盐末。"},"shed":{"n":"值班房","d":"一桌一炕，桌上的老簿子翻开着，炕头还温着半壶咸茶，窗纸让风顶得一鼓一鼓。"},"pump":{"n":"泵房","d":"泵轴裹着草绳，油壶冻硬了嘴。管子里存着死水，门轴上挂着的草帘结了盐霜。"},"yard":{"n":"坨地","d":"大盐坨苫着三层席，迎风那面压了整排卤袋。坨脚的盐包码得齐整，苫绳绷得咯咯响。"}},"items":{"planks":"桶板","hoop":"铁箍","handle":"提梁","stones":"配重石","gauge":"波美计"},"puzzles":[{"id":"碎卤度计","solved":"c_broken","clue":"c_gale"},{"id":"取样桶拼装","solved":"p_bucket","clue":"c_broken"},{"id":"闸梁配平","solved":"balanced","clue":"c_plaque"},{"id":"配重石过磅","solved":"c_scale","clue":"c_gear"},{"id":"卤度读数","solved":"reading","clue":"c_broken"}],"acts":[{"id":"look_flag","room":"dike","label":"看埂头的风向袋","n":["c_gale"],"eff":{"f":["c_gale"]},"text":"风向袋绷成一条直线，告示牌上粉笔字未干：寒潮半夜过境，各池今日收闸。"},{"id":"pick_glass","room":"dike","label":"捡起碎掉的卤度计","n":["c_broken"],"eff":{"f":["c_broken"]},"text":"玻璃管断成三截，红线那一截还认得出刻度：二十五度往上是保晶线，往下就该放卤了。"},{"id":"take_handle","room":"dike","label":"解下桩上的提梁","n":["handle_taken"],"eff":{"f":["handle_taken"],"i":["handle"]},"text":"提梁挂在埂桩的麻绳上，铁弯梁还结实，梁鼻上的销钉都在。"},{"id":"asm1","room":"dike","label":"把桶板拢进铁箍","req":{"i":["planks","hoop"]},"n":["asm1"],"eff":{"f":["asm1"]},"text":"五块板围拢，铁箍从上往下一路敲到底，桶身立了起来，就差个梁。"},{"id":"asm2","room":"dike","label":"装上提梁敲紧桶箍","req":{"i":["handle"],"f":["asm1"]},"n":["p_bucket"],"eff":{"f":["p_bucket"]},"text":"梁鼻对准销孔敲实，整桶提起来晃了晃，滴水不漏——取样桶齐了。"},{"id":"wrong_asm","room":"dike","label":"不拢板就先敲箍口","req":{"i":["hoop"]},"n":["asm1"],"text":"箍口空荡荡咬不住东西，敲了三下滚到脚边——没有桶板撑着，箍立不成桶。"},{"id":"read_brine","room":"dike","label":"用取样桶打卤插计读数","req":{"i":["gauge"],"f":["p_bucket","c_broken"]},"n":["reading"],"eff":{"f":["reading"]},"text":"卤水提上埂来，波美计浮住，液面稳在 25.4——过了红线一截，这一池卤熟透了。"},{"id":"dike_lose","room":"dike","label":"踏上结了薄冰的池面","end":"lose","text":"薄冰咔啦一声裂成蛛网，卤水漫过胶靴灌了进来。你扑住埂桩半晌，半条腿陷进池底的淤里，拔不出来了。"},{"id":"dike2gate","room":"dike","label":"进闸房","go":"gatehouse"},{"id":"gate2dike","room":"gatehouse","label":"回池埂","go":"dike"},{"id":"dike2beach","room":"dike","label":"下到滩上","go":"beach"},{"id":"beach2dike","room":"beach","label":"回池埂","go":"dike"},{"id":"dike2pump","room":"dike","label":"进泵房","go":"pump"},{"id":"pump2dike","room":"pump","label":"回池埂","go":"dike"},{"id":"beach_kit","room":"beach","label":"拢桶板扒出铁箍","n":["kit_dug"],"eff":{"f":["kit_dug"],"i":["planks","hoop"]},"text":"散板让风卷在滩窝里，拢起来五块齐全；铁箍半埋在盐沙下，扒出来锈而未断。"},{"id":"beach_flavor","room":"beach","label":"望了望滩口的卤沟","text":"卤沟里的白沫让风推着走，沟沿的盐霜结得厚——再过一夜，这里也要封口了。"},{"id":"beach2yard","room":"beach","label":"进坨地","go":"yard"},{"id":"yard2beach","room":"yard","label":"回滩上","go":"beach"},{"id":"read_beam","room":"gatehouse","label":"扳了扳闸把，读梁上木牌","n":["c_plaque"],"eff":{"f":["c_gear","c_plaque"]},"text":"绞盘空转两圈就咬住，木牌上粉笔字写着：南北梁配重相等，绞盘不吃丝，闸板才不出斜。"},{"id":"weigh_stones","room":"gatehouse","label":"把墙根的配重石归拢过磅","n":["c_scale"],"eff":{"f":["c_scale"],"i":["stones"]},"text":"五块石挨个上磅：刻五十的灌过铅，实重五十六；刻五十磨薄的那块只有四十六；三十的一块足秤；两块十的足秤。你把数记在掌心。"},{"id":"bal_correct","room":"gatehouse","label":"照过磅的数把石头分挂南北梁","req":{"i":["stones"],"f":["c_plaque","c_scale"]},"n":["balanced"],"eff":{"f":["balanced"]},"text":"五十六加两个十对四十六加三十——两梁各七十六公斤，绞盘空转一圈，齿箱松了口气。"},{"id":"bal_w1","room":"gatehouse","label":"把刻五十的两块分挂两头","req":{"i":["stones"],"f":["c_plaque","c_scale"]},"n":["balanced"],"text":"五十六对四十六，南梁一头沉，绞盘咬齿咯咯响，闸板在池口斜出了半掌。"},{"id":"bal_w2","room":"gatehouse","label":"把大块的都挂上北梁","req":{"i":["stones"],"f":["c_plaque","c_scale"]},"n":["balanced"],"text":"北梁压得吱呀响，南梁翘上了天，吊索拧成了麻花——这分法，石头不答应。"},{"id":"take_gauge","room":"gatehouse","label":"从抽屉取备用波美计","n":["gauge_taken"],"eff":{"f":["gauge_taken"],"i":["gauge"]},"text":"抽屉里躺着备用的波美计，护套完好，刻度纸黄了边——红线划在二十五，跟碎管上那截一个刻法。"},{"id":"gate2shed","room":"gatehouse","label":"进值班房","go":"shed"},{"id":"shed2gate","room":"shed","label":"回闸房","go":"gatehouse"},{"id":"gate_flavor","room":"gatehouse","label":"摸了摸吊梁的钢丝绳","text":"钢丝绳起毛了三股，油还挂着——上个月才换的，撑得住今夜这一绞。"},{"id":"win","room":"gatehouse","label":"绞动绞盘收平闸板","req":{"f":["balanced","reading"]},"end":"win","text":"南北梁吃得一样沉，绞盘一圈圈把闸板绞出水面，池口合得严实。波美计浮在卤样里稳稳指着 25.4——过了红线，这一池晶保住了。"},{"id":"shed_flavor","room":"shed","label":"翻值班房的老簿子","text":"簿子里夹着张旧波美计的刻度图，图角注着：红线以上方可收闸——与碎计上的红线一个刻法。"},{"id":"pump_flavor","room":"pump","label":"看泵轴上的油壶","text":"油壶冻硬了嘴，泵轴裹着草绳——泵房今夜不开，管子里存着死水。"},{"id":"yard_flavor","room":"yard","label":"看盐坨的苫布","text":"苫布让风掀了一角，坨脚的盐包上落着盐粒，抓一把又细又白。"}],"difficulty":{"minSteps":6,"maxSteps":20,"maxBranch":6}};</script>
@@ -126,7 +128,7 @@ function hash(s){var h=0;s=String(s||"");for(var i=0;i<s.length;i++){h=(h*31+s.c
 function boot(G){
 if(booted)return;booted=true;
 var title=G.title||"文字密室逃脱";
-document.title=title;
+document.title="镜花水月 · "+title;
 document.getElementById("title").textContent=title;
 document.documentElement.style.setProperty("--acc",PALETTE[hash(title)%PALETTE.length]);
 document.documentElement.style.setProperty("--acc2",PALETTE[hash(title)%PALETTE.length]+"22");

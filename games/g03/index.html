@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>文字密室逃脱</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🧩%3C/text%3E%3C/svg%3E">
+<title>镜花水月 · 文字密室逃脱</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23161D30'/%3E%3Ccircle cx='48' cy='40' r='21' fill='%23F5C542'/%3E%3Ccircle cx='58' cy='35' r='19' fill='%23161D30'/%3E%3Cpath d='M18 72 q11 -6 22 0 t22 0 t22 0' stroke='%238FA8F0' stroke-width='3.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M26 81 q9 -5 18 0 t18 0 t18 0' stroke='%233A56A8' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 :root{--bg:#EEF1F6;--card:#FFFFFF;--ink:#1B2233;--mute:#5B667D;--line:#D2D9E6;--acc:#3A56A8;--acc2:#3A56A822;--ok:#1E7A4F;--bad:#B3362B;--tint:transparent;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -14,6 +14,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Noto Sans SC","PingFang SC",system-ui,sans-serif}
 main{max-width:1060px;margin:0 auto;padding:24px 16px 80px}
 h1{font-size:clamp(24px,4.5vw,34px);line-height:1.25;margin:0 0 4px}
+.brand{font-size:12.5px;color:var(--mute);letter-spacing:.16em;margin-bottom:2px}
 .lead{color:var(--mute)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
 .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:13px;color:var(--mute)}
@@ -76,6 +77,7 @@ button:hover{border-color:var(--acc);transform:translateX(2px)}button:focus-visi
 </head>
 <body>
 <main>
+<div class="brand">✦ 镜花水月 · 文字密室关卡库</div>
 <h1 id="title">文字密室逃脱</h1>
 <p id="intro" class="lead"></p>
 <script>window.__GAME__={"title":"回声不作数","intro":"头灯主电耗尽，你在大岔厅与前队走散。前队留了路线底图和半包工具——照图上的方位走，把散件拼成能探路的家伙，别信回声。","start":"hall","rooms":{"hall":{"n":"主岔厅","d":"三股洞道在厅口岔开：北面干沟、东面洞道、西南石缝，洞口都一般宽窄。钟乳石从厅顶垂下来，像一片倒挂的林子。"},"camp":{"n":"遗弃营地","d":"前队把旧营地扎在岩壁根：防潮布上散着工具卷，一块扁石压着卷起的底图。帆布角上还留着他们没带走的半包干粮。"},"dry":{"n":"北面干沟","d":"干沟往里越收越窄，两侧石壁光溜溜的。沟底圆石干得发白，连一点潮气都没有。"},"crack":{"n":"西南石缝","d":"石缝斜向上收口，挤过双肘就再难进寸。缝口的碎岩一碰就簌簌往下掉渣。"},"gallery":{"n":"钟乳石廊","d":"洞道在这里收成一条石廊，两侧石幔一层叠一层，灯光照上去泛着湿光。廊底的凉风里混着水声。"},"river":{"n":"地下暗河滩","d":"暗河贴着洞底淌，淤泥滩一眼望不到对岸。滩面上东一块西一块露出石脊，深浅全凭猜。"},"shaft":{"n":"出口竖井厅","d":"竖井从厅顶直贯上去，井壁溜光。两条岩缝分列东西，缝口都在头顶三四米，灯光够不着里头。"}},"items":{"bamboo":"两米竹竿","lamphead":"备用灯头","tape":"绝缘胶带","lightpole":"探灯杆","map":"路线底图"},"puzzles":[{"id":"营地散件","solved":"p_parts","clue":"c_camp"},{"id":"绑扎探灯杆","solved":"p_pole","clue":"p_parts"},{"id":"岔口辨向","solved":"p_east","clue":"c_map"},{"id":"暗河点探","solved":"p_ford","clue":"c_mud"},{"id":"高处导标","solved":"c_mark","clue":"c_shaft"},{"id":"回声之惑","solved":"p_echo","clue":"c_echo"}],"acts":[{"id":"hall2camp","room":"hall","label":"沿来路退回旧营地","go":"camp"},{"id":"camp2hall","room":"camp","label":"回到主岔厅","go":"hall"},{"id":"hall2dry","room":"hall","label":"钻进北面干沟","go":"dry"},{"id":"dry2hall","room":"dry","label":"退出干沟","go":"hall"},{"id":"hall2crack","room":"hall","label":"挤进西南石缝","go":"crack"},{"id":"crack2hall","room":"crack","label":"从石缝退出来","go":"hall"},{"id":"hall2east","room":"hall","label":"沿东侧洞道进石廊","req":{"f":["c_map"]},"eff":{"f":["p_east"]},"go":"gallery"},{"id":"east2hall","room":"gallery","label":"退回主岔厅","go":"hall"},{"id":"east2river","room":"gallery","label":"下到暗河滩","go":"river"},{"id":"river2east","room":"river","label":"退上钟乳石廊","go":"gallery"},{"id":"ford","room":"river","label":"踩着石脊过暗河","req":{"f":["p_ford"]},"go":"shaft"},{"id":"ford_back","room":"shaft","label":"退回暗河滩","go":"river"},{"id":"look_camp","room":"camp","label":"打量前队营地","n":["c_camp"],"eff":{"f":["c_camp"]},"text":"工具卷散在防潮布上：竹竿、备用灯头、半卷绝缘胶带。前队连主电电池都带走了，布角压着他们的收队条。"},{"id":"gather","room":"camp","label":"翻捡散落的工具","req":{"f":["c_camp"]},"n":["p_parts"],"eff":{"f":["p_parts"],"i":["bamboo","lamphead","tape"]},"text":"竹竿两米出头，灯头卡口还完好，胶带筒心是干的——都是能用的东西。"},{"id":"lift_stone","room":"camp","label":"掀开压图的扁石","n":["c_map"],"eff":{"f":["c_map"],"i":["map"]},"text":"底图折着四折：三条岔道只把东侧那道用红铅笔描重了两笔，页脚注着方位——东偏南十五度，过廊涉滩，竖井出。"},{"id":"assemble","room":"camp","label":"把灯头绑上竹竿","req":{"i":["bamboo","lamphead","tape"]},"n":["p_pole"],"eff":{"f":["p_pole"],"i":["lightpole"]},"text":"胶带绕了七八圈，灯头稳稳立在竿头，一节一节拧亮——两米长的探灯杆成了。"},{"id":"shout","room":"dry","label":"朝干沟深处喊一声","n":["c_echo"],"eff":{"f":["c_echo"]},"text":"回声从沟底弹回来，嗡嗡地裹着水声——可这条沟干得能点着火。回声也会撒谎。"},{"id":"echo_solved","room":"hall","label":"对照底图识破回声","req":{"f":["c_echo","c_map"]},"n":["p_echo"],"eff":{"f":["p_echo"]},"text":"底图在北面干沟上画着叉，页边一行小字：窄缝聚音，声似活水，勿信。"},{"id":"look_mud","room":"river","label":"蹲下摸淤泥的深浅","n":["c_mud"],"eff":{"f":["c_mud"]},"text":"竿子没绑那会儿你就试过：一脚下去淤泥没过膝盖，石脊之间的口子在水下根本瞧不准。"},{"id":"probe","room":"river","label":"用探灯杆点探石脊","req":{"i":["lightpole"]},"n":["p_ford"],"eff":{"f":["p_ford"]},"text":"灯杆一寸寸点过去，石脊在水下连成一线：先踩西北角那块，再挪正东那块，末了跳上对岸高埠——过河的路探明白了。"},{"id":"wrong_wade","room":"river","label":"蹚进淤泥抄近路","n":["p_ford"],"text":"淤泥一口吞到胯，你抱着石脊退回来，靴筒里灌满冰凉的河水。"},{"id":"look_seams","room":"shaft","label":"仰头打量两条岩缝","n":["c_shaft"],"eff":{"f":["c_shaft"]},"text":"两条缝都在头顶三四米，缝口边缘溜滑，头灯的光探不进走向。"},{"id":"spot_mark","room":"shaft","label":"举杆照高处导标","req":{"i":["lightpole"]},"n":["c_mark"],"eff":{"f":["c_mark"]},"text":"竿头探进东缝，反光漆在灯光下亮起箭头——直指东缝深处，漆点一路排向井口。"},{"id":"wrong_west","room":"shaft","label":"扒西侧石缝试试","text":"西缝只容半臂，碎石簌簌往下掉，里面黑得没有一点反光。"},{"id":"climb","room":"shaft","label":"攀住导标点向上爬","req":{"f":["c_mark"]},"end":"win","text":"你贴着漆点一寸寸挪上去，缝口的风先灌了满怀。翻出岩缝时，谷口亮着前队的宿营灯，收队哨正数着最后一个名字。"},{"id":"shoulder_test","room":"crack","label":"往缝里塞过肩膀","text":"缝壁把呼吸都挤扁了。再进半寸，肩膀就要卡死在里头——你退了出来。"},{"id":"touch_drape","room":"gallery","label":"接一滴石幔上的水","text":"水珠凉得咬手，石幔背面还在一点点生长。"}],"difficulty":{"minSteps":6,"maxSteps":20,"maxBranch":6}};</script>
@@ -126,7 +128,7 @@ function hash(s){var h=0;s=String(s||"");for(var i=0;i<s.length;i++){h=(h*31+s.c
 function boot(G){
 if(booted)return;booted=true;
 var title=G.title||"文字密室逃脱";
-document.title=title;
+document.title="镜花水月 · "+title;
 document.getElementById("title").textContent=title;
 document.documentElement.style.setProperty("--acc",PALETTE[hash(title)%PALETTE.length]);
 document.documentElement.style.setProperty("--acc2",PALETTE[hash(title)%PALETTE.length]+"22");

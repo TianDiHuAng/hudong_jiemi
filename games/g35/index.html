@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>文字密室逃脱</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🧩%3C/text%3E%3C/svg%3E">
+<title>镜花水月 · 文字密室逃脱</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23161D30'/%3E%3Ccircle cx='48' cy='40' r='21' fill='%23F5C542'/%3E%3Ccircle cx='58' cy='35' r='19' fill='%23161D30'/%3E%3Cpath d='M18 72 q11 -6 22 0 t22 0 t22 0' stroke='%238FA8F0' stroke-width='3.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M26 81 q9 -5 18 0 t18 0 t18 0' stroke='%233A56A8' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 :root{--bg:#EEF1F6;--card:#FFFFFF;--ink:#1B2233;--mute:#5B667D;--line:#D2D9E6;--acc:#3A56A8;--acc2:#3A56A822;--ok:#1E7A4F;--bad:#B3362B;--tint:transparent;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -14,6 +14,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Noto Sans SC","PingFang SC",system-ui,sans-serif}
 main{max-width:1060px;margin:0 auto;padding:24px 16px 80px}
 h1{font-size:clamp(24px,4.5vw,34px);line-height:1.25;margin:0 0 4px}
+.brand{font-size:12.5px;color:var(--mute);letter-spacing:.16em;margin-bottom:2px}
 .lead{color:var(--mute)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
 .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:13px;color:var(--mute)}
@@ -76,6 +77,7 @@ button:hover{border-color:var(--acc);transform:translateX(2px)}button:focus-visi
 </head>
 <body>
 <main>
+<div class="brand">✦ 镜花水月 · 文字密室关卡库</div>
 <h1 id="title">文字密室逃脱</h1>
 <p id="intro" class="lead"></p>
 <script>window.__GAME__={"title":"按规程重来","intro":"烘干塔的麦堆测温报了警，全场停机。进料批次与塔身配重闸都要按规程重新来过——天亮前，这塔得再开起来。","start":"control","rooms":{"control":{"n":"控制室","d":"报警屏占半面墙，三号测温点红着。桌上钉着三张化验单，墙上挂着规程牌，电门罩着透明罩。"},"store":{"n":"工具房","d":"铁块堆在墙角滚作一堆，堆上压着张粉笔字条。工具架上探粮器、斗车摇把各归各位。"},"yard":{"n":"场院","d":"三堆麦子按批号插着牌，堆顶测温杆斜插着。斗车道直通塔底进料口，地磅房的窗亮着灯。"},"weigh":{"n":"地磅房","d":"地磅嵌在场院门口，磅房里一本过磅簿翻开着，墙上贴着旧年检的合格证。"},"lab":{"n":"化验室","d":"留样罐按批次码在架上，取样签插成一排，桌上的水分仪蒙着防尘罩。"},"base":{"n":"塔底进料层","d":"进料闸吊在料斗上方，闸梁伸出塔身，梁头挂着秤星尺。热风炉膛口泛着暗红，砖沿烫手，没有护栏。"}},"items":{"blocks":"配重铁块"},"puzzles":[{"id":"批次化验单","solved":"c_report","clue":"c_alarm"},{"id":"规程牌","solved":"c_rule","clue":"c_alarm"},{"id":"配重铁块","solved":"c_tag","clue":"c_rule"},{"id":"料闸配平","solved":"balanced","clue":"c_plaque"},{"id":"批次进塔","solved":"p_batch","clue":"c_report"}],"acts":[{"id":"look_alarm","room":"control","label":"查看报警屏","n":["c_alarm"],"eff":{"f":["c_alarm"]},"text":"三号测温点红得扎眼：41 度，比相邻两点高出六度——麦堆发热，得停机重排。"},{"id":"read_lab","room":"control","label":"翻桌上的批次化验单","n":["c_report"],"eff":{"f":["c_report"]},"text":"三张单子钉在一起：0712 批水分 18.2，0713 批 16.5，0714 批 14.8。"},{"id":"read_rule","room":"control","label":"读墙上的规程牌","n":["c_rule"],"eff":{"f":["c_rule"]},"text":"停机重开四步：一查测温，二配闸梁，三按水分高者先进塔，四满批开机——次序不得倒。"},{"id":"win","room":"control","label":"合上电门重新开机","req":{"f":["p_batch"]},"end":"win","text":"电门合拢，塔身风机从下往上一层层转起来，报警屏的红点挨个转绿。三批麦子各就各位——今晚这塔，是按规程重新开张的。"},{"id":"control2store","room":"control","label":"进工具房","go":"store"},{"id":"control2lab","room":"control","label":"进化验室","go":"lab"},{"id":"lab2control","room":"lab","label":"回控制室","go":"control"},{"id":"store2control","room":"store","label":"回控制室","go":"control"},{"id":"control2yard","room":"control","label":"去场院","go":"yard"},{"id":"yard2control","room":"yard","label":"回控制室","go":"control"},{"id":"yard2weigh","room":"yard","label":"去地磅房","go":"weigh"},{"id":"weigh2yard","room":"weigh","label":"回场院","go":"yard"},{"id":"yard2base","room":"yard","label":"进塔底进料层","go":"base"},{"id":"base2yard","room":"base","label":"回场院","go":"yard"},{"id":"store_blocks","room":"store","label":"挑配重铁块","n":["blocks_taken"],"eff":{"f":["blocks_taken","c_tag"],"i":["blocks"]},"text":"铁块堆里拣出四块：两块标五十的，一块标二十五的，一块标十的。堆上粉笔字条写得明白：磨圆边那块五十的实重四十七，起吊扣准，别按字面算。"},{"id":"store_flavor","room":"store","label":"翻看工具架","text":"探粮器的探头还带着粮温，斗车摇把上缠着新麻绳——白班的活做到一半撂了手。"},{"id":"read_plaque","room":"base","label":"读闸梁上的木牌","n":["c_plaque"],"eff":{"f":["c_plaque"]},"text":"木牌字被热气熏得发黄：料闸配平方许开闸，右梁配重一百零七公斤整，秤星居中为准。"},{"id":"bal_correct","room":"base","label":"按木牌数把铁块挂上右梁","req":{"i":["blocks"],"f":["c_plaque","c_tag"]},"n":["balanced"],"eff":{"f":["balanced"]},"text":"四十七、五十、十——三块落定，梁头秤星端端正正停在中线，闸板吊索吃力匀了。"},{"id":"bal_w1","room":"base","label":"把两块五十的都挂上去","req":{"i":["blocks"],"f":["c_plaque"]},"n":["balanced"],"text":"两块五十落梁，秤星差着一格半——磨圆边那块的亏空，木牌上的数早就扣进去了。"},{"id":"bal_w2","room":"base","label":"挑磨圆的加二十五的挂上","req":{"i":["blocks"],"f":["c_plaque"]},"n":["balanced"],"text":"七十二公斤挂上去，梁那头翘得老高，闸板压根没离门槛。"},{"id":"bal_w3","room":"base","label":"四块全挂上去再试","req":{"i":["blocks"],"f":["c_plaque"]},"n":["balanced"],"text":"秤星扎过了顶，梁身吱呀作响，你赶紧卸下一块才稳住。"},{"id":"bat_1","room":"base","label":"按规程把头一批卸进塔","req":{"f":["balanced","c_report","c_rule"]},"n":["p_batch"],"eff":{"f":["batch1"]},"text":"水分最高的 0712 批顺着斗车进了料闸，塔身第一段风机的声音沉了下去。"},{"id":"bat_w1","room":"base","label":"先把0713批卸进塔","req":{"f":["balanced","c_report","c_rule"]},"n":["p_batch"],"text":"16.5 的水分排了头，0712 批还在堆里捂着冒热气——规程牌上高水分先进那条，白纸黑字。"},{"id":"bat_w2","room":"base","label":"先把0714批卸进塔","req":{"f":["balanced","c_report","c_rule"]},"n":["p_batch"],"text":"最干的这批先进了塔，可场院里 0712 批的热气还在往上冒——顺序整个倒了过来。"},{"id":"bat_2","room":"base","label":"按序续卸第二批","req":{"f":["batch1"]},"n":["batch2"],"eff":{"f":["batch2"]},"text":"第二斗进闸，两批麦子在塔里分层铺开，界面齐得像用尺子量过。"},{"id":"bat_3","room":"base","label":"把末批卸进塔合龙","req":{"f":["batch2"]},"n":["p_batch"],"eff":{"f":["p_batch"]},"text":"第三斗合龙。三批按化验单排定，测温曲线开始逐段回落。"},{"id":"base_lose","room":"base","label":"伸手进暗红的炉膛掏焦块","end":"lose","text":"余火顺着袖口燎上来，灼痛从指尖窜到肘弯，你甩着手退到墙根——烫坏的手，已经握不住斗车把了。"},{"id":"yard_flavor","room":"yard","label":"看堆头上的批牌","text":"三块批牌齐全，0712 那块让热气熏得卷了边，牌后垫着半张旧化验单。"},{"id":"lab_flavor","room":"lab","label":"认一认留样罐的批次","text":"三个留样罐的签子与化验单批号一一对应，0714 罐里的麦粒最干爽。"},{"id":"weigh_flavor","room":"weigh","label":"看过磅记录","text":"过磅簿末页：0712 批十九吨四，0713 批十八吨一，0714 批十七吨六——吨位递减，水分也是。"}],"difficulty":{"minSteps":6,"maxSteps":20,"maxBranch":6}};</script>
@@ -126,7 +128,7 @@ function hash(s){var h=0;s=String(s||"");for(var i=0;i<s.length;i++){h=(h*31+s.c
 function boot(G){
 if(booted)return;booted=true;
 var title=G.title||"文字密室逃脱";
-document.title=title;
+document.title="镜花水月 · "+title;
 document.getElementById("title").textContent=title;
 document.documentElement.style.setProperty("--acc",PALETTE[hash(title)%PALETTE.length]);
 document.documentElement.style.setProperty("--acc2",PALETTE[hash(title)%PALETTE.length]+"22");

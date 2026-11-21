@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>文字密室逃脱</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🧩%3C/text%3E%3C/svg%3E">
+<title>镜花水月 · 文字密室逃脱</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23161D30'/%3E%3Ccircle cx='48' cy='40' r='21' fill='%23F5C542'/%3E%3Ccircle cx='58' cy='35' r='19' fill='%23161D30'/%3E%3Cpath d='M18 72 q11 -6 22 0 t22 0 t22 0' stroke='%238FA8F0' stroke-width='3.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M26 81 q9 -5 18 0 t18 0 t18 0' stroke='%233A56A8' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 :root{--bg:#EEF1F6;--card:#FFFFFF;--ink:#1B2233;--mute:#5B667D;--line:#D2D9E6;--acc:#3A56A8;--acc2:#3A56A822;--ok:#1E7A4F;--bad:#B3362B;--tint:transparent;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -14,6 +14,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Noto Sans SC","PingFang SC",system-ui,sans-serif}
 main{max-width:1060px;margin:0 auto;padding:24px 16px 80px}
 h1{font-size:clamp(24px,4.5vw,34px);line-height:1.25;margin:0 0 4px}
+.brand{font-size:12.5px;color:var(--mute);letter-spacing:.16em;margin-bottom:2px}
 .lead{color:var(--mute)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
 .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:13px;color:var(--mute)}
@@ -76,6 +77,7 @@ button:hover{border-color:var(--acc);transform:translateX(2px)}button:focus-visi
 </head>
 <body>
 <main>
+<div class="brand">✦ 镜花水月 · 文字密室关卡库</div>
 <h1 id="title">文字密室逃脱</h1>
 <p id="intro" class="lead"></p>
 <script>window.__GAME__={"title":"风向订正","intro":"站长下山取药，替班的小刘把巡测次序走乱了，记录簿上的风向也写拧了。按规程把巡测补齐，用风向标和烟把风向的官司断清，赶在 01:50 前把 02 时电报发出去。","start":"duty","rooms":{"duty":{"n":"值班室","d":"值班桌上摊着记录簿，铅笔搁在摊开的页边。墙上钉着观测规程卡和观测场平面图，隔壁发报房的绿灯闪着。炉上坐着水壶。"},"field":{"n":"观测场","d":"木栏围着观测场，百叶箱立在北头，箱门挂着冰扣。风向标在场心转个不停，架上挂着冰凌。东南角的雪堆得齐栏高。"},"pressure":{"n":"气压室","d":"气压室砌在场边背风处，空盒气压表挂在墙上，附温表贴在表侧。桌上压着上一班的手簿，字迹潦草难认。"},"corner":{"n":"观测场东南角","d":"东南角的雪积得齐栏高，雨量筒只露一截筒口。一把铁锹插在雪堆里，锹柄朝天。"},"radio":{"n":"发报房","d":"发报房的电键擦得发亮，码本翻在气象电码那页。墙上挂着时辰对照表，发报窗口的绿灯亮着待发。"},"dorm":{"n":"宿舍","d":"铺盖卷着，站长桌上压着半张药方和一张留言条。暖气片哒哒地响，窗玻璃结满冰花，看不清外面。"}},"items":{"shovel":"铁锹"},"puzzles":[{"id":"观测规程卡","solved":"c_rule","clue":"c_note"},{"id":"值班记录簿","solved":"c_book","clue":"c_rule"},{"id":"风向标读数","solved":"c_vane","clue":"c_book"},{"id":"烟旗佐证","solved":"c_smoke","clue":"c_vane"},{"id":"风向更正","solved":"p_wind","clue":"c_smoke"},{"id":"巡测走序","solved":"p_round","clue":"c_rule"}],"acts":[{"id":"d2f","room":"duty","label":"出值班室进观测场","go":"field"},{"id":"f2d","room":"field","label":"回值班室","go":"duty"},{"id":"d2r","room":"duty","label":"去发报房","go":"radio"},{"id":"r2d","room":"radio","label":"回值班室","go":"duty"},{"id":"f2p","room":"field","label":"进场边气压室","go":"pressure"},{"id":"p2f","room":"pressure","label":"回观测场","go":"field"},{"id":"f2c","room":"field","label":"走到东南角","go":"corner"},{"id":"c2f","room":"corner","label":"回观测场","go":"field"},{"id":"r2m","room":"radio","label":"去隔壁宿舍","go":"dorm"},{"id":"m2r","room":"dorm","label":"回发报房","go":"radio"},{"id":"read_note","room":"dorm","label":"读站长桌上的留言条","n":["c_note"],"eff":{"f":["c_note"]},"text":"站长的字：我下山取药，三天。小刘头回独立当班，簿子记得毛糙——凡事照规程卡和实物来，别信他的一面之词。"},{"id":"read_rule","room":"duty","label":"读观测规程卡","n":["c_rule"],"eff":{"f":["c_rule"]},"text":"规程卡印着巡测次序：一百叶箱温湿，二气压室本站气压，三风向风速，四雨量雪深——逐项记账，跳项作废，补测要注明。"},{"id":"read_book","room":"duty","label":"翻值班记录簿","n":["c_book"],"eff":{"f":["c_book"]},"text":"昨夜 20 时那页：气温负十二，本站气压如常，风向东南三米每秒，雪深三厘米。风向那格的字挤得厉害，像后来添上去的。"},{"id":"read_map","room":"duty","label":"看观测场平面图","n":["c_map"],"eff":{"f":["c_map"]},"text":"平面图标着方位：百叶箱在场北，风向标居中，雨量筒在东南角，蒸发皿靠西。气压室画在场边背风一侧。"},{"id":"correct_wind","room":"duty","label":"把风向记录更正过来","req":{"f":["c_vane","c_smoke","c_book"]},"n":["p_wind"],"eff":{"f":["p_wind"]},"text":"笔尖在风向格上划掉东南，改写西北，页边注明：原记为下风方向，据风向标与烟旗订正。"},{"id":"wrong_wind","room":"duty","label":"照簿子把风向写进电文","req":{"f":["c_book"]},"n":["p_wind"],"text":"笔尖照着簿子把东南又描了一遍——标和烟总得信一个，发出去的电报可不管错谁。"},{"id":"box_th","room":"field","label":"查百叶箱温湿","req":{"f":["c_rule"]},"n":["th1"],"eff":{"f":["th1"]},"text":"箱门冰扣掰开，干湿表挂在架正中：气温负十二度四，湿度七成三，跟簿子那页对得上。"},{"id":"vane_step","room":"field","label":"查风向风速并端详标架","req":{"f":["bar1","c_book"]},"n":["dir1"],"eff":{"f":["dir1","c_vane"]},"text":"站在标下读数：尾翼被甩向东南下风侧，风从西北来，风压板抬在第三格，转轴冻得发紧但没卡死——第三项巡测记完，簿子上那格东南越看越悬。"},{"id":"smoke_look","room":"field","label":"看烟囱的烟和旗梢","req":{"f":["c_vane"]},"n":["c_smoke"],"eff":{"f":["c_smoke"]},"text":"值班室烟囱的烟贴着屋顶扯向东南，杆上的旗梢也甩向东南，两面烟旗一个去处。"},{"id":"climb_vane","room":"field","label":"攀上风向标架子掰冻住的尾翼","end":"lose","text":"架子上的冰凌比看着的滑。第二级横撑一声脆响，人跟着标架一起歪倒下来——雪坡又深又软，喊声传不到值班室。"},{"id":"bar_read","room":"pressure","label":"查气压室本站气压","req":{"f":["th1"]},"n":["bar1"],"eff":{"f":["bar1"]},"text":"空盒表读数经附温订正，是一千零十二点六百帕——手簿上潦草的那行，原来抄对了。"},{"id":"wrong_seq","room":"pressure","label":"不按次序先抄气压","req":{"f":["c_rule"]},"n":["p_round"],"text":"手簿上先把气压那格填了，规程卡上的次序却还没走——跳项记的账，交上去也得退回来。"},{"id":"take_shovel","room":"corner","label":"拔出雪里的铁锹","n":["shovel_dug"],"eff":{"f":["shovel_dug"],"i":["shovel"]},"text":"铁锹从雪堆里拔出来，锹头磕了磕冻壳，还算趁手。"},{"id":"dig_gauge","room":"corner","label":"用铁锹刨开雨量筒边的积雪","req":{"f":["dir1","c_map"],"i":["shovel"]},"n":["p_round"],"eff":{"f":["p_round"]},"text":"锹尖刨开筒边冻雪，量雪尺插在承口边上：雪深三厘米四。第四项巡测记完，次序齐了。"},{"id":"wrong_transcribe","room":"radio","label":"照簿子原样先把电报誊好","req":{"f":["c_book"]},"n":["p_round"],"text":"电报纸誊了一半，风向那格照抄的东南——账没走完、数没核对，发出去就是事故。"},{"id":"send_report","room":"radio","label":"拍发定时观测电报","req":{"f":["p_round","p_wind"]},"end":"win","text":"电键嘀嘀嗒嗒，四组数据顺着线路进了台网。回执亮灯：02 时观测收到，风向西北，订正无误——站长那页毛糙的簿子，总算圆上了。"},{"id":"see_window","room":"dorm","label":"看窗上的冰花","text":"冰花把窗封成毛玻璃，外头的天光只透进来一点灰白，暖气片还在哒哒地响。"},{"id":"see_clock","room":"radio","label":"看时辰对照表","text":"02 时观测，01:45 前须完成巡测，01:50 拍发——手快还得稳。"}],"difficulty":{"minSteps":6,"maxSteps":20,"maxBranch":6}};</script>
@@ -126,7 +128,7 @@ function hash(s){var h=0;s=String(s||"");for(var i=0;i<s.length;i++){h=(h*31+s.c
 function boot(G){
 if(booted)return;booted=true;
 var title=G.title||"文字密室逃脱";
-document.title=title;
+document.title="镜花水月 · "+title;
 document.getElementById("title").textContent=title;
 document.documentElement.style.setProperty("--acc",PALETTE[hash(title)%PALETTE.length]);
 document.documentElement.style.setProperty("--acc2",PALETTE[hash(title)%PALETTE.length]+"22");
