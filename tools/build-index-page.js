@@ -11,7 +11,7 @@ const r=g.review,pt=g.playtest||{};
 const score=r?r.total+"/25":"未评";
 const dims=r?Object.entries(r.scores).map(([k,v])=>`<span class="dim">${esc(k)} ${v}</span>`).join(""):"";
 const ptLine=pt.cautious?`试玩：谨慎型${pt.cautious.cleared?"✓通关":"✗"+(pt.cautious.end||"")}（${pt.cautious.steps}步） · 乱试型${pt.chaotic&&pt.chaotic.cleared?"✓通关":"✗"+((pt.chaotic&&pt.chaotic.end)||"")}（${pt.chaotic?pt.chaotic.steps:"?"}步）`:"";
-return `<div class="card">
+return `<div class="card" data-game="${esc(g.title)}">
 <div class="head"><a class="play" href="games/${esc(g.id)}/index.html">▶ ${esc(g.title)}</a>
 <span class="diff" style="background:${difColor[g.seed.difficulty]||"#555"}">${esc(g.seed.difficulty)}</span>
 <span class="score">${esc(score)}</span></div>
@@ -20,6 +20,7 @@ return `<div class="card">
 <div class="mech">${g.seed.mechanics.map(esc).join(" + ")} · ${g.structure.rooms}房 ${g.structure.puzzles}谜 · 最短${g.metrics.shortest}步</div>
 <div class="dims">${dims}</div>
 <div class="pt">${esc(ptLine)}</div>
+<div class="prog" data-badge></div>
 <div class="links"><a href="games/${esc(g.id)}/concept.md">设定</a> · <a href="games/${esc(g.id)}/review.json">评审</a> · <a href="games/${esc(g.id)}/game.json">数据</a></div>
 </div>`}).join("\n");
 const html=`<!DOCTYPE html>
@@ -39,12 +40,28 @@ h1{font-size:30px;margin:0 0 6px}.sub{color:var(--mute);margin-bottom:24px}
 .theme{font-size:14px;margin-top:6px}
 .dims{margin-top:6px}.dim{display:inline-block;font-size:12px;border:1px solid var(--line);border-radius:4px;padding:0 6px;margin:2px 4px 0 0;color:var(--mute)}
 .links{margin-top:8px;font-size:13px}.links a{color:var(--acc);text-decoration:none}
+.prog{font-size:13px;margin-top:6px;font-weight:700;min-height:0}
 </style></head><body><main>
 <h1>文字密室逃脱 · 关卡目录</h1>
 <div class="sub">${IDX.count} 关 · 每关为单文件 HTML，点击标题直接开玩 · 生成于 ${esc(IDX.generated)} · 通过标准：${esc(IDX.passCriteria)}</div>
 <div class="grid">
 ${cards}
 </div>
-</main></body></html>`;
+</main>
+<script>
+(function(){try{
+var p=JSON.parse(localStorage.getItem("escape_progress")||"{}");
+var done=0,total=0;
+document.querySelectorAll(".card[data-game]").forEach(function(c){
+total++;var r=p[c.getAttribute("data-game")];if(!r)return;
+var b=c.querySelector("[data-badge]");if(!b)return;
+if(r.cleared){done++;var tm=r.bestTime?(function(ms){var s=Math.floor(ms/1000),m=Math.floor(s/60);return m+":"+String(s%60).padStart(2,"0")})(r.bestTime):"";
+b.textContent="✓ 已通关"+(r.bestSteps?" · 最佳 "+r.bestSteps+" 步":"")+(tm?" · "+tm:"");b.style.color="#5FCB92"}
+else if(r.plays){b.textContent="· 已尝试 "+r.plays+" 次";b.style.color="#F07A6E"}});
+var h=document.querySelector(".sub");
+if(h)h.textContent="你已通关 "+done+" / "+total+" 关 · "+h.textContent;
+}catch(e){}})();
+</script>
+</body></html>`;
 fs.writeFileSync(path.join(root,"index.html"),html);
 console.log("index.html written:",IDX.count,"games");

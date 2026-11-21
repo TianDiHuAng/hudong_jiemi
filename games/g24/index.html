@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>文字密室逃脱</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🧩%3C/text%3E%3C/svg%3E">
 <style>
 :root{--bg:#EEF1F6;--card:#FFFFFF;--ink:#1B2233;--mute:#5B667D;--line:#D2D9E6;--acc:#3A56A8;--acc2:#3A56A822;--ok:#1E7A4F;--bad:#B3362B;--tint:transparent;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -40,6 +41,10 @@ button:hover{border-color:var(--acc);transform:translateX(2px)}button:focus-visi
 .side h2{font-size:14px;margin:0 0 8px;color:var(--mute);letter-spacing:.08em;display:flex;align-items:center;justify-content:space-between}
 .mapreset{font-size:11px;padding:1px 8px;border-radius:6px;color:var(--mute);background:transparent}
 .mapreset:hover{color:var(--acc);transform:none}
+.banner{background:var(--acc2);border:1px solid var(--acc);border-radius:8px;padding:4px 10px;font-size:13px;margin:8px 0}
+#nudge{font-size:13px}
+.chip.link{cursor:pointer;user-select:none}
+.chip.link:hover{border-color:var(--acc);color:var(--ink)}
 #inv{display:flex;flex-wrap:wrap;gap:6px}
 .tag{border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:13.5px;background:var(--bg)}
 .tag .em{margin-right:4px}
@@ -54,6 +59,11 @@ button:hover{border-color:var(--acc);transform:translateX(2px)}button:focus-visi
 #map .node.cur text{fill:#fff;font-weight:700}
 #map .node.new rect{stroke-dasharray:4 3}
 #map .node.drag rect{stroke-width:2.5}
+#map .edge.shortest{stroke:var(--ok);stroke-width:3}
+#map .rb circle{fill:var(--acc);stroke:var(--bg);stroke-width:1}
+#map .rb text{fill:#fff;font-size:9px;font-weight:700}
+.maplegend{font-size:12px;color:var(--mute);margin-top:6px;line-height:1.8}
+@media(max-width:600px){button{padding:10px 12px}#acts button{min-height:42px}.card{padding:12px}}
 #veil{position:fixed;inset:0;background:rgba(10,14,24,.78);display:none;align-items:center;justify-content:center;z-index:9}
 #veil.show{display:flex}
 #veil .panel{background:var(--card);border-radius:16px;padding:36px 44px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
@@ -73,15 +83,18 @@ button:hover{border-color:var(--acc);transform:translateX(2px)}button:focus-visi
 <span class="chip">谜题 <b id="cPuzzle">–</b></span>
 <span class="chip">步数 <b id="cSteps">0</b></span>
 <span class="chip">物品 <b id="cItems">0</b></span>
+<span class="chip link" id="cSound">🔊 音效开</span>
+<span class="chip link" id="nudgeChip">🤔 卡住了？</span>
 </div>
 <div class="layout">
 <section class="stage card" aria-live="polite">
+<div id="banner" class="banner" style="display:none"></div>
 <div id="room"></div><div id="strip"></div><div id="desc"></div>
 <div id="log"></div><div id="acts"></div>
 <div class="tools"><button id="restart">重新开始</button></div>
 </section>
 <aside class="side">
-<div class="card"><h2>地 图 <button class="mapreset" id="mapreset">重置布局</button></h2><svg id="map" viewBox="0 0 200 120" aria-label="房间地图"></svg></div>
+<div class="card"><h2>地 图 <button class="mapreset" id="mapreset">重置布局</button></h2><svg id="map" viewBox="0 0 200 120" aria-label="房间地图"></svg><div class="maplegend" id="maplegend"></div></div>
 <div class="card"><h2>物 品</h2><div id="inv"></div></div>
 </aside>
 </div>
@@ -121,33 +134,89 @@ var intro=G.intro||"",ip=document.getElementById("intro");
 if(intro){ip.textContent=intro}else{ip.style.display="none"}
 var S,logEl=document.getElementById("log"),steps=0;
 var visited={},edges={};
+/* —— 用时统计：跨刷新累计 —— */
+var timeAccum=0,lastTick=Date.now();
+function tickTime(){var now=Date.now();timeAccum+=now-lastTick;lastTick=now}
+function fmtTime(ms){var s=Math.floor(ms/1000),m=Math.floor(s/60);return m+":"+String(s%60).padStart(2,"0")}
+/* —— 探索路线（复盘用） —— */
+var route=[],winInfo=null;
+/* —— 存档/续玩/成就记录 —— */
+var saveKey="save:"+title,progressKey="escape_progress",lastActs=[],tried={};
+function persist(){tickTime();try{var logs=[];for(var i=0;i<logEl.children.length;i++)logs.push(logEl.children[i].textContent);
+localStorage.setItem(saveKey,JSON.stringify({S:S,steps:steps,visited:visited,edges:edges,logs:logs,route:route,timeAccum:timeAccum}))}catch(e){}}
+function record(cleared){try{var p=JSON.parse(localStorage.getItem(progressKey)||"{}")||{};
+var r=p[title]||{plays:0};r.plays=(r.plays||0)+1;
+if(cleared){r.cleared=true;r.bestSteps=r.bestSteps?Math.min(r.bestSteps,steps):steps;
+r.bestTime=r.bestTime?Math.min(r.bestTime,timeAccum):timeAccum}
+p[title]=r;localStorage.setItem(progressKey,JSON.stringify(p))}catch(e){}}
+function banner(t,autohide){var b=document.getElementById("banner");b.textContent=t;b.style.display="block";
+if(autohide)setTimeout(function(){b.style.display="none"},6000)}
+/* —— 音效（WebAudio 合成，无外部资源） —— */
+var muted=false;try{muted=localStorage.getItem("escape_muted")==="1"}catch(e){}
+var AC=null;
+function tone(f,d,type,v,delay){if(muted)return;
+try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+var o=AC.createOscillator(),g=AC.createGain();o.type=type||"sine";o.frequency.value=f;
+g.gain.value=v||.05;o.connect(g);g.connect(AC.destination);
+var t0=AC.currentTime+(delay||0);o.start(t0);o.stop(t0+d)}catch(e){}}
+function sfx(kind){
+if(kind==="move")tone(196,.06,"sine",.05);
+else if(kind==="look")tone(392,.05,"sine",.035);
+else if(kind==="solve"){tone(587,.1,"triangle",.06);tone(880,.16,"triangle",.06,.1)}
+else if(kind==="win"){tone(523,.12,"triangle",.07);tone(659,.12,"triangle",.07,.12);tone(784,.22,"triangle",.07,.24)}
+else if(kind==="lose"){tone(330,.25,"sine",.06);tone(262,.4,"sine",.06,.25)}}
+var cs=document.getElementById("cSound");
+function syncSound(){cs.textContent=muted?"🔇 音效关":"🔊 音效开"}
+cs.onclick=function(){muted=!muted;try{localStorage.setItem("escape_muted",muted?"1":"0")}catch(e){}syncSound();if(!muted)sfx("look")};
+syncSound();
+/* —— 卡住了？轻提示（只指方向，不揭答案） —— */
+function nudge(){
+var looks=[],moves=[];
+lastActs.forEach(function(a){var c=catOf(a)[0];
+if(!tried[a.label]){if(c.indexOf("查看")>-1)looks.push(a.label);else if(a.go&&!visited[a.go])moves.push(a.label)}});
+var tips=[];
+if(looks.length)tips.push("这一带还有没细看的地方："+looks.slice(0,3).join("、"));
+if(moves.length)tips.push("隔壁还没去过："+moves.slice(0,3).join("、"));
+if(!tips.length)tips.push("手头的线索都翻过了——试着把它们组合起来，再回头看看房间里的东西。");
+say("（提示）"+tips.join("；"));
+banner("提示已写进日志 ⬇",true)}
+document.getElementById("nudgeChip").onclick=nudge;
+/* —— 键盘：数字键直选动作 —— */
+document.addEventListener("keydown",function(e){
+if(S&&S.end)return;
+var n=parseInt(e.key,10);
+if(n>=1&&n<=9&&lastActs[n-1])act(lastActs[n-1])});
 /* —— 地图布局存档：节点可拖拽，按关卡标题持久化 —— */
 var layoutKey="maplayout:"+title,layout={};
 try{layout=JSON.parse(localStorage.getItem(layoutKey)||"{}")||{}}catch(e){layout={}}
 function saveLayout(){try{localStorage.setItem(layoutKey,JSON.stringify(layout))}catch(e){}}
+var progressKey="escape_progress";
 function has(s,a){var r=a.req||{};return a.room===s.room&&(r.i||[]).every(function(x){return s.i.indexOf(x)>-1})&&(r.f||[]).every(function(x){return s.f.indexOf(x)>-1})&&(a.n||[]).every(function(x){return s.f.indexOf(x)<0})}
 function avail(s){return s.end?[]:G.acts.filter(function(a){return has(s,a)})}
 function ap(s,a){var e=a.eff||{},i=new Set(s.i),f=new Set(s.f);(e.i||[]).forEach(function(x){i.add(x)});(e.rm||[]).forEach(function(x){i.delete(x)});(e.f||[]).forEach(function(x){f.add(x)});
 return{room:a.go||s.room,i:Array.from(i).sort(),f:Array.from(f).sort(),end:a.end||null}}
 function key(s){return s.room+"|"+s.i+"|"+s.f+"|"+(s.end||"")}
-/* —— 通关时一次性 BFS 求理论最短步数（仅结算展示，不剧透路径） —— */
-function shortestSteps(){
-try{var s0={room:G.start,i:[],f:[],end:null},K={},Q=[{s:s0,d:0}];
+/* —— 通关时一次性 BFS 求理论最短步数与房间链（仅结算展示，不提前剧透） —— */
+function shortestSolve(){
+try{var s0={room:G.start,i:[],f:[],end:null},K={},P={},Q=[{s:s0,d:0}];
 K[key(s0)]=1;
 while(Q.length){
-if(Q.length>150000)return -1;
+if(Q.length>150000)return{steps:-1,rooms:null};
 var it=Q.shift(),s=it.s;
-if(s.end==="win")return it.d;
+if(s.end==="win"){
+var chain=[],k=key(s);
+while(k){chain.unshift(s.room);if(!P[k])break;s=P[k].s;k=key(s)}
+return{steps:it.d,rooms:chain}}
 var as=avail(s);
 for(var i=0;i<as.length;i++){var t=ap(s,as[i]),k=key(t);
-if(!K[k]){K[k]=1;Q.push({s:t,d:it.d+1})}}}
-return -2}catch(e){return -1}}
+if(!K[k]){K[k]=1;P[k]={s:s};Q.push({s:t,d:it.d+1})}}}
+return{steps:-2,rooms:null}}catch(e){return{steps:-1,rooms:null}}}
 function say(t){var p=document.createElement("p");p.textContent=t;logEl.appendChild(p);logEl.scrollTop=1e5}
 function solvedCount(){return (G.puzzles||[]).filter(function(p){return S.f.indexOf(p.solved)>-1}).length}
 function catOf(a){if(a.go)return["🚪 移动"];
 if(/^(看|读|翻|查|端详|听|问|搜|找|观察|检查|细看|打量|数|对照|比较|核|掀|望|摸|试|探|拨|闻|敲|点)/.test(a.label||""))return["🔍 查看"];
 return["🛠️ 行动"]}
-function drawMap(){
+function drawMap(replay){
 var D={},cur=S.room;
 Object.keys(visited).forEach(function(r){D[r]=1});
 D[cur]=1;
@@ -171,14 +240,22 @@ var xs=ids.map(function(r){return pos[r].x}),ys=ids.map(function(r){return pos[r
 var W=Math.max(36+(maxKnown+2)*78+6,Math.max.apply(null,xs.concat([200]))+46);
 var H=Math.max(22+((levels.length?Math.max.apply(null,levels.map(function(d){return byLevel[d].length})):1)+1)*34,Math.max.apply(null,ys.concat([120]))+34);
 var svg=['<svg viewBox="0 0 '+W+" "+H+'" xmlns="http://www.w3.org/2000/svg">'];
+var shortEdges={};
+if(replay&&winInfo&&winInfo.rooms){for(var i=0;i<winInfo.rooms.length-1;i++)shortEdges[[winInfo.rooms[i],winInfo.rooms[i+1]].sort().join("|")]=1}
 Object.keys(edges).forEach(function(k){var p=k.split("|");
 if(!pos[p[0]]||!pos[p[1]])return;
 svg.push('<line class="edge'+(edges[k]===2?" cur":"")+'" x1="'+pos[p[0]].x+'" y1="'+pos[p[0]].y+'" x2="'+pos[p[1]].x+'" y2="'+pos[p[1]].y+'"/>')});
+Object.keys(shortEdges).forEach(function(k){var p=k.split("|");
+if(!pos[p[0]]||!pos[p[1]])return;
+svg.push('<line class="edge shortest" x1="'+pos[p[0]].x+'" y1="'+pos[p[0]].y+'" x2="'+pos[p[1]].x+'" y2="'+pos[p[1]].y+'"/>')});
 ids.forEach(function(r){var p=pos[r],cls="node"+(visited[r]?" vis":"")+(r===cur?" cur":"")+(adj[r]&&!visited[r]?" new":"");
 var name=(r===cur||visited[r]||adj[r])?(G.rooms[r]?G.rooms[r].n:r):"?";
-svg.push('<g class="'+cls+'" data-room="'+r+'"><rect x="'+(p.x-31)+'" y="'+(p.y-12)+'" width="62" height="24" rx="9"/><text x="'+p.x+'" y="'+(p.y+4)+'" text-anchor="middle">'+name.slice(0,6)+"</text></g>")});
+svg.push('<g class="'+cls+'" data-room="'+r+'"><rect x="'+(p.x-31)+'" y="'+(p.y-12)+'" width="62" height="24" rx="9"/><text x="'+p.x+'" y="'+(p.y+4)+'" text-anchor="middle">'+name.slice(0,6)+"</text></g>");
+if(replay){var ri=route.indexOf(r);
+if(ri>-1)svg.push('<g class="rb"><circle cx="'+(p.x+24)+'" cy="'+(p.y-12)+'" r="8"/><text class="rb" x="'+(p.x+24)+'" y="'+(p.y-9)+'">'+(ri+1)+"</text></g>")}});
 svg.push("</svg>");
-var m=document.getElementById("map");m.setAttribute("viewBox","0 0 "+W+" "+H);m.innerHTML=svg.join("")}
+var m=document.getElementById("map");m.setAttribute("viewBox","0 0 "+W+" "+H);m.innerHTML=svg.join("");
+document.getElementById("maplegend").textContent=replay?(winInfo&&winInfo.rooms?"🟢 绿线＝理论最短路线（"+winInfo.rooms.filter(function(r,i,a){return i===0||r!==a[i-1]}).length+" 站） · 🔵 数字＝你的探索顺序":"🔢 数字＝你的探索顺序"):""}
 /* —— 地图节点拖拽（指针事件，布局实时存档） —— */
 (function(){
 var m=document.getElementById("map"),drag=null;
@@ -207,28 +284,49 @@ document.documentElement.style.setProperty("--tint",PALETTE[hash(title+G.rooms[S
 document.getElementById("inv").innerHTML=S.i.length?S.i.map(function(x){var n=G.items[x]||x;return '<span class="tag"><span class="em">'+emojiFor(n,1)+"</span>"+n+"</span>"}).join(""):'<span class="tag">（空手）</span>';
 if(S.end){document.getElementById("acts").innerHTML="";
 var b=document.createElement("button");b.className="pri";b.textContent=S.end==="win"?"通关！再玩一次":"失败了，重新开始";b.onclick=reset;document.getElementById("acts").appendChild(b);
-var sp=S.end==="win"?shortestSteps():null;
+tickTime();
+winInfo=S.end==="win"?shortestSolve():null;
+var rating=winInfo&&winInfo.steps>0?(steps===winInfo.steps?" · 完美路线 🏆":steps<=winInfo.steps+3?" · 干净利落 ⭐":" · 曲径通幽 🧭"):"";
+var dispRooms=winInfo&&winInfo.rooms?winInfo.rooms.filter(function(r,i,a){return i===0||r!==a[i-1]}):null;
+var routeText=dispRooms?("最短路线（"+dispRooms.length+" 站）："+dispRooms.map(function(r){return G.rooms[r]?G.rooms[r].n:r}).join(" → ")):"";
 document.getElementById("veilEm").textContent=S.end==="win"?"🎉":"🕯️";
 document.getElementById("veilT").textContent=S.end==="win"?"通关！":"失败了……";
-var sub=S.end==="win"?("本局 "+steps+" 步 · 解开谜题 "+solvedCount()+"/"+(G.puzzles||[]).length+(sp>0?(" · 理论最短 "+sp+" 步"+(steps===sp?" · 完美路线 🏆":steps<=sp+3?" · 干净利落 ⭐":" · 曲径通幽 🧭")):(sp===-1?" · （状态太多，未计算最短步数）":""))):"";
-document.getElementById("veilSub").textContent=sub;
+var subL1=(S.end==="win"?("本局 "+steps+" 步"+rating):"已探索 "+Object.keys(visited).length+" 房 · 收获 "+S.i.length+" 件物品")+" · 用时 "+fmtTime(timeAccum);
+if(S.end==="win")subL1+=" · 解开谜题 "+solvedCount()+"/"+(G.puzzles||[]).length;
+if(winInfo&&winInfo.steps>0)subL1+=" · 理论最短 "+winInfo.steps+" 步";
+else if(winInfo&&winInfo.steps===-1)subL1+=" · （状态太多，未计算最短步数）";
+document.getElementById("veilSub").innerHTML=subL1+(routeText?"<br>"+routeText:"");
 document.getElementById("veil").classList.add("show");
-chips();drawMap();return}
+sfx(S.end);record(S.end==="win");
+try{localStorage.removeItem(saveKey)}catch(e){}
+chips();drawMap(S.end==="win");return}
 document.getElementById("veil").classList.remove("show");
 var groups={},order=[];
 avail(S).forEach(function(a){var c=catOf(a);if(!groups[c[0]]){groups[c[0]]=[];order.push(c[0])}groups[c[0]].push(a)});
 var box=document.getElementById("acts");box.innerHTML="";
 order.forEach(function(gn){var h=document.createElement("div");h.className="grp";h.textContent=gn;box.appendChild(h);
 groups[gn].forEach(function(a){var b=document.createElement("button");b.textContent=a.label;b.onclick=function(){act(a)};box.appendChild(b)})});
-chips();drawMap()}
-function act(a){var pre=S.room;var t=ap(S,a);S=t;steps++;visited[S.room]=1;
-if(pre!==S.room)edges[[pre,S.room].sort().join("|")]=1;
-if(a.text)say(a.text);if(a.go)say("—— "+G.rooms[S.room].n+" ——");draw()}
-function reset(){S={room:G.start,i:[],f:[],end:null};steps=0;visited={};visited[G.start]=1;edges={};logEl.innerHTML="";
-if(intro)say(intro);say(G.rooms[S.room].d);document.getElementById("veil").classList.remove("show");draw()}
+chips();drawMap();
+lastActs=avail(S)}
+function act(a){var before=solvedCount(),pre=S.room;var t=ap(S,a);S=t;steps++;visited[S.room]=1;tried[a.label]=1;
+if(pre!==S.room){edges[[pre,S.room].sort().join("|")]=1;route.push(S.room);sfx("move")}else sfx(catOf(a)[0].indexOf("查看")>-1?"look":"look");
+if(solvedCount()>before)sfx("solve");
+if(a.text)say(a.text);if(a.go)say("—— "+G.rooms[S.room].n+" ——");draw();persist()}
+function reset(){S={room:G.start,i:[],f:[],end:null};steps=0;visited={};visited[G.start]=1;edges={};tried={};route=[G.start];timeAccum=0;lastTick=Date.now();winInfo=null;logEl.innerHTML="";
+if(intro)say(intro);say(G.rooms[S.room].d);document.getElementById("veil").classList.remove("show");draw();persist()}
 document.getElementById("restart").onclick=reset;
 document.getElementById("veilBtn").onclick=reset;
-reset();
+/* —— 续玩：有未完结存档则恢复 —— */
+var restored=false,savedState=null;
+try{savedState=JSON.parse(localStorage.getItem(saveKey)||"null")}catch(e){}
+if(savedState&&savedState.S&&!savedState.S.end&&savedState.S.room&&G.rooms[savedState.S.room]){
+S=savedState.S;steps=savedState.steps||0;visited=savedState.visited||{};visited[S.room]=1;edges=savedState.edges||{};tried={};
+route=savedState.route||[S.room];timeAccum=savedState.timeAccum||0;lastTick=Date.now();winInfo=null;
+logEl.innerHTML="";
+(savedState.logs||[]).forEach(function(t){var p=document.createElement("p");p.textContent=t;logEl.appendChild(p)});
+banner("已恢复上次进度（第 "+steps+" 步）· 点「重新开始」可从头玩",true);
+restored=true;draw()}
+if(!restored)reset();
 }
 if(window.__GAME__){boot(window.__GAME__);return}
 fetch("game.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}).then(boot).catch(function(){
